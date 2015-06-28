@@ -34,9 +34,10 @@ class ArticlesController extends AdminController {
         $languages = Language::all();
         $language = "";
 		$newscategories = ArticleCategory::all();
-		$newscategory = "";
+        $newscategory = "";
+		$title = "Nova notícia";
         // Show the page
-        return view('admin.news.create_edit', compact('languages', 'language','newscategories','newscategory'));
+        return view('admin.news.create_edit', compact('languages', 'language','newscategories','newscategory','title'));
     }
 
     /**
@@ -85,8 +86,9 @@ class ArticlesController extends AdminController {
         $language = $news->language_id;
 		$newscategories = ArticleCategory::all();
 		$newscategory = $news->newscategory_id;
+        $title = 'Editar notícia';
 
-        return view('admin.news.create_edit',compact('news','languages','language','newscategories','newscategory'));
+        return view('admin.news.create_edit',compact('news','languages','language','newscategories','newscategory','title'));
     }
 
     /**
@@ -134,8 +136,9 @@ class ArticlesController extends AdminController {
     public function getDelete($id)
     {
         $news = Article::find($id);
+        $title = "Remover notícia";
         // Show the page
-        return view('admin.news.delete', compact('news'));
+        return view('admin.news.delete', compact('news','title'));
     }
 
     /**

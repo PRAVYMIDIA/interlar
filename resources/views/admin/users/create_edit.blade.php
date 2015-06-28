@@ -1,8 +1,5 @@
 @extends('admin.layouts.modal') @section('content')
-<ul class="nav nav-tabs">
-	<li class="active"><a href="#tab-general" data-toggle="tab">{{{
-			trans('admin/modal.general') }}}</a></li>
-</ul>
+
 <form class="form-horizontal" method="post"
 	action="@if (isset($user)){{ URL::to('admin/users/' . $user->id . '/edit') }}@endif"
 	autocomplete="off">
@@ -78,25 +75,42 @@
 				</div>
 			</div>
 			<div class="col-md-12">
-				<div class="form-">
-					<label class="col-md-2 control-label" for="confirm">{{
-						trans('admin/users.activate_user') }}</label>
-					<div class="col-md-6">
-						<select class="form-control" name="confirmed" id="confirmed">
-							<option value="1" {{{ ((isset($user) && $user->confirmed == 1)? '
-								selected="selected"' : '') }}}>{{{ trans('admin/users.yes')
-								}}}</option>
-							<option value="0" {{{ ((isset($user) && $user->confirmed == 0) ?
-								' selected="selected"' : '') }}}>{{{ trans('admin/users.no')
-								}}}</option>
-						</select>
+				<div class="col-md-6">
+					<div class="form-">
+						<label class="col-md-3 control-label" for="confirm">{{
+							trans('admin/users.activate_user') }}</label>
+						<div class="col-md-6">
+							<select class="form-control" name="confirmed" id="confirmed">
+								<option value="1" {{{ ((isset($user) && $user->confirmed == 1)? '
+									selected="selected"' : '') }}}>{{{ trans('admin/users.yes')
+									}}}</option>
+								<option value="0" {{{ ((isset($user) && $user->confirmed == 0) ?
+									' selected="selected"' : '') }}}>{{{ trans('admin/users.no')
+									}}}</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-">
+						<label class="col-md-4 control-label" for="admin">Administrador</label>
+						<div class="col-md-6">
+							<select class="form-control" name="admin" id="admin">
+								<option value="1" {{{ ((isset($user) && $user->admin == 1)? '
+									selected="selected"' : '') }}}>{{{ trans('admin/users.yes')
+									}}}</option>
+								<option value="0" {{{ ((isset($user) && $user->admin == 0) ?
+									' selected="selected"' : '') }}}>{{{ trans('admin/users.no')
+									}}}</option>
+							</select>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 	<div class="form-group">
-		<div class="col-md-12">
+		<div class="col-md-12" style="margin-top:10px;">
 			<button type="reset" class="btn btn-sm btn-warning close_popup">
 				<span class="glyphicon glyphicon-ban-circle"></span> {{
 				trans("admin/modal.cancel") }}

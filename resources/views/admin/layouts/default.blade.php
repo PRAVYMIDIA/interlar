@@ -2,7 +2,7 @@
 
 {{-- Web site Title --}}
 @section('title')
-    Administration :: @parent
+    Administração :: @parent
 @endsection
 
 {{-- Styles --}}
