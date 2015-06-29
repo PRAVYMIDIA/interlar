@@ -1,4 +1,4 @@
-@extends('admin.layouts.modal') {{-- Content --}} @section('content')
+@extends('admin.layouts.default') {{-- Content --}} @section('main')
 <!-- Tabs -->
 <ul class="nav nav-tabs">
 	<li class="active"><a href="#tab-general" data-toggle="tab"> {{
