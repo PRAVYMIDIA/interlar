@@ -27,7 +27,8 @@ class UserController extends AdminController {
      * @return Response
      */
     public function getCreate() {
-        return view('admin.users.create_edit');
+        $title = 'Novo usuário';
+        return view('admin.users.create_edit', compact('title'));
     }
 
     /**
@@ -38,13 +39,14 @@ class UserController extends AdminController {
     public function postCreate(UserRequest $request) {
 
         $user = new User ();
-        $user -> name = $request->name;
-		$user -> username = $request->username;
-        $user -> email = $request->email;
-        $user -> password = bcrypt($request->password);
-        $user -> confirmation_code = str_random(32);
-        $user -> confirmed = $request->confirmed;
-        $user -> save();
+        $user->name = $request->name;
+		$user->username = $request->username;
+        $user->email = $request->email;
+        $user->password = bcrypt($request->password);
+        $user->confirmation_code = str_random(32);
+        $user->confirmed = $request->confirmed;
+        $user->admin = $request->admin;
+        $user->save();
     }
 
     /**
@@ -54,9 +56,9 @@ class UserController extends AdminController {
      * @return Response
      */
     public function getEdit($id) {
-
+        $title = 'Editar usuário';
         $user = User::find($id);
-        return view('admin.users.create_edit', compact('user'));
+        return view('admin.users.create_edit', compact('user','title'));
     }
 
     /**
@@ -68,8 +70,9 @@ class UserController extends AdminController {
     public function postEdit(UserEditRequest $request, $id) {
 
         $user = User::find($id);
-        $user -> name = $request->name;
-        $user -> confirmed = $request->confirmed;
+        $user->name         = $request->name;
+        $user->confirmed    = $request->confirmed;
+        $user->admin        = $request->admin;
 
         $password = $request->password;
         $passwordConfirmation = $request->password_confirmation;
@@ -91,8 +94,9 @@ class UserController extends AdminController {
     public function getDelete($id)
     {
         $user = User::find($id);
+        $title = 'Remover usuário';
         // Show the page
-        return view('admin.users.delete', compact('user'));
+        return view('admin.users.delete', compact('user','title'));
     }
 
     /**

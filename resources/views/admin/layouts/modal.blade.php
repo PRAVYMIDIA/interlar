@@ -9,7 +9,7 @@
 <!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame -->
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-<title>Administration</title>
+<title>Administração</title>
 
 <meta name="keywords" content="@yield('keywords')" />
 <meta name="author" content="@yield('author')" />
@@ -54,13 +54,15 @@
 <body>
 	<!-- Container -->
 	<div class="container">
-		<div class="page-header"></div>
-		<div class="pull-right">
-			<button class="btn btn-primary btn-sm close_popup">
-				<span class="glyphicon glyphicon-backward"></span> {{{
-				trans('admin/admin.back') }}}
-			</button>
+		<div class="page-header">{{ isset($title)?$title:'&nbsp;' }}
+			<div class="pull-right">
+				<button class="btn btn-primary btn-xs close_popup">
+					<span class="glyphicon glyphicon-backward"></span> {{{
+					trans('admin/admin.back') }}}
+				</button>
+			</div>
 		</div>
+		
 		<!-- Content -->
 		@yield('content')
 		<!-- ./ content -->
@@ -99,7 +101,7 @@
 							}).fail(function(jqXHR, textStatus, errorThrown) {
 			                    // Optionally alert the user of an error here...
 			                    var textResponse = jqXHR.responseText;
-			                    var alertText = "One of the following conditions is not met:\n\n";
+			                    var alertText = "Alguma condição não foi atendida:\n\n";
 			                    var jsonResponse = jQuery.parseJSON(textResponse);
 
 			                    $.each(jsonResponse, function(n, elem) {
@@ -127,7 +129,7 @@
 						}).fail(function(jqXHR, textStatus, errorThrown) {
 		                    // Optionally alert the user of an error here...
 		                    var textResponse = jqXHR.responseText;
-		                    var alertText = "One of the following conditions is not met:\n\n";
+		                    var alertText = "Alguma condição não foi atendida:\n\n";
 		                    var jsonResponse = jQuery.parseJSON(textResponse);
 
 		                    $.each(jsonResponse, function(n, elem) {
