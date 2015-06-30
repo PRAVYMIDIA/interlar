@@ -30,6 +30,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'namespace' => 'Admin
     Route::pattern('id', '[0-9]+');
     Route::pattern('id2', '[0-9]+');
 
+    # Rota default para /admin
+    Route::get('/', 'DashboardController@index');
+
     # Admin Dashboard
     Route::get('dashboard', 'DashboardController@index');
 

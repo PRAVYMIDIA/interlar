@@ -1,4 +1,4 @@
-@extends('app')
+@extends('site')
 @section('title') Home :: @parent @stop
 @section('content')
 <div class="row">
