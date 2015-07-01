@@ -83,9 +83,11 @@
 	<script src="{{{ asset('assets/admin/js/jquery.colorbox.js') }}}"></script>
 	<script src="{{  asset('assets/admin/js/summernote.js')}}"></script>
 	<script src="{{  asset('assets/admin/js/select2.js') }}"></script>
+	<script src="{{  asset('assets/admin/js/jquery.maskMoney.min.js') }}"></script>
 	<script type="text/javascript">
 			$(function() {
 				$('textarea').summernote({height: 250});
+				$(".moeda").maskMoney({prefix:'R$ ', allowZero:true, allowNegative: true, thousands:'.', decimal:',', affixesStay: false});
 				$('form').submit(function(event) {
 					event.preventDefault();
 					var form = $(this);
