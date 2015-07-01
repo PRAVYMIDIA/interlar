@@ -24,7 +24,7 @@
         <tr>
             <th>Nome</th>
             <th>Criado em</th>
-            <th>{{ trans("admin/admin.action") }}</th>
+            <th width="10%">{{ trans("admin/admin.action") }}</th>
         </tr>
         </thead>
         <tbody></tbody>
@@ -40,7 +40,7 @@
             oTable = $('#table').DataTable({
                 "sDom": "<'row'<'col-md-6'l><'col-md-6'f>r>t<'row'<'col-md-6'i><'col-md-6'p>>",
                 "sPaginationType": "bootstrap",
-
+                "language": datatable_lang,
                 "processing": true,
                 "serverSide": true,
                 "ajax": "{{ URL::to('admin/ambiente/data/') }}",
@@ -50,7 +50,7 @@
                         width: "98%",
                         height: "98%",
                         onClosed: function () {
-                            window.location.reload();
+                            oTable.ajax.reload();
                         }
                     });
                 }

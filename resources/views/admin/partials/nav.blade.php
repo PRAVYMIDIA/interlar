@@ -22,6 +22,24 @@
             <span class="hidden-sm text"> Ambientes</span>
         </a>
     </li>
+    <li class="{{set_active('admin/produtotipo*')}}">
+        <a href="{{url('admin/produtotipo')}}">
+            <i class="fa fa-list"></i>
+            <span class="hidden-sm text"> Tipos de Produtos</span>
+        </a>
+    </li>
+    <li class="{{set_active('admin/fornecedor*')}}">
+        <a href="{{url('admin/fornecedor')}}">
+            <i class="fa fa-truck"></i>
+            <span class="hidden-sm text"> Fornecedores</span>
+        </a>
+    </li>
+    <li class="{{set_active('admin/produto*')}}">
+        <a href="{{url('admin/produto')}}">
+            <i class="fa fa-diamond"></i>
+            <span class="hidden-sm text"> Produtos</span>
+        </a>
+    </li>
     <!-- <li class="{{set_active('admin/news*')}}">
         <a href="#">
             <i class="glyphicon glyphicon-bullhorn"></i> Notícias

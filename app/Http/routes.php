@@ -47,6 +47,39 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'namespace' => 'Admin
     Route::get('ambiente/data', 'AmbienteController@data');
     Route::get('ambiente/reorder', 'AmbienteController@getReorder');
 
+    # ProdutoTipos
+    Route::get('produtotipo', 'ProdutoTipoController@index');
+    Route::get('produtotipo/create', 'ProdutoTipoController@getCreate');
+    Route::post('produtotipo/create', 'ProdutoTipoController@postCreate');
+    Route::get('produtotipo/{id}/edit', 'ProdutoTipoController@getEdit');
+    Route::post('produtotipo/{id}/edit', 'ProdutoTipoController@postEdit');
+    Route::get('produtotipo/{id}/delete', 'ProdutoTipoController@getDelete');
+    Route::post('produtotipo/{id}/delete', 'ProdutoTipoController@postDelete');
+    Route::get('produtotipo/data', 'ProdutoTipoController@data');
+    Route::get('produtotipo/reorder', 'ProdutoTipoController@getReorder');
+
+    # Fornecedores
+    Route::get('fornecedor', 'FornecedorController@index');
+    Route::get('fornecedor/create', 'FornecedorController@getCreate');
+    Route::post('fornecedor/create', 'FornecedorController@postCreate');
+    Route::get('fornecedor/{id}/edit', 'FornecedorController@getEdit');
+    Route::post('fornecedor/{id}/edit', 'FornecedorController@postEdit');
+    Route::get('fornecedor/{id}/delete', 'FornecedorController@getDelete');
+    Route::post('fornecedor/{id}/delete', 'FornecedorController@postDelete');
+    Route::get('fornecedor/data', 'FornecedorController@data');
+    Route::get('fornecedor/reorder', 'FornecedorController@getReorder');
+
+    # Produtos
+    Route::get('produto', 'ProdutoController@index');
+    Route::get('produto/create', 'ProdutoController@getCreate');
+    Route::post('produto/create', 'ProdutoController@postCreate');
+    Route::get('produto/{id}/edit', 'ProdutoController@getEdit');
+    Route::post('produto/{id}/edit', 'ProdutoController@postEdit');
+    Route::get('produto/{id}/delete', 'ProdutoController@getDelete');
+    Route::post('produto/{id}/delete', 'ProdutoController@postDelete');
+    Route::get('produto/data', 'ProdutoController@data');
+    Route::get('produto/reorder', 'ProdutoController@getReorder');
+
 
     # Language
     Route::get('language', 'LanguageController@index');

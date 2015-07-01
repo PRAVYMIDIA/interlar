@@ -8,6 +8,7 @@ use App\Http\Requests\Admin\DeleteRequest;
 use App\Http\Requests\Admin\ReorderRequest;
 use Illuminate\Support\Facades\Auth;
 use Datatables;
+use DB;
 
 class AmbienteController extends AdminController {
 
@@ -91,11 +92,9 @@ class AmbienteController extends AdminController {
         $ambiente -> nome = $request->nome;
         $ambiente -> descricao = $request->descricao;
 
-        $imagem = "";
         if(Input::hasFile('imagem'))
         {
             $file = Input::file('imagem');
-            dd($file);
             $filename = $file->getClientOriginalName();
             $extension = $file -> getClientOriginalExtension();
             $imagem = sha1($filename . time()) . '.' . $extension;
@@ -145,12 +144,13 @@ class AmbienteController extends AdminController {
      */
     public function data()
     {
-        $ambiente = Ambiente::select(array('ambientes.id','ambientes.nome', 'ambientes.created_at'))
+        $ambiente = Ambiente::select(array('ambientes.id','ambientes.nome', DB::raw('DATE_FORMAT(ambientes.created_at,\'%d/%m/%Y %H:%i\') as criado_em')))
             ->orderBy('ambientes.nome', 'ASC');
 
         return Datatables::of($ambiente)
-            ->add_column('actions', '<a href="{{{ URL::to(\'admin/ambiente/\' . $id . \'/edit\' ) }}}" class="btn btn-success btn-sm iframe" ><span class="glyphicon glyphicon-pencil"></span>  {{ trans("admin/modal.edit") }}</a>
-                    <a href="{{{ URL::to(\'admin/ambiente/\' . $id . \'/delete\' ) }}}" class="btn btn-sm btn-danger iframe"><span class="glyphicon glyphicon-trash"></span> {{ trans("admin/modal.delete") }}</a>
+            ->add_column('actions', '<a href="{{{ URL::to(\'admin/ambiente/\' . $id . \'/edit\' ) }}}" class="btn btn-success btn-xs iframe" title="{{ trans("admin/modal.edit") }}" ><span class="glyphicon glyphicon-pencil"></span></a>
+                    <a href="{{{ URL::to(\'admin/ambiente/\' . $id . \'/addprodutos\' ) }}}" class="btn btn-info btn-xs iframe" title="Adicionar Produtos" ><span class="fa fa-diamond"></span></a>
+                    <a href="{{{ URL::to(\'admin/ambiente/\' . $id . \'/delete\' ) }}}" class="btn btn-xs btn-danger iframe" title="{{ trans("admin/modal.delete") }}"><span class="glyphicon glyphicon-trash"></span></a>
                     <input type="hidden" name="row" value="{{$id}}" id="row">')
             ->remove_column('id')
 
