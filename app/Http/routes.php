@@ -36,6 +36,18 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'namespace' => 'Admin
     # Admin Dashboard
     Route::get('dashboard', 'DashboardController@index');
 
+    # Ambientes
+    Route::get('ambiente', 'AmbienteController@index');
+    Route::get('ambiente/create', 'AmbienteController@getCreate');
+    Route::post('ambiente/create', 'AmbienteController@postCreate');
+    Route::get('ambiente/{id}/edit', 'AmbienteController@getEdit');
+    Route::post('ambiente/{id}/edit', 'AmbienteController@postEdit');
+    Route::get('ambiente/{id}/delete', 'AmbienteController@getDelete');
+    Route::post('ambiente/{id}/delete', 'AmbienteController@postDelete');
+    Route::get('ambiente/data', 'AmbienteController@data');
+    Route::get('ambiente/reorder', 'AmbienteController@getReorder');
+
+
     # Language
     Route::get('language', 'LanguageController@index');
     Route::get('language/create', 'LanguageController@getCreate');

@@ -16,13 +16,13 @@
             <span class="hidden-sm text"> Painel</span>
         </a>
     </li>
-    <li class="{{set_active('admin/language*')}}">
-        <a href="{{url('admin/language')}}">
-            <i class="fa fa-language"></i>
-            <span class="hidden-sm text"> Idioma</span>
+    <li class="{{set_active('admin/ambiente*')}}">
+        <a href="{{url('admin/ambiente')}}">
+            <i class="fa fa-home"></i>
+            <span class="hidden-sm text"> Ambientes</span>
         </a>
     </li>
-    <li class="{{set_active('admin/news*')}}">
+    <!-- <li class="{{set_active('admin/news*')}}">
         <a href="#">
             <i class="glyphicon glyphicon-bullhorn"></i> Notícias
             <span class="fa arrow"></span>
@@ -81,7 +81,7 @@
                 </a>
             </li>
         </ul>
-    </li>
+    </li> -->
     <li class="{{set_active('admin/users*')}}">
         <a href="{{url('admin/users')}}">
             <i class="glyphicon glyphicon-user"></i>
