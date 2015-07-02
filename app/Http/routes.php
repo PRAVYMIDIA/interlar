@@ -80,6 +80,17 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'namespace' => 'Admin
     Route::get('produto/data', 'ProdutoController@data');
     Route::get('produto/reorder', 'ProdutoController@getReorder');
 
+    # Lojas
+    Route::get('loja', 'LojaController@index');
+    Route::get('loja/create', 'LojaController@getCreate');
+    Route::post('loja/create', 'LojaController@postCreate');
+    Route::get('loja/{id}/edit', 'LojaController@getEdit');
+    Route::post('loja/{id}/edit', 'LojaController@postEdit');
+    Route::get('loja/{id}/delete', 'LojaController@getDelete');
+    Route::post('loja/{id}/delete', 'LojaController@postDelete');
+    Route::get('loja/data', 'LojaController@data');
+    Route::get('loja/reorder', 'LojaController@getReorder');    
+
 
     # Language
     Route::get('language', 'LanguageController@index');

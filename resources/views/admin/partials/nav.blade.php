@@ -18,26 +18,32 @@
     </li>
     <li class="{{set_active('admin/ambiente*')}}">
         <a href="{{url('admin/ambiente')}}">
-            <i class="fa fa-home"></i>
+            <i class="fa fa-home fa-fw"></i>
             <span class="hidden-sm text"> Ambientes</span>
         </a>
     </li>
     <li class="{{set_active('admin/produtotipo*')}}">
         <a href="{{url('admin/produtotipo')}}">
-            <i class="fa fa-list"></i>
+            <i class="fa fa-list fa-fw"></i>
             <span class="hidden-sm text"> Tipos de Produtos</span>
         </a>
     </li>
     <li class="{{set_active('admin/fornecedor*')}}">
         <a href="{{url('admin/fornecedor')}}">
-            <i class="fa fa-truck"></i>
+            <i class="fa fa-truck fa-fw"></i>
             <span class="hidden-sm text"> Fornecedores</span>
         </a>
     </li>
     <li class="{{set_active('admin/produto*')}}">
         <a href="{{url('admin/produto')}}">
-            <i class="fa fa-diamond"></i>
+            <i class="fa fa-diamond fa-fw"></i>
             <span class="hidden-sm text"> Produtos</span>
+        </a>
+    </li>
+    <li class="{{set_active('admin/loja*')}}">
+        <a href="{{url('admin/loja')}}">
+            <i class="fa fa-building fa-fw"></i>
+            <span class="hidden-sm text"> Lojas</span>
         </a>
     </li>
     <!-- <li class="{{set_active('admin/news*')}}">
