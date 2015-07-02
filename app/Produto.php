@@ -60,16 +60,18 @@ class Produto extends Model
     *   Mutator para remover a imagem antiga (caso houver)
     */
     public function setImagemAttribute($value){
-        $image_path = public_path() . '/images/produto/'.$this->attributes['id'].'/';
-        if( strlen($this->attributes['imagem']) ){
-            if($this->attributes['imagem'] != $value){
-                if(file_exists( $image_path.$this->attributes['imagem'] )){
-                    unlink( $image_path.$this->attributes['imagem'] );
-                    if(file_exists( $image_path.'thumb_'.$this->attributes['imagem'] )){
-                        unlink( $image_path.'thumb_'.$this->attributes['imagem'] );
+        if(isset($this->attributes['id'])){
+            $image_path = public_path() . '/images/produto/'.$this->attributes['id'].'/';
+            if( strlen($this->attributes['imagem']) ){
+                if($this->attributes['imagem'] != $value){
+                    if(file_exists( $image_path.$this->attributes['imagem'] )){
+                        unlink( $image_path.$this->attributes['imagem'] );
+                        if(file_exists( $image_path.'thumb_'.$this->attributes['imagem'] )){
+                            unlink( $image_path.'thumb_'.$this->attributes['imagem'] );
+                        }
                     }
-                }
-            }            
+                }            
+            }
         }
         $this->attributes['imagem'] = $value;
     }
@@ -86,6 +88,10 @@ class Produto extends Model
             $img_thumb->save($image_path.'thumb_'.$this->attributes['imagem'],60);
         }
         return 'thumb_'.$this->attributes['imagem'];
+    }
+
+    public function ambientes(){
+        return $this->belongsToMany('App\Ambiente');
     }
 
 

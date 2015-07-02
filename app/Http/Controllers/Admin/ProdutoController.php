@@ -5,6 +5,7 @@ use App\Produto;
 use App\ProdutoTipo;
 use App\ProdutoImagem;
 use App\Fornecedor;
+use App\Ambiente;
 use Illuminate\Support\Facades\Input;
 use App\Http\Requests\Admin\ProdutoRequest;
 use App\Http\Requests\Admin\DeleteRequest;
@@ -36,8 +37,11 @@ class ProdutoController extends AdminController {
 		$title = "Novo Produto";
         $produtos_tipos = ProdutoTipo::lists('nome','id')->all();
         $fornecedores = Fornecedor::lists('nome','id')->all();
+
+        $ambientes = new Ambiente();
+        $ambientes = $ambientes->lists('nome','id')->all();
         // Show the page
-        return view('admin.produto.create_edit', compact('title','produtos_tipos','fornecedores'));
+        return view('admin.produto.create_edit', compact('title','produtos_tipos','fornecedores','ambientes'));
     }
 
     /**
@@ -76,6 +80,11 @@ class ProdutoController extends AdminController {
             $produto->thumb();
         }
 
+        # Salva o relacionamento muitos pra muitos do produtos->ambientes
+        if($request->produto_ambiente){
+            $produto->ambientes()->sync($request->produto_ambiente);
+        }
+
         // Demais imagens do produto
         $imagens = $request->produto_imagem;
 
@@ -103,10 +112,19 @@ class ProdutoController extends AdminController {
         $produto = Produto::find($id);
         $produtos_tipos = ProdutoTipo::lists('nome','id')->all();
         $fornecedores = Fornecedor::lists('nome','id')->all();
+        $ambientes = new Ambiente();
+        $ambientes = $ambientes->lists('nome','id')->all();
+
+        $produtos_ambientes = array();
+        if( $produto->ambientes ){
+            foreach ($produto->ambientes as $ambiente) {
+                $produtos_ambientes[$ambiente->id] = $ambiente->nome;
+            }
+        }
 
         $title = 'Editar Produto';
 
-        return view('admin.produto.create_edit',compact('produto','title','produtos_tipos','fornecedores'));
+        return view('admin.produto.create_edit',compact('produto','title','produtos_tipos','fornecedores','ambientes','produtos_ambientes'));
     }
 
     /**
@@ -137,6 +155,13 @@ class ProdutoController extends AdminController {
             Input::file('imagem')->move($destinationPath, $imagem);
         }
         $produto -> save();
+
+        # Salva o relacionamento muitos pra muitos do produtos->ambientes
+        if($request->produto_ambiente){
+            
+            // $produto->ambientes()->attach($ambiente_id,['user_id_created' => Auth::id()]);
+            $produto->ambientes()->sync($request->produto_ambiente);
+        }
 
         if(Input::hasFile('imagem'))
         {

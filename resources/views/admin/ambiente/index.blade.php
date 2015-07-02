@@ -23,6 +23,7 @@
         <thead>
         <tr>
             <th>Nome</th>
+            <th width="10%">Qtd. Produtos</th>
             <th>Criado em</th>
             <th width="10%">{{ trans("admin/admin.action") }}</th>
         </tr>

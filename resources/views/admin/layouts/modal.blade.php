@@ -45,6 +45,7 @@
 <link
 	href="{{asset('assets/admin/font-awesome-4.2.0/css/font-awesome.min.css')}}"
 	rel="stylesheet" type="text/css">
+@yield('styles')
 <!-- The HTML5 shim, for IE6-8 support of HTML5 elements -->
 <!-- start: Favicon and Touch Icons -->
 <link rel="shortcut icon"

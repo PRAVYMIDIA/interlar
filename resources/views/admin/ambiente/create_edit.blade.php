@@ -1,8 +1,16 @@
-@extends('admin.layouts.modal') {{-- Content --}} @section('content')
+@extends('admin.layouts.modal')
+
+@section('styles')
+<link href="{{{ asset('assets/admin/css/bootstrap-duallistbox.css') }}}"
+	rel="stylesheet" type="text/css">
+@stop
+
+{{-- Content --}} 
+@section('content')
 <!-- Tabs -->
 <ul class="nav nav-tabs">
-	<li class="active"><a href="#tab-general" data-toggle="tab"> {{
-			trans("admin/modal.general") }}</a></li>
+	<li class="active"><a href="#tab-general" data-toggle="tab"> Ambiente</a></li>
+	<li><a href="#tab-produtos" data-toggle="tab"> Produtos neste Ambiente</a></li>
 </ul>
 <!-- ./ tabs -->
 {{-- Edit Ambiente Form --}}
@@ -17,7 +25,7 @@
 	<!-- Tabs Content -->
 	<div class="tab-content">
 		<!-- General tab -->
-		<div class="tab-pane active" id="tab-general">
+		
 			<div class="tab-pane active" id="tab-general">
 				
 				<div
@@ -41,8 +49,8 @@
 					</div>
 				</div>
 				@if((isset($ambiente) ? $ambiente->imagem : '')!='' )
-				<div class="form-group">
-					<img class="img-responsive img-thumbnail" title="imagem atual" src="/images/ambiente/{{$ambiente->id.'/'.$ambiente->imagem}}" alt="Imagem atual">
+				<div class="form-group center-block">
+					<a href="/images/ambiente/{{$ambiente->id.'/'.$ambiente->imagem }}" target="_blank"><img class="img-responsive img-thumbnail center-block" title="imagem atual" src="/images/ambiente/{{$ambiente->id.'/'.$ambiente->thumb()}}" alt="Imagem atual"></a>
 				</div>
 				@endif
 				<div
@@ -57,9 +65,26 @@
 			</div>
 			<!-- ./ tabs content -->
 
+			<!-- Produtos tab -->
+			<div class="tab-pane" id="tab-produtos">
+				<br>
+				<select class="form-control" multiple="multiple" size="10" name="produto_ambiente[]">
+				@foreach($produtos as $id => $produto)
+			      <option value="{{$id}}"
+			      @if(isset($produtos_ambientes))
+			      	@if(isset($produtos_ambientes[$id]))
+			      		selected="selected"
+			      	@endif
+			      @endif
+			      >{{$produto}}</option>
+			    @endforeach
+			    </select>
+			</div>
+			<!-- ./ Produtos tab -->
+
 			<!-- Form Actions -->
 
-			<div class="form-group">
+			<div class="form-group" style="margin-top:20px;">
 				<div class="col-md-12">
 					<button type="reset" class="btn btn-sm btn-warning close_popup">
 						<span class="glyphicon glyphicon-ban-circle"></span> {{
@@ -82,4 +107,18 @@
 			<!-- ./ form actions -->
 
 </form>
+@stop
+
+@section('scripts')
+	@parent
+	<script src="{{  asset('assets/admin/js/jquery.bootstrap-duallistbox.js') }}"></script>
+	<script type="text/javascript">
+		$(document).ready(function($) {
+			var bootstrapduallist = $('select[name="produto_ambiente[]"]').bootstrapDualListbox({
+				 nonSelectedListLabel: 'Produtos Disponíveis',
+  				selectedListLabel: 'Produtos Selecionados',
+			});
+		});
+	</script>
+
 @stop

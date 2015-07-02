@@ -2,6 +2,7 @@
 use Log;
 use App\Http\Controllers\AdminController;
 use App\Ambiente;
+use App\Produto;
 use Illuminate\Support\Facades\Input;
 use App\Http\Requests\Admin\AmbienteRequest;
 use App\Http\Requests\Admin\DeleteRequest;
@@ -31,8 +32,10 @@ class AmbienteController extends AdminController {
     public function getCreate()
     {
 		$title = "Novo Ambiente";
+        $produtos = new Produto();
+        $produtos = $produtos->lists('nome','id')->all();
         // Show the page
-        return view('admin.ambiente.create_edit', compact('title'));
+        return view('admin.ambiente.create_edit', compact('title','produtos'));
     }
 
     /**
@@ -58,10 +61,15 @@ class AmbienteController extends AdminController {
         $ambiente -> imagem = $imagem;
         $ambiente -> save();
 
+        # Salva o relacionamento muitos pra muitos do produtos->ambientes
+        if($request->produto_ambiente){
+            $ambiente->produtos()->sync($request->produto_ambiente);
+        }
+
         if(Input::hasFile('imagem'))
         {
             $destinationPath = public_path() . '/images/ambiente/'.$ambiente->id.'/';
-            Input::file('imagem')->move($destinationPath, $imagem);
+            $file->move($destinationPath, $imagem);
         }
     }
     /**
@@ -74,9 +82,19 @@ class AmbienteController extends AdminController {
     {
         $ambiente = Ambiente::find($id);
 
+        $produtos = new Produto();
+        $produtos = $produtos->lists('nome','id')->all();
+
+        $produtos_ambientes = array();
+        if( $ambiente->produtos ){
+            foreach ($ambiente->produtos as $produto) {
+                $produtos_ambientes[$produto->id] = $produto->nome;
+            }
+        }
+
         $title = 'Editar Ambiente';
 
-        return view('admin.ambiente.create_edit',compact('ambiente','title'));
+        return view('admin.ambiente.create_edit',compact('ambiente','title','produtos_ambientes','produtos'));
     }
 
     /**
@@ -95,17 +113,25 @@ class AmbienteController extends AdminController {
         if(Input::hasFile('imagem'))
         {
             $file = Input::file('imagem');
+            $destinationPath = public_path() . '/images/ambiente/'.$ambiente->id.'/';
             $filename = $file->getClientOriginalName();
             $extension = $file -> getClientOriginalExtension();
             $imagem = sha1($filename . time()) . '.' . $extension;
-            $ambiente -> imagem = $imagem;
+
+            if($file->move($destinationPath, $imagem)){
+                $ambiente -> imagem = $imagem;
+            }            
         }
         $ambiente -> save();
 
+        # Salva o relacionamento muitos pra muitos do produtos->ambientes
+        if($request->produto_ambiente){
+            $ambiente->produtos()->sync($request->produto_ambiente);
+        }
+
         if(Input::hasFile('imagem'))
         {
-            $destinationPath = public_path() . '/images/ambiente/'.$ambiente->id.'/';
-            Input::file('imagem')->move($destinationPath, $imagem);
+            
         }
     }
 
@@ -144,12 +170,11 @@ class AmbienteController extends AdminController {
      */
     public function data()
     {
-        $ambiente = Ambiente::select(array('ambientes.id','ambientes.nome', DB::raw('DATE_FORMAT(ambientes.created_at,\'%d/%m/%Y %H:%i\') as criado_em')))
+        $ambiente = Ambiente::select(array('ambientes.id','ambientes.nome',DB::raw('(SELECT COUNT(1) FROM ambiente_produto WHERE ambiente_produto.ambiente_id = ambientes.id) as qtd_produtos') ,DB::raw('DATE_FORMAT(ambientes.created_at,\'%d/%m/%Y %H:%i\') as criado_em')))
             ->orderBy('ambientes.nome', 'ASC');
 
         return Datatables::of($ambiente)
             ->add_column('actions', '<a href="{{{ URL::to(\'admin/ambiente/\' . $id . \'/edit\' ) }}}" class="btn btn-success btn-xs iframe" title="{{ trans("admin/modal.edit") }}" ><span class="glyphicon glyphicon-pencil"></span></a>
-                    <a href="{{{ URL::to(\'admin/ambiente/\' . $id . \'/addprodutos\' ) }}}" class="btn btn-info btn-xs iframe" title="Adicionar Produtos" ><span class="fa fa-diamond"></span></a>
                     <a href="{{{ URL::to(\'admin/ambiente/\' . $id . \'/delete\' ) }}}" class="btn btn-xs btn-danger iframe" title="{{ trans("admin/modal.delete") }}"><span class="glyphicon glyphicon-trash"></span></a>
                     <input type="hidden" name="row" value="{{$id}}" id="row">')
             ->remove_column('id')

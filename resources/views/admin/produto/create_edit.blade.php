@@ -1,4 +1,12 @@
-@extends('admin.layouts.modal') {{-- Content --}} @section('content')
+@extends('admin.layouts.modal') 
+
+@section('styles')
+<link href="{{{ asset('assets/admin/css/bootstrap-duallistbox.css') }}}"
+	rel="stylesheet" type="text/css">
+@stop
+
+{{-- Content --}} 
+@section('content')
 <style type="text/css">
 #produtos_imagens{
 	margin-top: 15px;
@@ -8,6 +16,7 @@
 <ul class="nav nav-tabs">
 	<li class="active"><a href="#tab-general" data-toggle="tab">Produto</a></li>
 	<li><a href="#tab-imagens" data-toggle="tab">Imagens Extras</a></li>
+	<li><a href="#tab-ambientes" data-toggle="tab">Ambientes</a></li>
 </ul>
 <!-- ./ tabs -->
 {{-- Edit Produto Form --}}
@@ -131,11 +140,28 @@
 		</div>
 		<!-- ./ Imagens extras tab -->
 
+		<!-- Ambientes tab -->
+		<div class="tab-pane" id="tab-ambientes">
+			<br>
+			<select class="form-control" multiple="multiple" size="10" name="produto_ambiente[]">
+			@foreach($ambientes as $id => $ambiente)
+		      <option value="{{$id}}"
+		      @if(isset($produtos_ambientes))
+		      	@if(isset($produtos_ambientes[$id]))
+		      		selected="selected"
+		      	@endif
+		      @endif
+		      >{{$ambiente}}</option>
+		    @endforeach
+		    </select>
+		</div>
+		<!-- ./ Ambientes tab -->
+
 			<!-- ./ tabs content -->
 
 			<!-- Form Actions -->
 
-			<div class="form-group">
+			<div class="form-group" style="margin-top:20px;">
 				<div class="col-md-12">
 					<button type="reset" class="btn btn-sm btn-warning close_popup">
 						<span class="glyphicon glyphicon-ban-circle"></span> {{
@@ -163,7 +189,14 @@
 
 @section('scripts')
 	@parent
+	<script src="{{  asset('assets/admin/js/jquery.bootstrap-duallistbox.js') }}"></script>
 	<script type="text/javascript">
+		$(document).ready(function($) {
+			var bootstrapduallist = $('select[name="produto_ambiente[]"]').bootstrapDualListbox({
+				 nonSelectedListLabel: 'Ambientes Disponíveis',
+  				selectedListLabel: 'Ambientes Selecionados',
+			});
+		});
 		function remover (imagem_id) {
 			var remove = confirm('Remover esta imagem?');
 			if(remove){
