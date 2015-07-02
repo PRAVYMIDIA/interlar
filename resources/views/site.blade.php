@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -24,7 +24,8 @@
           {{--href="{{asset('assets/site/css/justifiedGallery.min.css')}}"/>--}}
     {{--<link rel="stylesheet"--}}
           {{--href="{{asset('assets/site/css/lightbox.min.css')}}"/>--}}
-
+        <link rel="stylesheet"
+              href="{{'css/siteinterlar.css'}}"/>
     @yield('styles')
 
     <!-- Fonts -->
