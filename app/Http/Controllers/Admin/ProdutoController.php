@@ -3,6 +3,7 @@ use Log;
 use App\Http\Controllers\AdminController;
 use App\Produto;
 use App\ProdutoTipo;
+use App\ProdutoImagem;
 use App\Fornecedor;
 use Illuminate\Support\Facades\Input;
 use App\Http\Requests\Admin\ProdutoRequest;
@@ -62,14 +63,33 @@ class ProdutoController extends AdminController {
             $filename = $file->getClientOriginalName();
             $extension = $file -> getClientOriginalExtension();
             $imagem = sha1($filename . time()) . '.' . $extension;
+            $produto -> imagem = $imagem;
         }
-        $produto -> imagem = $imagem;
+        
         $produto -> save();
-
+        
+        $destinationPath = public_path() . '/images/produto/'.$produto->id.'/';
         if(Input::hasFile('imagem'))
         {
-            $destinationPath = public_path() . '/images/produto/'.$produto->id.'/';
             Input::file('imagem')->move($destinationPath, $imagem);
+            # Gera miniatura
+            $produto->thumb();
+        }
+
+        // Demais imagens do produto
+        $imagens = $request->produto_imagem;
+
+        if( count($imagens) ){
+            foreach ($imagens as $file) {
+                $filename = $file->getClientOriginalName();
+                $extension = $file -> getClientOriginalExtension();
+                $imagem = sha1($filename . time()) . '.' . $extension;
+                $produto_imagem = new ProdutoImagem(['imagem'=>$imagem,'user_id_created'=>Auth::id()]);
+                $produto->imagens()->save($produto_imagem);
+                # Copia a imagem pra pasta do produto
+                
+                $file->move($destinationPath, $imagem);
+            }
         }
     }
     /**
@@ -106,6 +126,7 @@ class ProdutoController extends AdminController {
         $produto -> parcelas = $request->parcelas;
         $produto -> descricao = $request->descricao;
 
+        $destinationPath = public_path() . '/images/produto/'.$produto->id.'/';
         if(Input::hasFile('imagem'))
         {
             $file = Input::file('imagem');
@@ -113,13 +134,33 @@ class ProdutoController extends AdminController {
             $extension = $file -> getClientOriginalExtension();
             $imagem = sha1($filename . time()) . '.' . $extension;
             $produto -> imagem = $imagem;
+            Input::file('imagem')->move($destinationPath, $imagem);
         }
         $produto -> save();
 
         if(Input::hasFile('imagem'))
         {
-            $destinationPath = public_path() . '/images/produto/'.$produto->id.'/';
-            Input::file('imagem')->move($destinationPath, $imagem);
+            # Gera miniatura
+            $produto->thumb();
+        }
+
+        // Demais imagens do produto
+        $imagens = $request->produto_imagem;
+
+        if( count($imagens) ){
+            foreach ($imagens as $file) {
+                if($file){
+                    $filename = $file->getClientOriginalName();
+                    $extension = $file -> getClientOriginalExtension();
+                    $imagem = sha1($filename . time()) . '.' . $extension;
+                    $produto_imagem = new ProdutoImagem(['imagem'=>$imagem,'user_id_created'=>Auth::id()]);
+                    $produto->imagens()->save($produto_imagem);
+                    # Copia a imagem pra pasta do produto
+                    
+                    $file->move($destinationPath, $imagem);
+                }
+                
+            }
         }
     }
 
@@ -174,7 +215,7 @@ class ProdutoController extends AdminController {
 
         return Datatables::of($produto)
             ->edit_column('valor','{{ number_format( doubleval($valor), 2,\',\',\'.\') }}')
-            ->edit_column('imagem','{!! strlen($imagem)? \'<img src="/images/produto/\' . $id . \'/\' . $imagem . \'" width="100" />\':\'\' !!}')
+            ->edit_column('imagem','{!! strlen($imagem)? \'<img src="/images/produto/\' . $id . \'/thumb_\' . $imagem . \'" width="100" />\':\'\' !!}')
             ->add_column('actions', '<a href="{{{ URL::to(\'admin/produto/\' . $id . \'/edit\' ) }}}" class="btn btn-success btn-xs iframe" title="{{ trans("admin/modal.edit") }}" ><span class="glyphicon glyphicon-pencil"></span></a>
                     <a href="{{{ URL::to(\'admin/produto/\' . $id . \'/delete\' ) }}}" class="btn btn-xs btn-danger iframe" title="{{ trans("admin/modal.delete") }}"><span class="glyphicon glyphicon-trash"></span></a>
                     <input type="hidden" name="row" value="{{$id}}" id="row">')
@@ -200,5 +241,29 @@ class ProdutoController extends AdminController {
             }
         }
         return $list;
+    }
+
+
+    /**
+     * Remove a imagem extra
+     *
+     * @param $id
+     * @return Response
+     */
+
+    public function getRemoverImagem($id)
+    {
+        $produto_imagem = ProdutoImagem::find($id);
+        # Remove o arquivo fisíco
+        $destinationPath = public_path() . '/images/produto/'.$produto_imagem->produto_id.'/';
+
+        if(file_exists( $destinationPath.$produto_imagem->imagem )){
+            unlink( $destinationPath.$produto_imagem->imagem );
+            if(file_exists( $destinationPath.'thumb_'.$produto_imagem->imagem )){
+                unlink( $destinationPath.'thumb_'.$produto_imagem->imagem );
+            }
+        }
+        $produto_imagem->delete();
+        
     }
 }

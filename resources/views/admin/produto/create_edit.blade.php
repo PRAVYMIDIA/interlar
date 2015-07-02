@@ -1,4 +1,9 @@
 @extends('admin.layouts.modal') {{-- Content --}} @section('content')
+<style type="text/css">
+#produtos_imagens{
+	margin-top: 15px;
+}
+</style>
 <!-- Tabs -->
 <ul class="nav nav-tabs">
 	<li class="active"><a href="#tab-general" data-toggle="tab">Produto</a></li>
@@ -28,8 +33,8 @@
 				</div>
 			</div>
 			@if((isset($produto) ? $produto->imagem : '')!='' )
-			<div class="form-group">
-				<img class="img-responsive img-thumbnail" title="imagem atual" src="/images/produto/{{$produto->id.'/'.$produto->imagem}}" alt="Imagem atual">
+			<div class="form-group center-block">
+				<a href="/images/produto/{{$produto->id.'/'.$produto->imagem }}" target="_blank"><img class="img-responsive img-thumbnail center-block" title="imagem atual" src="/images/produto/{{$produto->id.'/'.$produto->thumb()}}" alt="Imagem atual"></a>
 			</div>
 			@endif
 			<div
@@ -94,22 +99,30 @@
 		<div class="tab-pane" id="tab-imagens">
 			<br>
 			@if(isset($produto))
+			<ul class="list-group">
 				@if( count( $produto->imagens ) )
 					@foreach($produto->imagens as $imagem)
-						<div class="row">
-							<div class="col-md-10">
-								<img class="img-responsive img-thumbnail" title="imagem extra {{ $imagem->id }}" src="/images/produto/{{$produto->id.'/'.$imagem->imagem }}" alt="Imagem">
-							</div>
-							<div class="col-md-2">
+						<li class="list-group-item" id="imagem_extra_{{ $imagem->id }}">
+								<a href="/images/produto/{{$produto->id.'/'.$imagem->imagem }}" target="_blank" title="Ver imagem em tamanho máximo">
+								<img class="img-responsive img-thumbnail" title="imagem extra {{ $imagem->id }}" src="/images/produto/{{$produto->id.'/'.$imagem->thumb() }}" alt="Imagem">
+								</a>
 								<button type="button" class="btn btn-danger" onclick="remover({{ $imagem->id }});"> <i class="fa fa-times"></i> Remover </button>
-							</div>
-						</div>
+							
+						</li>
 					@endforeach
 				@endif
+			</ul>
 			@endif
-			<button class="btn btn-success" type="button" onclick="adicionar();"><i class="fa fa-plus"></i> Adicionar mais uma imagem</button>
-			<div class="form-group" id="produtos_imagens">
-				<div class="col-lg-12">
+			<div class="row">
+				<div class="col-md-6 col-md-offset-3">
+					<button class="btn btn-success btn-block" type="button" onclick="adicionar();"><i class="fa fa-plus"></i> Adicionar mais uma imagem</button>
+				</div>
+			</div>
+			<div id="produtos_imagens">
+				<div class="well well-sm">
+					<span class="pull-right">
+						<button type="button" class="btn btn-xs btn-danger" onclick="removeUpload(this);" title="Remover"><i class="fa fa-times"></i></button>
+					</span>
 					<label class="control-label" for="imagem">Imagem Extra</label> 
 					<input name="produto_imagem[]" type="file" class="uploader" value="" />
 				</div>
@@ -152,12 +165,34 @@
 	@parent
 	<script type="text/javascript">
 		function remover (imagem_id) {
-			// @TODO REMOVER por ajax
-			console.log(imagem_id);
+			var remove = confirm('Remover esta imagem?');
+			if(remove){
+				$.ajax({
+					url: '{{ URL::to('admin/produto/removerimagem') }}/'+imagem_id,
+				})
+				.done(function() {
+					$('#imagem_extra_'+imagem_id).hide('fast', function() {
+						$(this).remove();
+					});
+				})
+				.fail(function() {
+					alert('Erro ao remover imagem.');
+				});
+			}
+			
+			
 		}
 		function adicionar () {
-			// @TODO Adicionar
-			console.log('Adicionar');
+			$('#produtos_imagens').append('<div class="well well-sm">\
+					<span class="pull-right">\
+						<button type="button" class="btn btn-xs btn-danger" onclick="removeUpload(this);" title="Remover"><i class="fa fa-times"></i></button>\
+					</span>\
+					<label class="control-label" for="imagem">Imagem Extra</label> \
+					<input name="produto_imagem[]" type="file" class="uploader" value="" />\
+				</div>');
+		}
+		function removeUpload(qual){
+			$(qual).closest('div').remove();
 		}
 	</script>
 @stop
