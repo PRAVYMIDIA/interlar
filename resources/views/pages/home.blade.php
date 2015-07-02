@@ -98,7 +98,7 @@
           <div class="row">
             <div class="col-sm-6 col-md-4">
               <div class="thumbnail thumbnail-custom">
-                <img src="img/produtos/prod1.png" alt="...">
+                <img src="assets/site/images/produtos/prod1.png" alt="...">
                 <div class="caption" style="text-align: center;">
                   <span class="captionproduto">Sofá Real 3 Lugares com Chaise -  Estofados Lima <span style="text-decoration:line-through;">De: R$ 99.000,00 </span><span>por apenas: </span><span>R$</span><span style="color:red; font-size:20px;">90,000,00</span><span> em até 12x s/Juros</span></span>
                 </div>
@@ -106,7 +106,7 @@
             </div>
             <div class="col-sm-6 col-md-4">
               <div class="thumbnail thumbnail-custom">
-                <img src="img/produtos/prod1.png" alt="...">
+                <img src="assets/site/images/produtos/prod1.png" alt="...">
                 <div class="caption" style="text-align: center;">
                   <span class="captionproduto">Sofá Real 3 Lugares com Chaise -  Estofados Lima <span style="text-decoration:line-through;">De: R$ 99.000,00 </span><span>por apenas: </span><span>R$</span><span style="color:red; font-size:20px;">90,000,00</span><span> em até 12x s/Juros</span></span>
                 </div>
@@ -114,7 +114,7 @@
             </div>
             <div class="col-sm-6 col-md-4">
               <div class="thumbnail thumbnail-custom">
-                <img src="img/produtos/prod1.png" alt="...">
+                <img src="assets/site/images/produtos/prod1.png" alt="...">
                 <div class="caption" style="text-align: center;">
                   <span class="captionproduto">Sofá Real 3 Lugares com Chaise -  Estofados Lima <span style="text-decoration:line-through;">De: R$ 99.000,00 </span><span>por apenas: </span><span>R$</span><span style="color:red; font-size:20px;">90,000,00</span><span> em até 12x s/Juros</span></span>
                 </div>
@@ -122,7 +122,7 @@
             </div>
             <div class="col-sm-6 col-md-4">
               <div class="thumbnail thumbnail-custom">
-                <img src="img/produtos/prod1.png" alt="...">
+                <img src="assets/site/images/produtos/prod1.png" alt="...">
                 <div class="caption" style="text-align: center;">
                   <span class="captionproduto">Sofá Real 3 Lugares com Chaise -  Estofados Lima <span style="text-decoration:line-through;">De: R$ 99.000,00 </span><span>por apenas: </span><span>R$</span><span style="color:red; font-size:20px;">90,000,00</span><span> em até 12x s/Juros</span></span>
                 </div>
@@ -130,7 +130,7 @@
             </div>
             <div class="col-sm-6 col-md-4">
               <div class="thumbnail thumbnail-custom">
-                <img src="img/produtos/prod1.png" alt="...">
+                <img src="assets/site/images/produtos/prod1.png" alt="...">
                 <div class="caption" style="text-align: center;">
                   <span class="captionproduto">Sofá Real 3 Lugares com Chaise -  Estofados Lima <span style="text-decoration:line-through;">De: R$ 99.000,00 </span><span>por apenas: </span><span>R$</span><span style="color:red; font-size:20px;">90,000,00</span><span> em até 12x s/Juros</span></span>
                 </div>
@@ -138,7 +138,7 @@
             </div>
             <div class="col-sm-6 col-md-4">
               <div class="thumbnail thumbnail-custom">
-                <img src="img/produtos/prod1.png" alt="...">
+                <img src="assets/site/images/produtos/prod1.png" alt="...">
                 <div class="caption" style="text-align: center;">
                   <span class="captionproduto">Sofá Real 3 Lugares com Chaise -  Estofados Lima <span style="text-decoration:line-through;">De: R$ 99.000,00 </span><span>por apenas: </span><span>R$</span><span style="color:red; font-size:20px;">90,000,00</span><span> em até 12x s/Juros</span></span>
                 </div>
@@ -146,7 +146,7 @@
             </div>
             <div class="col-sm-6 col-md-4">
               <div class="thumbnail thumbnail-custom">
-                <img src="img/produtos/prod1.png" alt="...">
+                <img src="assets/site/images/produtos/prod1.png" alt="...">
                 <div class="caption" style="text-align: center;">
                   <span class="captionproduto">Sofá Real 3 Lugares com Chaise -  Estofados Lima <span style="text-decoration:line-through;">De: R$ 99.000,00 </span><span>por apenas: </span><span>R$</span><span style="color:red; font-size:20px;">90,000,00</span><span> em até 12x s/Juros</span></span>
                 </div>

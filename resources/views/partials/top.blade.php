@@ -1,11 +1,11 @@
 <div class="barra-top">
-	<img src="{!!'img/logo_aricanduva_top.png' !!}">
+	<img src="{!!'assets/site/images/logo_aricanduva_top.png' !!}">
 </div>
 
 <div class="rectangle-3" style="background-color: #FFFFFF;">
   <div class="container">
     <div class="col-md-3">
-      <img src="img/logo_shopping_interlar_aricanduva.png" />
+      <img src="assets/site/images/logo_shopping_interlar_aricanduva.png" />
     </div>
     <div class="col-md-6" style="margin-top: 30px;">
       <nav class="navbar navbar-default navbar-custom">
