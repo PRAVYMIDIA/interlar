@@ -46,7 +46,7 @@
 <div class="container">
 @yield('content')
 </div>
-@include('partials.footer')
+@include('partials.footeradmin')
 
 <!-- Scripts -->
 <script src="{{ elixir('js/site.js') }}"></script>
