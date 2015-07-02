@@ -15,21 +15,14 @@
               content="Lorem ipsum dolor sit amet, nihil fabulas et sea, nam posse menandri scripserit no, mei."/>
     @show
 
-		<link href="{{ elixir('css/site.css') }}" rel="stylesheet">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <!-- CSS Site -->
+    <link rel="stylesheet" href="css/siteinterlar.css">
+    <!-- CSS Leftnavi -->
+    <link rel="stylesheet" type="text/css" href="assets/site/css/bs_leftnavi.css">
 
-    {{-- TODO: Incorporate into elixer workflow. --}}
-    {{--<link rel="stylesheet"--}}
-          {{--href="{{asset('assets/site/css/half-slider.css')}}">--}}
-    {{--<link rel="stylesheet"--}}
-          {{--href="{{asset('assets/site/css/justifiedGallery.min.css')}}"/>--}}
-    {{--<link rel="stylesheet"--}}
-          {{--href="{{asset('assets/site/css/lightbox.min.css')}}"/>--}}
-        <link rel="stylesheet"
-              href="{{'css/siteinterlar.css'}}"/>
     @yield('styles')
-
-    <!-- Fonts -->
-    <link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -50,11 +43,12 @@
 @include('partials.footer')
 
 <!-- Scripts -->
-<script src="{{ elixir('js/site.js') }}"></script>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>    
 
-{{-- TODO: Incorporate into elixir workflow. --}}
-{{--<script src="{{asset('assets/site/js/jquery.justifiedGallery.min.js')}}"></script>--}}
-{{--<script src="{{asset('assets/site/js/lightbox.min.js')}}"></script>--}}
+<script src="assets/site/js/bs_leftnavi.js"></script>    
 
 <script>
     $('#flash-overlay-modal').modal();
