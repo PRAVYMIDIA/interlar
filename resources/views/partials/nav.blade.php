@@ -16,12 +16,12 @@
                 <li class="{{ (Request::is('/') ? 'active' : '') }}">
                     <a href="{!! URL::to('') !!}"><i class="fa fa-home"></i> Home</a>
                 </li>
-                <li class="{{ (Request::is('about') ? 'active' : '') }}">
+                <!-- <li class="{{ (Request::is('about') ? 'active' : '') }}">
                     <a href="{!! URL::to('about') !!}">About</a>
                 </li>
                 <li class="{{ (Request::is('contact') ? 'active' : '') }}">
                     <a href="{!! URL::to('contact') !!}">Contact</a>
-                </li>
+                </li> -->
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
