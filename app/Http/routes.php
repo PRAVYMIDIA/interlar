@@ -77,6 +77,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'namespace' => 'Admin
     Route::post('produto/{id}/edit', 'ProdutoController@postEdit');
     Route::get('produto/{id}/delete', 'ProdutoController@getDelete');
     Route::post('produto/{id}/delete', 'ProdutoController@postDelete');
+    Route::get('produto/removerimagem/{id}', 'ProdutoController@getRemoverImagem');
     Route::get('produto/data', 'ProdutoController@data');
     Route::get('produto/reorder', 'ProdutoController@getReorder');
 
