@@ -92,6 +92,16 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'namespace' => 'Admin
     Route::get('loja/data', 'LojaController@data');
     Route::get('loja/reorder', 'LojaController@getReorder');    
 
+    # Ambientes
+    Route::get('banner', 'BannerController@index');
+    Route::get('banner/create', 'BannerController@getCreate');
+    Route::post('banner/create', 'BannerController@postCreate');
+    Route::get('banner/{id}/edit', 'BannerController@getEdit');
+    Route::post('banner/{id}/edit', 'BannerController@postEdit');
+    Route::get('banner/{id}/delete', 'BannerController@getDelete');
+    Route::post('banner/{id}/delete', 'BannerController@postDelete');
+    Route::get('banner/data', 'BannerController@data');
+    Route::get('banner/reorder', 'BannerController@getReorder');
 
     # Language
     Route::get('language', 'LanguageController@index');

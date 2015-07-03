@@ -128,11 +128,6 @@ class AmbienteController extends AdminController {
         if($request->produto_ambiente){
             $ambiente->produtos()->sync($request->produto_ambiente);
         }
-
-        if(Input::hasFile('imagem'))
-        {
-            
-        }
     }
 
     /**
