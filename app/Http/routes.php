@@ -15,6 +15,7 @@ Route::get('/', 'HomeController@index');
 Route::get('home', 'HomeController@index');
 // Route::get('sobre', 'PaginasController@about');
 // Route::get('contato', 'PaginasController@contact');
+Route::get('loja', 'LojaController@index');
 
 Route::pattern('id', '[0-9]+');
 // Route::get('produto/{id}', 'ProdutoController@show');

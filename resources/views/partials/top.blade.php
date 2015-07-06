@@ -47,7 +47,7 @@
                 </ul>
               </li>                  
               <li><a href="#">Produtos</a></li>
-              <li><a href="#">Lojas</a></li>                  
+              <li><a href="{!! URL::to('loja') !!}">Lojas</a></li>                  
             </ul>
 
           </div><!-- /.navbar-collapse -->
