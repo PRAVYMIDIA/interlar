@@ -99,17 +99,17 @@ class BannerController extends AdminController {
     public function postEdit(BannerRequest $request, $id)
     {
         $data_inicio_array = explode('/', $request->dtinicio);
-        $dtinicio = Carbon::createFromDate($data_inicio_array[2], $data_inicio_array[1],$data_inicio_array[0]);
-        
         $data_fim_array = explode('/', $request->dtfim);
-        $dtfim = Carbon::createFromDate($data_fim_array[2], $data_fim_array[1],$data_fim_array[0]);
-
+        
+        $dtinicio   = Carbon::createFromDate($data_inicio_array[2], $data_inicio_array[1],$data_inicio_array[0]);
+        $dtfim      = Carbon::createFromDate($data_fim_array[2], $data_fim_array[1],$data_fim_array[0]);
+        
         $banner = Banner::find($id);
         $banner -> user_id_updated  = Auth::id();
         $banner -> nome             = $request->nome;
         $banner -> url              = $request->url;
-        $banner -> dtinicio         = $request->dtinicio;
-        $banner -> dtfim            = $request->dtfim;
+        $banner -> dtinicio         = $dtinicio;
+        $banner -> dtfim            = $dtfim;
         $banner -> html             = $request->html;
 
         if(Input::hasFile('imagem'))

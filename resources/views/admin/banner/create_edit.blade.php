@@ -3,6 +3,9 @@
 @section('styles')
 <link href="{{{ asset('assets/admin/css/bootstrap-duallistbox.css') }}}"
 	rel="stylesheet" type="text/css">
+
+<link href="{{{ asset('assets/admin/css/datepicker3.css') }}}"
+	rel="stylesheet" type="text/css">
 @stop
 
 {{-- Content --}} 
@@ -34,7 +37,7 @@
 					class="form-group {{{ $errors->has('nome') ? 'has-error' : '' }}}">
 					<div class="col-md-12">
 						<label class="control-label" for="nome"> Nome</label> <input
-							class="form-control" type="text" name="nome" id="nome"  required="required
+							class="form-control" type="text" name="nome" id="nome"  required="required"
 							value="{{{ Input::old('nome', isset($banner) ? $banner->nome : null) }}}" />
 						{!!$errors->first('nome', '<label class="control-label">:message</label>')!!}
 					</div>
@@ -176,11 +179,19 @@
 @section('scripts')
 	@parent
 	<script src="{{  asset('assets/admin/js/jquery.bootstrap-duallistbox.js') }}"></script>
+	<script src="{{  asset('assets/admin/js/bootstrap-datepicker.js') }}"></script>
+	<script src="{{  asset('assets/admin/js/bootstrap-datepicker.pt-BR.js') }}"></script>
 	<script type="text/javascript">
 		$(document).ready(function($) {
 			var bootstrapduallist = $('select[name="produto_banner[]"]').bootstrapDualListbox({
 				 nonSelectedListLabel: 'Produtos Disponíveis',
   				selectedListLabel: 'Produtos Selecionados',
+			});
+
+			$('.date').datepicker({
+			    format: "dd/mm/yyyy",
+			    language: "pt-BR",
+			    todayHighlight: true
 			});
 		});
 	</script>
