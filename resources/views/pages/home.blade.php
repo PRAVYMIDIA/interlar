@@ -20,12 +20,9 @@
                     <ul class="gw-nav gw-nav-list">
                       <li class="init-arrow-down"> <a href="javascript:void(0)"> <span class="gw-menu-text">Ambientes</span> <b class="gw-arrow"></b> </a>
                         <ul class="gw-submenu">
-                          <li> <a href="javascript:void(0)">Quarto</a> </li>
-                          <li> <a href="javascript:void(0)">Cozinha</a> </li>
-                          <li> <a href="javascript:void(0)">Banheiro</a> </li>
-                          <li> <a href="javascript:void(0)">Sala de Jantar</a> </li>
-                          <li> <a href="javascript:void(0)">Sala de Estar</a> </li>
-                          <li> <a href="javascript:void(0)">Closet</a> </li>
+                          @foreach($ambientes as $id=>$ambiente)
+                          <li> <a href="/ambientes/{{str_slug($ambiente, '-').'/'. $id }}">{{$ambiente}}</a> </li>
+                          @endforeach
 
                         </ul>
                       </li>
@@ -58,12 +55,10 @@
             <div class="col-sm-12 hidden-xs" style="padding-top: 8px;">
               <ul class="nav nav-pills nav-stacked">
                 <li role="presentation" class="active"><a href="#">Ambientes</a></li>
-                <li role="presentation"><a href="#">Quarto</a></li>
-                <li role="presentation" class="active-item"><a href="#">Cozinha</a></li>
-                <li role="presentation"><a href="#">Banheiro</a></li>
-                <li role="presentation"><a href="#">Sala de Jantar</a></li>
-                <li role="presentation"><a href="#">Sala de Estar</a></li>
-                <li role="presentation"><a href="#">Closet</a></li>
+                @foreach($ambientes as $id=>$ambiente)
+                <li role="presentation" class="{{set_active('ambiente/'.str_slug($ambiente, '-').'*')}}-item"> <a href="/ambientes/{{str_slug($ambiente, '-').'/'. $id }}">{{$ambiente}}</a> </li>
+                @endforeach
+                
               </ul>
             </div>
           </div>
