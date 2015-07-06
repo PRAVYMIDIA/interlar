@@ -8,11 +8,11 @@
 
     <div class="page-header">
         <h3>
-            {{$title}}
+            Painel de controle
         </h3>
     </div>
 
-    <div class="row">
+   <!--  <div class="row">
         <div class="col-lg-3 col-md-6">
             <div class="panel panel-info">
                 <div class="panel-heading">
@@ -174,5 +174,5 @@
                 </a>
             </div>
         </div>
-    </div>
+    </div> -->
 @endsection

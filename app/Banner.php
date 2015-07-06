@@ -4,7 +4,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Image;
 
-class Ambiente extends Model
+class Banner extends Model
 {
 	use SoftDeletes;
 	/**
@@ -12,7 +12,13 @@ class Ambiente extends Model
 	 *
 	 * @var array
 	 */
-	protected $fillable = ['descricao','imagem','user_id_created'];
+	protected $fillable = ['url',
+                            'dtinicio',
+                            'dtfim',
+                            'html',
+                            'imagem',
+                            'user_id_created'
+                            ];
 
 
 	/**
@@ -20,10 +26,16 @@ class Ambiente extends Model
      *
      * @var array
      */
-    protected $dates = ['deleted_at'];
+    protected $dates = ['deleted_at','dtinicio','dtfim'];
 
-    public function produtos(){
-        return $this->belongsToMany('App\Produto');
+    public function getDtinicioAttribute(){
+        $dt_array = explode('-', $this->attributes['dtinicio']);
+        return $dt_array[2].'/'.$dt_array[1].'/'.$dt_array[0];
+    }
+
+    public function getDtfimAttribute(){
+        $dt_array = explode('-', $this->attributes['dtfim']);
+        return $dt_array[2].'/'.$dt_array[1].'/'.$dt_array[0];
     }
 
     /**
@@ -31,7 +43,7 @@ class Ambiente extends Model
     */
     public function setImagemAttribute($value){
         if(isset($this->attributes['id'])){
-            $image_path = public_path() . '/images/ambiente/'.$this->attributes['id'].'/';
+            $image_path = public_path() . '/images/banner/'.$this->attributes['id'].'/';
             if( strlen($this->attributes['imagem']) ){
                 if($this->attributes['imagem'] != $value){
                     if(file_exists( $image_path.$this->attributes['imagem'] )){
@@ -52,7 +64,7 @@ class Ambiente extends Model
     }
 
     public function thumb(){
-        $image_path = public_path() . '/images/ambiente/'.$this->attributes['id'].'/';
+        $image_path = public_path() . '/images/banner/'.$this->attributes['id'].'/';
         # Verifica se existe a miniatura
         if(!file_exists( $image_path.'thumb_'.$this->attributes['imagem'] )){
 

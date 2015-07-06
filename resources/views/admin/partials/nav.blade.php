@@ -46,6 +46,12 @@
             <span class="hidden-sm text"> Lojas</span>
         </a>
     </li>
+    <li class="{{set_active('admin/banner*')}}">
+        <a href="{{url('admin/banner')}}">
+            <i class="fa fa-bullhorn fa-fw"></i>
+            <span class="hidden-sm text"> Banners</span>
+        </a>
+    </li>
     <!-- <li class="{{set_active('admin/news*')}}">
         <a href="#">
             <i class="glyphicon glyphicon-bullhorn"></i> Notícias
