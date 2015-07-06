@@ -60,7 +60,7 @@
 
             var startPosition;
             var endPosition;
-            $("#table tbody").sortable({
+            /*$("#table tbody").sortable({
                 cursor: "move",
                 start: function (event, ui) {
                     startPosition = ui.item.prevAll().length + 1;
@@ -76,7 +76,7 @@
                     }, function (data) {
                     });
                 }
-            });
+            });*/
         });
     </script>
 @stop

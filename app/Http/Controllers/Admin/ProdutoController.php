@@ -90,14 +90,16 @@ class ProdutoController extends AdminController {
 
         if( count($imagens) ){
             foreach ($imagens as $file) {
-                $filename = $file->getClientOriginalName();
-                $extension = $file -> getClientOriginalExtension();
-                $imagem = sha1($filename . time()) . '.' . $extension;
-                $produto_imagem = new ProdutoImagem(['imagem'=>$imagem,'user_id_created'=>Auth::id()]);
-                $produto->imagens()->save($produto_imagem);
-                # Copia a imagem pra pasta do produto
-                
-                $file->move($destinationPath, $imagem);
+                if($file){
+                    $filename = $file->getClientOriginalName();
+                    $extension = $file -> getClientOriginalExtension();
+                    $imagem = sha1($filename . time()) . '.' . $extension;
+                    $produto_imagem = new ProdutoImagem(['imagem'=>$imagem,'user_id_created'=>Auth::id()]);
+                    $produto->imagens()->save($produto_imagem);
+                    # Copia a imagem pra pasta do produto
+                    
+                    $file->move($destinationPath, $imagem);    
+                }
             }
         }
     }
