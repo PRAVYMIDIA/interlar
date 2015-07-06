@@ -1,13 +1,12 @@
 <?php namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\AdminController;
-use App\Article;
-use App\ArticleCategory;
-use App\User;
-use App\Video;
-use App\VideoAlbum;
-use App\Photo;
-use App\PhotoAlbum;
+use App\Ambiente;
+use App\ProdutoTipo;
+use App\Produto;
+use App\Loja;
+use App\Fornecedor;
+use App\Banner;
 
 class DashboardController extends AdminController {
 
@@ -18,16 +17,15 @@ class DashboardController extends AdminController {
 
 	public function index()
 	{
-        $title = "Dashboard";
+        $title = "Painel";
 
-        $news = Article::count();
-        $newscategory = ArticleCategory::count();
-        $users = User::count();
-        $photo = Photo::count();
-        $photoalbum = PhotoAlbum::count();
-        $video = Video::count();
-        $videoalbum = VideoAlbum::count();
-		return view('admin.dashboard.index',  compact('title','news','newscategory','video','videoalbum','photo',
-            'photoalbum','users'));
+        $ambientes      = Ambiente::count();
+        $tipos          = ProdutoTipo::count();
+        $produtos       = Produto::count();
+        $fornecedores   = Fornecedor::count();
+        $lojas          = Loja::count();
+        $banners        = Banner::count();
+		return view('admin.dashboard.index',  compact('title','ambientes','tipos','produtos','fornecedores','lojas',
+            'banners'));
 	}
 }
