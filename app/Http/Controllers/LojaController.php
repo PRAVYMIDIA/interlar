@@ -1,5 +1,6 @@
 <?php namespace App\Http\Controllers;
 
+use App\Loja;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -29,6 +30,7 @@ class LojaController extends Controller {
 	 */
 	public function index()
 	{
-		return view('loja.index');
+		$lojas = Loja::where('ativo', 1)->get();
+		return view('loja.index',compact('lojas'));
 	}
 }
