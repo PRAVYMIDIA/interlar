@@ -66,12 +66,10 @@
             <div class="col-sm-12 hidden-xs">
               <ul class="nav nav-pills nav-stacked" style="margin-top:15px;">
                 <li role="presentation" class="active"><a href="#">Produtos</a></li>
-                <li role="presentation"><a href="#">Mesas</a></li>
-                <li role="presentation"><a href="#">Cadeiras</a></li>
-                <li role="presentation"><a href="#">Planejados</a></li>
-                <li role="presentation"><a href="#">Sofas</a></li>
-                <li role="presentation"><a href="#">Poltronas</a></li>
-                <li role="presentation"><a href="#">Racks</a></li>
+                @foreach($tipos as $id=>$tipo)
+                <li role="presentation" class="{{set_active('tipo/'.str_slug($tipo, '-').'*')}}-item"> <a href="/tipos/{{str_slug($tipo, '-').'/'. $id }}">{{$tipo}}</a> </li>
+                @endforeach
+                
               </ul>
             </div>
           </div>
@@ -79,74 +77,18 @@
             <div class="col-sm-12 hidden-xs">
               <ul class="nav nav-pills nav-stacked" style="margin-top:15px;">
                 <li role="presentation" class="active"><a href="#">Lojas</a></li>
-                <li role="presentation"><a href="#">Difratelli</a></li>
-                <li role="presentation"><a href="#">Interlinea</a></li>
-                <li role="presentation"><a href="#">Italínea</a></li>
-                <li role="presentation"><a href="#">Lojas Fenícia</a></li>
-                <li role="presentation"><a href="#">Momento Design</a></li>
+                @foreach($lojas as $id=>$loja)
+                <li role="presentation" class="{{set_active('loja/'.str_slug($loja, '-').'*')}}-item"> <a href="/lojas/{{str_slug($loja, '-').'/'. $id }}">{{$loja}}</a> </li>
+                @endforeach
               </ul>
             </div>
           </div>
           <br />
         </div> <!-- /. col-lg-3 -->
         <div class="col-lg-9">
-          <div class="row">
-            <div class="col-sm-6 col-md-4">
-              <div class="thumbnail thumbnail-custom">
-                <img src="assets/site/images/produtos/prod1.png" alt="...">
-                <div class="caption" style="text-align: center;">
-                  <span class="captionproduto">Sofá Real 3 Lugares com Chaise -  Estofados Lima <span style="text-decoration:line-through;">De: R$ 99.000,00 </span><span>por apenas: </span><span>R$</span><span style="color:red; font-size:20px;">90,000,00</span><span> em até 12x s/Juros</span></span>
-                </div>
-              </div>
-            </div>
-            <div class="col-sm-6 col-md-4">
-              <div class="thumbnail thumbnail-custom">
-                <img src="assets/site/images/produtos/prod1.png" alt="...">
-                <div class="caption" style="text-align: center;">
-                  <span class="captionproduto">Sofá Real 3 Lugares com Chaise -  Estofados Lima <span style="text-decoration:line-through;">De: R$ 99.000,00 </span><span>por apenas: </span><span>R$</span><span style="color:red; font-size:20px;">90,000,00</span><span> em até 12x s/Juros</span></span>
-                </div>
-              </div>
-            </div>
-            <div class="col-sm-6 col-md-4">
-              <div class="thumbnail thumbnail-custom">
-                <img src="assets/site/images/produtos/prod1.png" alt="...">
-                <div class="caption" style="text-align: center;">
-                  <span class="captionproduto">Sofá Real 3 Lugares com Chaise -  Estofados Lima <span style="text-decoration:line-through;">De: R$ 99.000,00 </span><span>por apenas: </span><span>R$</span><span style="color:red; font-size:20px;">90,000,00</span><span> em até 12x s/Juros</span></span>
-                </div>
-              </div>
-            </div>
-            <div class="col-sm-6 col-md-4">
-              <div class="thumbnail thumbnail-custom">
-                <img src="assets/site/images/produtos/prod1.png" alt="...">
-                <div class="caption" style="text-align: center;">
-                  <span class="captionproduto">Sofá Real 3 Lugares com Chaise -  Estofados Lima <span style="text-decoration:line-through;">De: R$ 99.000,00 </span><span>por apenas: </span><span>R$</span><span style="color:red; font-size:20px;">90,000,00</span><span> em até 12x s/Juros</span></span>
-                </div>
-              </div>
-            </div>
-            <div class="col-sm-6 col-md-4">
-              <div class="thumbnail thumbnail-custom">
-                <img src="assets/site/images/produtos/prod1.png" alt="...">
-                <div class="caption" style="text-align: center;">
-                  <span class="captionproduto">Sofá Real 3 Lugares com Chaise -  Estofados Lima <span style="text-decoration:line-through;">De: R$ 99.000,00 </span><span>por apenas: </span><span>R$</span><span style="color:red; font-size:20px;">90,000,00</span><span> em até 12x s/Juros</span></span>
-                </div>
-              </div>
-            </div>
-            <div class="col-sm-6 col-md-4">
-              <div class="thumbnail thumbnail-custom">
-                <img src="assets/site/images/produtos/prod1.png" alt="...">
-                <div class="caption" style="text-align: center;">
-                  <span class="captionproduto">Sofá Real 3 Lugares com Chaise -  Estofados Lima <span style="text-decoration:line-through;">De: R$ 99.000,00 </span><span>por apenas: </span><span>R$</span><span style="color:red; font-size:20px;">90,000,00</span><span> em até 12x s/Juros</span></span>
-                </div>
-              </div>
-            </div>
-            <div class="col-sm-6 col-md-4">
-              <div class="thumbnail thumbnail-custom">
-                <img src="assets/site/images/produtos/prod1.png" alt="...">
-                <div class="caption" style="text-align: center;">
-                  <span class="captionproduto">Sofá Real 3 Lugares com Chaise -  Estofados Lima <span style="text-decoration:line-through;">De: R$ 99.000,00 </span><span>por apenas: </span><span>R$</span><span style="color:red; font-size:20px;">90,000,00</span><span> em até 12x s/Juros</span></span>
-                </div>
-              </div>
-            </div>
+          <div class="row" id="bloco_produtos">
+            
+           
           </div>          
         </div> <!-- /. col-lg-9 -->
       </div> <!-- /. row -->
@@ -155,10 +97,36 @@
 
 @section('scripts')
     @parent
+    <script src="{{asset('assets/site/js/mustache.js')}}"></script>
+    <script src="{{asset('assets/site/js/templates.js')}}"></script>
+
     <script>
         $('#myCarousel').carousel({
             interval: 4000
         });
+        $(document).ready(function() {
+          $('#bloco_produtos').hide();
+          carregaLoading();
+
+          $.ajax({
+            url: '/produtos/data',
+          })
+          .done(function(retorno) {
+            fechaLoading();
+            html = Mustache.to_html(template_produtos, retorno);
+            $('#bloco_produtos').html(html);
+            $('#bloco_produtos').show('fast',function(){
+              $('.tag-parcela').show('slow');
+            });
+          })
+          .fail(function() {
+            fechaLoading();
+          });
+          
+          
+        });
+
+        
     </script>
 @endsection
 @stop

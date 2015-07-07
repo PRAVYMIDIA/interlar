@@ -88,7 +88,7 @@
 	<script type="text/javascript">
 			$(function() {
 				$('textarea').summernote({height: 250});
-				$(".moeda").maskMoney({prefix:'R$ ', allowZero:true, allowNegative: true, thousands:'.', decimal:',', affixesStay: false});
+				$(".moeda").maskMoney({prefix:'R$ ', allowZero:false, allowNegative: true, thousands:'.', affixesStay: false, decimal:',', affixesStay: false});
 				$('form').submit(function(event) {
 					event.preventDefault();
 					var form = $(this);

@@ -25,6 +25,7 @@
             <th>Nome</th>
             <th>Tipo</th>
             <th>Valor</th>
+            <th>Valor Promo.</th>
             <th>Parcelas</th>
             <th>Imagem</th>
             <th>Criado em</th>

@@ -53,7 +53,7 @@ class HomeController extends Controller {
 		$tipos 			= $tipos->lists('nome','id')->all();
 
 		$produtos      	= new Produto();
-		$produtos 		= $produtos->all();
+		$produtos 		= $produtos->with('fornecedor')->get();
 
 		// $fornecedores   = new Fornecedor();
 		// $fornecedores	= $fornecedores->lists('nome','id')->all();
