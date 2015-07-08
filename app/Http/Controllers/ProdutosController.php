@@ -40,4 +40,12 @@ class ProdutosController extends Controller {
 		return $produtos;
 	}
 
+	public function show($slug,$id)
+    {
+        $produto = Produto::find($id);
+
+        dd($produto);
+        // return view('produto.view_produto', compact('produto'));
+    }
+
 }

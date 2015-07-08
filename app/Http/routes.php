@@ -21,7 +21,11 @@ Route::get('loja', 'LojaController@index');
 // Route::get('produto/{id}', 'ProdutoController@show');
 Route::get('ambientes/{slug}/{id}', 'AmbientesController@show');
 
-Route::get('produtos/data', 'ProdutosController@data');
+Route::get('produtos/data',         'ProdutosController@data');
+Route::get('produtos/{slug}/{id}',  'ProdutosController@show');
+
+
+Route::post('emails/salvar',  'EmailsController@salvar');
 
 
 Route::controllers([

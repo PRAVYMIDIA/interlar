@@ -14,8 +14,8 @@
           <div class="col-xs-12 col-sm-4"><br />
             <b>Receba incriveis ofertas no seu email!</b><br />
             <div class="form-group has-feedback" style="margin-top: 5px;">
-              <input type="text" class="form-control" id="emailnewsletter">
-              <span class="glyphicon glyphicon-circle-arrow-up form-control-feedback"></span>
+              <input type="email" class="form-control" id="emailnewsletter" placeholder="Digite seu E-Mail">
+              <span class="glyphicon glyphicon-open form-control-feedback" id="enviaNewsletterEmail"></span>
             </div>
           </div>
           <div class="col-xs-12 col-sm-2 hidden-xs"><br />

@@ -47,7 +47,7 @@ class Produto extends Model
     }
 
     public function setFornecedorIdAttribute($value){
-            $this->attributes['fornecedor_id'] = ($value != ""||$value != "0") ? $value  : null;
+            $this->attributes['fornecedor_id'] = ($value != "" && $value != "0" && !empty($value) ) ? $value  : NULL;
     }
 
     public function setValorAttribute($value){

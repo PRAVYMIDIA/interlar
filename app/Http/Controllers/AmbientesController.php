@@ -9,7 +9,7 @@ class AmbientesController extends Controller {
         $this->middleware('auth', [ 'except' => [ 'index', 'show' ] ]);
     }
 
-    public function show($id)
+    public function show($slug,$id)
     {
         // Get all the blog posts
         $ambiente = Ambiente::find($id);

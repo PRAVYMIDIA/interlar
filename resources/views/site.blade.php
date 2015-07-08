@@ -64,6 +64,70 @@
         $('.loader').hide('fast', function() {
             $(this).remove();
         });
+    }
+
+    $(document).ready(function() {
+        $('#emailnewsletter').bind('keypress', function(e) {
+            var code = e.keyCode || e.which;
+            if(code == 13) { //Enter keycode
+             salvaNewsletter();
+            }
+        });  
+        $('#enviaNewsletterEmail').click(function() {
+            salvaNewsletter();
+        });  
+    });
+
+    function validateEmail(email) {
+        var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+        return re.test(email);
+    }
+
+    function salvaNewsletter(){
+
+        var v_email = $('#emailnewsletter').val();
+        var re = /[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}/igm;
+        if (!validateEmail(v_email))
+        {
+            alert('Por favor coloque um e-mail válido.');
+            return false;
+        }
+        carregaLoading();
+        $.ajax({
+            url: '/emails/salvar',
+            type: 'POST',
+            dataType: 'json',
+            data: {_token: '{{{ csrf_token() }}}', email:v_email},
+        })
+        .done(function(retorno) {
+            fechaLoading();
+            if(retorno.erro){
+                $('#emailnewsletter').parent().addClass('has-error');
+                $('#emailnewsletter').val('Houve algum erro ao salvar seu e-mail.');
+
+                setTimeout(function() {
+                   $('#emailnewsletter').val(''); 
+                   $('#emailnewsletter').parent().removeClass('has-error');
+                }, 5000);
+            }else{
+                $('#emailnewsletter').val('E-Mail salvo com sucesso!');
+                $('#emailnewsletter').parent().addClass('has-success');
+            }
+            setTimeout(function() {
+               $('#emailnewsletter').parent().removeClass('has-success');
+               $('#emailnewsletter').val(''); 
+            }, 5000);
+        })
+        .fail(function() {
+            fechaLoading();
+                $('#emailnewsletter').parent().addClass('has-error');
+            $('#emailnewsletter').val('Houve algum erro ao salvar seu e-mail.');
+            setTimeout(function() {
+               $('#emailnewsletter').val(''); 
+               $('#emailnewsletter').parent().removeClass('has-error');
+            }, 5000);
+        });
+        
     }  
 </script>
 

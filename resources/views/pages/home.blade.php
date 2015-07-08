@@ -3,9 +3,15 @@
 @section('content')
       <div class="row">
         <div class="col-lg-12">
-          <div class="banner-faixa-top">
-            <p class="text-center banner-faixa-top-text">APROVEITE NOSSAS OFERTAS! DESCONTOS INCRÍVEIS DE ATÉ 70% SOMENTE NESTE FINAL DE SEMANA, NÃO PERCA!</p>
-          </div>
+          @if($banner)
+            <div onclick="document.location='{{ $banner->url }}';" style="cursor:pointer;">
+            @if(strlen($banner->html) )
+              {!! $banner->html !!}
+            @else
+              <img class="img-responsive img-thumbnail center-block" title="imagem atual" src="/images/banner/{{$banner->id.'/'.$banner->imagem }}" alt="banner">
+            @endif
+            </div>
+          @endif
         </div>
       </div> <!-- /. row -->
 
@@ -89,7 +95,12 @@
           <div class="row" id="bloco_produtos">
             
            
-          </div>          
+          </div>
+          <div class="row">
+            <span class="col-md-4 col-md-offset-4">
+              <button type="button" class="btn btn-default btn-block" id="btn_carrega_mais_produtos" onclick="carregaProdutos();">Carregar mais produtos</button>
+            </span>
+          </div>
         </div> <!-- /. col-lg-9 -->
       </div> <!-- /. row -->
 
@@ -104,24 +115,39 @@
         $('#myCarousel').carousel({
             interval: 4000
         });
-        $(document).ready(function() {
-          $('#bloco_produtos').hide();
-          carregaLoading();
+        var page = 1;
+        var next_page = '/produtos/data';
+        function carregaProdutos(){
 
-          $.ajax({
-            url: '/produtos/data',
-          })
-          .done(function(retorno) {
-            fechaLoading();
-            html = Mustache.to_html(template_produtos, retorno);
-            $('#bloco_produtos').html(html);
-            $('#bloco_produtos').show('fast',function(){
-              $('.tag-parcela').show('slow');
+          if(next_page){
+
+            carregaLoading();
+
+            $.ajax({
+              url: next_page,
+            })
+            .done(function(retorno) {
+              next_page = retorno.next_page_url;
+              if(!next_page){
+                $('#btn_carrega_mais_produtos').hide('fast');
+              }
+              fechaLoading();
+              html = Mustache.to_html(template_produtos, retorno);
+              $('#bloco_produtos').append(html);
+              $('.item-produto').show('fast',function(){
+                $('.tag-parcela').show('slow');
+              });
+            })
+            .fail(function() {
+              fechaLoading();
             });
-          })
-          .fail(function() {
-            fechaLoading();
-          });
+
+          }
+        }
+
+        $(document).ready(function() {
+          
+          carregaProdutos();
           
           
         });

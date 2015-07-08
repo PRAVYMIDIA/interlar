@@ -61,10 +61,10 @@ class HomeController extends Controller {
 		$lojas			= new Loja();
 		$lojas			= $lojas->lists('nome','id')->all();
 
-		$banners		= new Banner();
-		$banners		= $banners->lists('nome','id')->all();
+		$banner		= new Banner();
+		$banner		= $banner->orderByRaw("RAND()")->first();
 
-		return view('pages.home', compact('ambientes','tipos','produtos','lojas','banners')); //'fornecedores',
+		return view('pages.home', compact('ambientes','tipos','produtos','lojas','banner')); //'fornecedores',
 
 		//return view('pages.welcome');
 	}

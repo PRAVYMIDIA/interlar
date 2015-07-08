@@ -238,8 +238,8 @@ class ProdutoController extends AdminController {
             ->orderBy('produtos.nome', 'ASC');
 
         return Datatables::of($produto)
-            ->edit_column('valor','{{ ($valor != \'\') ? number_format( doubleval($valor), 2,\',\',\'.\') : \'\' }}')
-            ->edit_column('valor_promocional','{!! $valor_promocional!=\'\'? \'<span class="label label-danger">\'. number_format( doubleval($valor_promocional), 2,\',\',\'.\'). \'</span>\' : \'\' !!}')
+
+            ->edit_column('valor_promocional','{!! $valor_promocional!=\'\'? \'<span class="label label-danger">\'.  $valor_promocional. \'</span>\' : \'\' !!}')
             ->edit_column('imagem','{!! strlen($imagem)? \'<img src="/images/produto/\' . $id . \'/thumb_200x200_\' . $imagem . \'" width="100" />\':\'\' !!}')
             ->add_column('actions', '<a href="{{{ URL::to(\'admin/produto/\' . $id . \'/edit\' ) }}}" class="btn btn-success btn-xs iframe" title="{{ trans("admin/modal.edit") }}" ><span class="glyphicon glyphicon-pencil"></span></a>
                     <a href="{{{ URL::to(\'admin/produto/\' . $id . \'/delete\' ) }}}" class="btn btn-xs btn-danger iframe" title="{{ trans("admin/modal.delete") }}"><span class="glyphicon glyphicon-trash"></span></a>

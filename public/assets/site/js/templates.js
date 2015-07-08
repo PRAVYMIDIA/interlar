@@ -1,11 +1,12 @@
 /*jshint multistr: true */
 
 var template_produtos = '{{#data}}\
-        <div class="col-sm-6 col-md-4">\
+        <div class="col-sm-6 col-md-4 item-produto">\
           <div class="thumbnail thumbnail-custom">\
             <a href="/produtos/{{produto_slug}}/{{ id }}">\
               <img src="{{mini}}" alt="{{nome}}">\
             </a>\
+          </div>\
             {{#parcelas}}\
                 <img src="/assets/site/images/tag-{{parcelas}}-parcelas.png" class="tag-parcela" />\
             {{/parcelas}}\
@@ -30,6 +31,5 @@ var template_produtos = '{{#data}}\
                 {{/parcelas}}\
               </span>\
             </div>\
-          </div>\
         </div>\
         {{/data}}';
