@@ -53,6 +53,18 @@
 <script>
     $('#flash-overlay-modal').modal();
     $('div.alert').not('.alert-danger').delay(3000).slideUp(300);
+
+    // Ajax loaders
+            
+    function carregaLoading(){
+        $('body').append('<div class="loader"></div>');
+    }
+
+    function fechaLoading(){
+        $('.loader').hide('fast', function() {
+            $(this).remove();
+        });
+    }  
 </script>
 
 @yield('scripts')
