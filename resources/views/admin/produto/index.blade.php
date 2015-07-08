@@ -25,6 +25,7 @@
             <th>Nome</th>
             <th>Tipo</th>
             <th>Valor</th>
+            <th>Valor Promo.</th>
             <th>Parcelas</th>
             <th>Imagem</th>
             <th>Criado em</th>
@@ -62,7 +63,7 @@
 
             var startPosition;
             var endPosition;
-            $("#table tbody").sortable({
+           /* $("#table tbody").sortable({
                 cursor: "move",
                 start: function (event, ui) {
                     startPosition = ui.item.prevAll().length + 1;
@@ -78,7 +79,7 @@
                     }, function (data) {
                     });
                 }
-            });
+            });*/
         });
     </script>
 @stop

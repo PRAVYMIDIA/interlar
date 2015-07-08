@@ -12,7 +12,9 @@
         "yajra/laravel-datatables-oracle" : "~5.0",
 		"laracasts/flash": "~1.3",
 		"intervention/image": "2.2.0",
-        "barryvdh/laravel-debugbar": "^2.0@dev"
+        "barryvdh/laravel-debugbar": "^2.0@dev",
+        "guzzlehttp/guzzle": "~5.3|~6.0",
+        "doctrine/dbal": "~2.5"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

@@ -64,12 +64,12 @@
 			<div class="form-group {{{ $errors->has('produto_tipo_id') ? 'error' : '' }}}">
 				<div class="col-lg-12">
 					<label class="control-label" for="fornecedor_id">Fornecedor</label>
-					{!!  Form::select('fornecedor_id',array_merge(array(''=>'Não informado'),$fornecedores), (isset($produto) ? $produto->fornecedor_id : null),array('class'=>'form-control') );  !!}
+					{!!  Form::select('fornecedor_id',(array(''=>'Não informado')+$fornecedores), (isset($produto) ? $produto->fornecedor_id : null),array('class'=>'form-control') );  !!}
 				</div>
 			</div>
 			
 			<div class="row">
-				<div class="col-md-6">
+				<div class="col-md-4">
 					<div class="form-group {{{ $errors->has('valor') ? 'has-error' : '' }}}">
 						<div class="col-md-12">
 							<label class="control-label" for="valor"> Valor</label> 
@@ -80,7 +80,18 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-md-6">
+				<div class="col-md-4">
+					<div class="form-group {{{ $errors->has('valor_promocional') ? 'has-error' : '' }}}">
+						<div class="col-md-12">
+							<label class="control-label" for="valor_promocional"> Valor Promocional</label> 
+							<input
+								class="form-control moeda" type="text" name="valor_promocional" id="valor_promocional"
+								value="{{{ Input::old('valor_promocional', isset($produto) ? $produto->valor_promocional : null) }}}" />
+							{!!$errors->first('valor_promocional', '<label class="control-label">:message</label>')!!}
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
 					<div class="form-group {{{ $errors->has('parcelas') ? 'has-error' : '' }}}">
 						<div class="col-md-12">
 							<label class="control-label" for="parcelas"> Parcelas</label> 

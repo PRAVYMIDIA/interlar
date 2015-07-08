@@ -18,6 +18,7 @@ class Produto extends Model
                             'fornecedor_id',
                             'produto_tipo_id',
                             'valor',
+                            'valor_promocional',
                             'parcelas',
                             'imagem'
                         ];
@@ -46,15 +47,23 @@ class Produto extends Model
     }
 
     public function setFornecedorIdAttribute($value){
-            $this->attributes['fornecedor_id'] = $value == ""||$value == "0" ? null : $value;
+            $this->attributes['fornecedor_id'] = ($value != ""||$value != "0") ? $value  : null;
     }
 
     public function setValorAttribute($value){
-            $this->attributes['valor'] = $value ?  str_replace(',', '.', str_replace('.', '',  $value)) : '';
+            $this->attributes['valor'] = $value ?  str_replace(',', '.', str_replace('.', '',  $value)) : NULL;
     }
 
     public function getValorAttribute($value){
-            return number_format( doubleval($value) ,2,',','.');
+            return $value ? number_format( doubleval($value) ,2,',','.') : NULL;
+    }
+
+    public function setValorPromocionalAttribute($value){
+            $this->attributes['valor_promocional'] = $value ?  str_replace(',', '.', str_replace('.', '',  $value)) : NULL;
+    }
+
+    public function getValorPromocionalAttribute($value){
+            return $value ? number_format( doubleval($value) ,2,',','.') : NULL;
     }
     /**
     *   Mutator para remover a imagem antiga (caso houver)
@@ -66,28 +75,36 @@ class Produto extends Model
                 if($this->attributes['imagem'] != $value){
                     if(file_exists( $image_path.$this->attributes['imagem'] )){
                         unlink( $image_path.$this->attributes['imagem'] );
-                        if(file_exists( $image_path.'thumb_'.$this->attributes['imagem'] )){
-                            unlink( $image_path.'thumb_'.$this->attributes['imagem'] );
+                        if(file_exists( $image_path.'thumb_200x200_'.$this->attributes['imagem'] )){
+                            unlink( $image_path.'thumb_200x200_'.$this->attributes['imagem'] );
                         }
                     }
                 }            
             }
         }
         $this->attributes['imagem'] = $value;
+        if(isset($this->attributes['id'])){
+            if($value!=''){
+                $this->thumb();
+            }
+        }
     }
 
-    public function thumb(){
+    public function thumb($largura=200, $altura=200,$qualidade = 60){
+        
         $image_path = public_path() . '/images/produto/'.$this->attributes['id'].'/';
-        # Verifica se existe a miniatura
-        if(!file_exists( $image_path.'thumb_'.$this->attributes['imagem'] )){
 
-            $img_thumb = Image::make($image_path.$this->attributes['imagem'])->resize(200, 200, function($constraint){
-                $constraint->aspectRatio();
-                $constraint->upsize();
-            });
-            $img_thumb->save($image_path.'thumb_'.$this->attributes['imagem'],60);
+        if(file_exists( $image_path.$this->attributes['imagem'] )){
+            # Verifica se existe a miniatura
+            if(!file_exists( $image_path.'thumb_'.$largura.'x'.$altura.'_'.$this->attributes['imagem'] )){
+
+                $img_thumb = Image::make($image_path.$this->attributes['imagem'])->fit($largura, $altura, function($constraint){
+                    $constraint->upsize();
+                });
+                $img_thumb->save($image_path.'thumb_'.$largura.'x'.$altura.'_'.$this->attributes['imagem'],$qualidade);
+            }
+            return 'thumb_'.$largura.'x'.$altura.'_'.$this->attributes['imagem'];
         }
-        return 'thumb_'.$this->attributes['imagem'];
     }
 
     public function ambientes(){

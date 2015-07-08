@@ -57,6 +57,7 @@ class ProdutoController extends AdminController {
         $produto -> produto_tipo_id = $request->produto_tipo_id;
         $produto -> fornecedor_id = $request->fornecedor_id;
         $produto -> valor = $request->valor;
+        $produto -> valor_promocional = $request->valor_promocional;
         $produto -> parcelas = $request->parcelas;
         $produto -> descricao = $request->descricao;
 
@@ -90,14 +91,16 @@ class ProdutoController extends AdminController {
 
         if( count($imagens) ){
             foreach ($imagens as $file) {
-                $filename = $file->getClientOriginalName();
-                $extension = $file -> getClientOriginalExtension();
-                $imagem = sha1($filename . time()) . '.' . $extension;
-                $produto_imagem = new ProdutoImagem(['imagem'=>$imagem,'user_id_created'=>Auth::id()]);
-                $produto->imagens()->save($produto_imagem);
-                # Copia a imagem pra pasta do produto
-                
-                $file->move($destinationPath, $imagem);
+                if($file){
+                    $filename = $file->getClientOriginalName();
+                    $extension = $file -> getClientOriginalExtension();
+                    $imagem = sha1($filename . time()) . '.' . $extension;
+                    $produto_imagem = new ProdutoImagem(['imagem'=>$imagem,'user_id_created'=>Auth::id()]);
+                    $produto->imagens()->save($produto_imagem);
+                    # Copia a imagem pra pasta do produto
+                    
+                    $file->move($destinationPath, $imagem);    
+                }
             }
         }
     }
@@ -136,13 +139,14 @@ class ProdutoController extends AdminController {
     public function postEdit(ProdutoRequest $request, $id)
     {
         $produto = Produto::find($id);
-        $produto -> user_id_updated = Auth::id();
-        $produto -> nome = $request->nome;
-        $produto -> produto_tipo_id = $request->produto_tipo_id;
-        $produto -> fornecedor_id = $request->fornecedor_id;
-        $produto -> valor = $request->valor;
-        $produto -> parcelas = $request->parcelas;
-        $produto -> descricao = $request->descricao;
+        $produto -> user_id_updated     = Auth::id();
+        $produto -> nome                = $request->nome;
+        $produto -> produto_tipo_id     = $request->produto_tipo_id;
+        $produto -> fornecedor_id       = $request->fornecedor_id;
+        $produto -> valor               = $request->valor;
+        $produto -> valor_promocional   = $request->valor_promocional;
+        $produto -> parcelas            = $request->parcelas;
+        $produto -> descricao           = $request->descricao;
 
         $destinationPath = public_path() . '/images/produto/'.$produto->id.'/';
         if(Input::hasFile('imagem'))
@@ -151,8 +155,8 @@ class ProdutoController extends AdminController {
             $filename = $file->getClientOriginalName();
             $extension = $file -> getClientOriginalExtension();
             $imagem = sha1($filename . time()) . '.' . $extension;
-            $produto -> imagem = $imagem;
             Input::file('imagem')->move($destinationPath, $imagem);
+            $produto -> imagem = $imagem;
         }
         $produto -> save();
 
@@ -161,12 +165,6 @@ class ProdutoController extends AdminController {
             
             // $produto->ambientes()->attach($ambiente_id,['user_id_created' => Auth::id()]);
             $produto->ambientes()->sync($request->produto_ambiente);
-        }
-
-        if(Input::hasFile('imagem'))
-        {
-            # Gera miniatura
-            $produto->thumb();
         }
 
         // Demais imagens do produto
@@ -231,6 +229,7 @@ class ProdutoController extends AdminController {
                                         'produtos.nome', 
                                         'produtos_tipos.nome as tipo', 
                                         'produtos.valor',
+                                        'produtos.valor_promocional',
                                         'produtos.parcelas',
                                         'produtos.imagem',
                                         DB::raw('DATE_FORMAT(produtos.created_at,\'%d/%m/%Y %H:%i\') as criado_em')
@@ -239,8 +238,9 @@ class ProdutoController extends AdminController {
             ->orderBy('produtos.nome', 'ASC');
 
         return Datatables::of($produto)
-            ->edit_column('valor','{{ number_format( doubleval($valor), 2,\',\',\'.\') }}')
-            ->edit_column('imagem','{!! strlen($imagem)? \'<img src="/images/produto/\' . $id . \'/thumb_\' . $imagem . \'" width="100" />\':\'\' !!}')
+            ->edit_column('valor','{{ ($valor != \'\') ? number_format( doubleval($valor), 2,\',\',\'.\') : \'\' }}')
+            ->edit_column('valor_promocional','{!! $valor_promocional!=\'\'? \'<span class="label label-danger">\'. number_format( doubleval($valor_promocional), 2,\',\',\'.\'). \'</span>\' : \'\' !!}')
+            ->edit_column('imagem','{!! strlen($imagem)? \'<img src="/images/produto/\' . $id . \'/thumb_200x200_\' . $imagem . \'" width="100" />\':\'\' !!}')
             ->add_column('actions', '<a href="{{{ URL::to(\'admin/produto/\' . $id . \'/edit\' ) }}}" class="btn btn-success btn-xs iframe" title="{{ trans("admin/modal.edit") }}" ><span class="glyphicon glyphicon-pencil"></span></a>
                     <a href="{{{ URL::to(\'admin/produto/\' . $id . \'/delete\' ) }}}" class="btn btn-xs btn-danger iframe" title="{{ trans("admin/modal.delete") }}"><span class="glyphicon glyphicon-trash"></span></a>
                     <input type="hidden" name="row" value="{{$id}}" id="row">')
