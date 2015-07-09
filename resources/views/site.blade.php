@@ -38,6 +38,17 @@
 
 @include('flash::message')
 <div class="container">
+    <div class="row">
+          @if($banner)
+            <div onclick="document.location='{{ $banner->url }}';" style="cursor:pointer;">
+            @if(strlen($banner->html) )
+              {!! $banner->html !!}
+            @else
+              <img class="img-responsive img-thumbnail center-block" title="imagem atual" src="/images/banner/{{$banner->id.'/'.$banner->imagem }}" alt="banner">
+            @endif
+            </div>
+          @endif
+      </div> <!-- /. row -->
 @yield('content')
 </div>
 @include('partials.footer')
@@ -66,17 +77,64 @@
         });
     }
 
+    var pagina_exibicao_produtos = {{ isset($produto_grade)?1:0}};
+
+    var v_termo = '{{ isset($termo)?$termo:null }}';
+    var v_ambiente = {{ isset($ambiente_id)?($ambiente_id?$ambiente_id:'null'):'null' }};
+    var v_tipo = {{ isset($tipo_id)?($tipo_id?$tipo_id:'null'):'null' }};
+
     $(document).ready(function() {
         $('#emailnewsletter').bind('keypress', function(e) {
             var code = e.keyCode || e.which;
             if(code == 13) { //Enter keycode
              salvaNewsletter();
             }
-        });  
+        });
+
+        $('#termo').bind('keypress', function(e) {
+            var code = e.keyCode || e.which;
+            if(code == 13) { //Enter keycode
+             $(this).closest('form').submit();
+            }
+        }); 
+
         $('#enviaNewsletterEmail').click(function() {
             salvaNewsletter();
+        });
+
+        $('.bt_ambiente').click(function(e) {
+            e.preventDefault();
+            filtraProdutosPorAmbiente( $(this).attr('ambiente') );
+        }); 
+        $('.bt_tipo').click(function(e) {
+            e.preventDefault();
+            filtraProdutosPorTipo( $(this).attr('tipo') );
         });  
     });
+
+    function filtraProdutosPorAmbiente (filtro_id) {
+        v_ambiente = filtro_id;
+        next_page = '/produtos/data';
+        $('.menu_ambientes').removeClass('active-item');
+        $('#item_ambiente_'+filtro_id).addClass('active-item');
+        if(pagina_exibicao_produtos){
+            carregaProdutos();
+        }else{
+            document.location = '/?ambiente='+v_ambiente;
+        }
+    }
+
+    function filtraProdutosPorTipo (filtro_id) {
+        v_tipo = filtro_id;
+        next_page = '/produtos/data';
+        $('.menu_tipos').removeClass('active-item');
+        $('#item_tipo_'+filtro_id).addClass('active-item');
+        if(pagina_exibicao_produtos){
+            carregaProdutos();
+        }else{
+            document.location = '/?tipo='+v_ambiente;
+        }
+    }
 
     function validateEmail(email) {
         var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;

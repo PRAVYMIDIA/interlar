@@ -25,6 +25,9 @@ Route::get('produtos/data',         'ProdutosController@data');
 Route::get('produtos/{slug}/{id}',  'ProdutosController@show');
 
 
+Route::get('busca',  'HomeController@busca');
+
+
 Route::post('emails/salvar',  'EmailsController@salvar');
 
 

@@ -1,13 +1,11 @@
 <?php namespace App\Http\Controllers;
 
-use App\Ambiente;
-use App\ProdutoTipo;
-use App\Produto;
 use App\Loja;
 // use App\Fornecedor;
-use App\Banner;
+
 use Illuminate\Database\Eloquent;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 
 class HomeController extends Controller {
 
@@ -43,30 +41,41 @@ class HomeController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function index()
+	public function index(Request $request)
 	{
-
-		$ambientes      = new Ambiente();
-		$ambientes 		= $ambientes->lists('nome','id')->all();
-
-		$tipos      	= new ProdutoTipo();
-		$tipos 			= $tipos->lists('nome','id')->all();
-
-		$produtos      	= new Produto();
-		$produtos 		= $produtos->with('fornecedor')->get();
-
-		// $fornecedores   = new Fornecedor();
-		// $fornecedores	= $fornecedores->lists('nome','id')->all();
 
 		$lojas			= new Loja();
 		$lojas			= $lojas->lists('nome','id')->all();
 
-		$banner		= new Banner();
-		$banner		= $banner->orderByRaw("RAND()")->first();
+		$tipo_id = null;
+		if(!empty($request->input('tipo'))){
+			$tipo_id = $request->input('tipo_id');
+		}
+		$ambiente_id = null;
+		if(!empty($request->input('ambiente'))){
+			$ambiente_id = $request->input('ambiente');
+		}
 
-		return view('pages.home', compact('ambientes','tipos','produtos','lojas','banner')); //'fornecedores',
+		$produto_grade = 1;
 
-		//return view('pages.welcome');
+		return view('pages.home', compact('lojas','produto_grade')); 
+	}
+
+	/**
+	 * Busca de produtos
+	 *
+	 * @return Response
+	 */
+	public function busca(Request $request)
+	{
+
+		$lojas			= new Loja();
+		$lojas			= $lojas->lists('nome','id')->all();
+
+		$produto_grade = 1;
+
+		$termo = $request->input('termo');
+		return view('pages.home', compact('lojas','termo','produto_grade')); 
 	}
 
 }
