@@ -2,6 +2,7 @@
 use Log;
 use App\Http\Controllers\AdminController;
 use App\Loja;
+use App\LojaTipo;
 use Illuminate\Support\Facades\Input;
 use App\Http\Requests\Admin\LojaRequest;
 use App\Http\Requests\Admin\DeleteRequest;
@@ -31,8 +32,9 @@ class LojaController extends AdminController {
     public function getCreate()
     {
 		$title = "Nova Loja";
+        $lojastipos = LojaTipo::lists('nome','id')->all();
         // Show the page
-        return view('admin.loja.create_edit', compact('title'));
+        return view('admin.loja.create_edit', compact('title', 'lojastipos'));
     }
 
     /**
@@ -47,6 +49,7 @@ class LojaController extends AdminController {
         $loja -> nome = $request->nome;
         $loja -> descricao = $request->descricao;
         $loja -> localizacao = $request->localizacao;
+        $loja -> loja_tipo = $request->loja_tipo;
         $loja -> ativo = $request->ativo;
 
         $imagem = "";
@@ -75,10 +78,11 @@ class LojaController extends AdminController {
     public function getEdit($id)
     {
         $loja = Loja::find($id);
+        $lojastipos = LojaTipo::lists('nome','id')->all();
 
         $title = 'Editar Loja';
 
-        return view('admin.loja.create_edit',compact('loja','title'));
+        return view('admin.loja.create_edit',compact('loja','title', 'lojastipos'));
     }
 
     /**
@@ -94,6 +98,7 @@ class LojaController extends AdminController {
         $loja -> nome = $request->nome;
         $loja -> descricao = $request->descricao;
         $loja -> localizacao = $request->localizacao;
+        $loja -> loja_tipo = $request->loja_tipo;
         $loja -> ativo = $request->ativo;
 
         if(Input::hasFile('imagem'))

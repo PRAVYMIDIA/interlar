@@ -11,12 +11,13 @@
 |
 */
 
-Route::get('/', 'HomeController@index');
-Route::get('home', 'HomeController@index');
-// Route::get('sobre', 'PaginasController@about');
-// Route::get('contato', 'PaginasController@contact');
-Route::get('loja', 'LojaController@index');
-
+Route::get('/',                     'HomeController@index');
+Route::get('home',                  'HomeController@index');
+// Route::get('sobre',              'PaginasController@about');
+// Route::get('contato',            'PaginasController@contact');
+Route::get('loja',                  'LojaController@index');
+Route::get('loja/data',             'LojaController@data');
+Route::post('loja/buscar',          'LojaController@buscar');
 
 // Route::get('produto/{id}', 'ProdutoController@show');
 Route::get('ambientes/{slug}/{id}', 'AmbientesController@show');
@@ -101,6 +102,17 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'namespace' => 'Admin
     Route::post('loja/{id}/delete', 'LojaController@postDelete');
     Route::get('loja/data', 'LojaController@data');
     Route::get('loja/reorder', 'LojaController@getReorder');    
+
+    # Tipos de Loja - Segmentos
+    Route::get('lojatipo', 'LojaTipoController@index');
+    Route::get('lojatipo/create', 'LojaTipoController@getCreate');
+    Route::post('lojatipo/create', 'LojaTipoController@postCreate');
+    Route::get('lojatipo/{id}/edit', 'LojaTipoController@getEdit');
+    Route::post('lojatipo/{id}/edit', 'LojaTipoController@postEdit');
+    Route::get('lojatipo/{id}/delete', 'LojaTipoController@getDelete');
+    Route::post('lojatipo/{id}/delete', 'LojaTipoController@postDelete');
+    Route::get('lojatipo/data', 'LojaTipoController@data');
+    Route::get('lojatipo/reorder', 'LojaTipoController@getReorder');
 
     # Ambientes
     Route::get('banner', 'BannerController@index');

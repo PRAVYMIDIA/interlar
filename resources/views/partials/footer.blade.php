@@ -1,5 +1,6 @@
     <footer class="footer">
       <div class="container">
+        <div class="row">
         <div class="row footer-text">
           <div class="col-xs-12 col-sm-3">
             <img src="assets/site/images/logo_interlar_footer.png" class="img-responsive" />
@@ -26,6 +27,7 @@
           <div class="col-xs-12 col-sm-2 visible-xs">
             <img src="assets/site/images/navegar_footer.png" class="img-responsive" style="margin-top: 5px;" />
           </div>          
+        </div> <!-- /. row -->
         </div> <!-- /. row -->
       </div> <!-- /. container footer-text -->
       <div class="footer-assinatura">

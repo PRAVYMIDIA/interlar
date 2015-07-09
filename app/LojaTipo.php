@@ -3,15 +3,16 @@
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Loja extends Model
+class LojaTipo extends Model
 {
+	protected $table = 'lojas_tipos';
 	use SoftDeletes;
 	/**
 	 * The attributes that are mass assignable.
 	 *
 	 * @var array
 	 */
-	protected $fillable = ['nome','descricao','imagem','localizacao','ativo','user_id_created'];
+	protected $fillable = ['nome','descricao','ativo','user_id_created'];
 
 
 	/**
