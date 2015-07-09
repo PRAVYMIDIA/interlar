@@ -87,7 +87,7 @@
 	<script src="{{  asset('assets/admin/js/jquery.maskMoney.min.js') }}"></script>
 	<script type="text/javascript">
 			$(function() {
-				$('textarea').summernote({height: 250});
+				$('.wysihtml5').summernote({height: 250});
 				$(".moeda").maskMoney({prefix:'R$ ', allowZero:false, allowNegative: true, thousands:'.', affixesStay: false, decimal:',', affixesStay: false});
 				$('form').submit(function(event) {
 					event.preventDefault();

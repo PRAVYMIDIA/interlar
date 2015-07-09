@@ -22,7 +22,7 @@
             <span class="hidden-sm text"> Ambientes</span>
         </a>
     </li>
-    <li class="{{set_active('admin/produtotipo*')}}">
+    <li class="{{set_active('admin/produtotipo')}}">
         <a href="{{url('admin/produtotipo')}}">
             <i class="fa fa-list fa-fw"></i>
             <span class="hidden-sm text"> Tipos de Produtos</span>
@@ -34,18 +34,24 @@
             <span class="hidden-sm text"> Fornecedores</span>
         </a>
     </li>
-    <li class="{{set_active('admin/produto*')}}">
+    <li class="{{set_active('admin/produto')}}">
         <a href="{{url('admin/produto')}}">
             <i class="fa fa-diamond fa-fw"></i>
             <span class="hidden-sm text"> Produtos</span>
         </a>
     </li>
-    <li class="{{set_active('admin/loja*')}}">
+    <li class="{{set_active('admin/loja')}}">
         <a href="{{url('admin/loja')}}">
             <i class="fa fa-building fa-fw"></i>
             <span class="hidden-sm text"> Lojas</span>
         </a>
     </li>
+    <li class="{{set_active('admin/lojatipo')}}">
+        <a href="{{url('admin/lojatipo')}}">
+            <i class="fa fa-building fa-fw"></i>
+            <span class="hidden-sm text"> Tipos de Loja - Segmentos</span>
+        </a>
+    </li>    
     <li class="{{set_active('admin/banner*')}}">
         <a href="{{url('admin/banner')}}">
             <i class="fa fa-bullhorn fa-fw"></i>

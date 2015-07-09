@@ -4,6 +4,8 @@
 
 <div class="rectangle-3" style="background-color: #FFFFFF;">
   <div class="container">
+    <div class="row">
+    <div class="row">
     <div class="col-md-3">
       <img src="assets/site/images/logo_shopping_interlar_aricanduva.png" />
     </div>
@@ -61,5 +63,8 @@
       </div>
     </div>
   </div>
+  </div>
+  </div>
 
 </div> <!-- /.rectangle-3 -->
+

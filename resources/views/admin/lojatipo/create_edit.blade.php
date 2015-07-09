@@ -8,8 +8,8 @@
 {{-- Edit Loja Form --}}
 <form class="form-horizontal" id="fupload" enctype="multipart/form-data"
 	method="post"
-	action="@if(isset($loja)){{ URL::to('admin/loja/'.$loja->id.'/edit') }}
-	        @else{{ URL::to('admin/loja/create') }}@endif"
+	action="@if(isset($loja)){{ URL::to('admin/lojatipo/'.$lojatipo->id.'/edit') }}
+	        @else{{ URL::to('admin/lojatipo/create') }}@endif"
 	autocomplete="off">
 	<!-- CSRF Token -->
 	<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
@@ -25,7 +25,7 @@
 					<div class="col-md-12">
 						<label class="control-label" for="nome"> Nome</label> <input
 							class="form-control" type="text" name="nome" id="nome"
-							value="{{{ Input::old('nome', isset($loja) ? $loja->nome : null) }}}" />
+							value="{{{ Input::old('nome', isset($lojatipo) ? $lojatipo->nome : null) }}}" />
 						{!!$errors->first('nome', '<label class="control-label">:message</label>')!!}
 					</div>
 				</div>
@@ -35,49 +35,21 @@
 					<div class="col-md-12">
 						<label class="control-label" for="descricao">Descrição</label>
 						<textarea class="form-control full-width" name="descricao"
-							value="descricao" rows="10">{{{ Input::old('descricao', isset($loja) ? $loja->descricao : null) }}}</textarea>
+							value="descricao" rows="10">{{{ Input::old('descricao', isset($lojatipo) ? $lojatipo->descricao : null) }}}</textarea>
 						{!! $errors->first('descricao', '<label class="control-label">:message</label>')
 						!!}
 					</div>
 				</div>
 
 				<div
-					class="form-group {{{ $errors->has('localizacao') ? 'has-error' : '' }}}">
-					<div class="col-md-12">
-						<label class="control-label" for="localizacao">Localização</label><input
-							class="form-control" type="text" name="localizacao" id="localizacao"
-							value="{{{ Input::old('localizacao', isset($loja) ? $loja->localizacao : null) }}}" />
-						{!!$errors->first('localizacao', '<label class="control-label">:message</label>')!!}
-					</div>
-				</div>
-				<div class="form-group {{{ $errors->has('loja_tipo') ? 'error' : '' }}}">
-					<div class="col-lg-12">
-						<label class="control-label" for="loja_tipo">Tipo da Loja - Segmento</label>
-						{!! Form::select('loja_tipo',$lojastipos, (isset($loja) ? $loja->loja_tipo : null),array('class'=>'form-control','required'=>'required') );  !!}
-					</div>
-				</div>
-				@if((isset($loja) ? $loja->imagem : '')!='' )
-				<div class="form-group">
-					<img class="img-responsive img-thumbnail" title="imagem atual" src="/images/loja/{{$loja->id.'/'.$loja->imagem}}" alt="Imagem atual">
-				</div>
-				@endif
-				<div
-					class="form-group {{{ $errors->has('imagem') ? 'error' : '' }}}">
-					<div class="col-lg-12">
-						<label class="control-label" for="imagem">{{ (isset($loja) ? $loja->imagem : '')!=''?'Trocar ':'Inserir ' }}Imagem</label> <input name="imagem"
-							type="file" class="uploader" id="imagem" value="Upload" />
-					</div>
-
-				</div>
-				<div
 					class="form-group {{{ $errors->has('ativo') ? 'has-error' : '' }}}">
 					<div class="col-md-12">
 						<label class="control-label" for="ativo">{{
 						trans('admin/users.activate_user') }}</label>						
 						<select class="form-control" name="ativo" id="ativo">
-							<option value="1" {{{ ((isset($loja) && $loja->ativo == 1)? '
+							<option value="1" {{{ ((isset($lojatipo) && $lojatipo->ativo == 1)? '
 								selected="selected"' : '') }}}>SIM</option>
-							<option value="0" {{{ ((isset($loja) && $loja->ativo == 0) ?
+							<option value="0" {{{ ((isset($lojatipo) && $lojatipo->ativo == 0) ?
 								' selected="selected"' : '') }}}>NÃO</option>
 						</select>
 					</div>
@@ -100,7 +72,7 @@
 					</button>
 					<button type="submit" class="btn btn-sm btn-success">
 						<span class="glyphicon glyphicon-ok-circle"></span> 
-						@if	(isset($loja)) 
+						@if	(isset($lojatipo)) 
 						  {{ trans("admin/modal.edit") }}
 						@else 
 						  {{trans("admin/modal.create") }}

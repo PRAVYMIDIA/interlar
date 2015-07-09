@@ -141,3 +141,12 @@ body {
 .nav-stacked{
     background-color: #ffffff;
 }
+
+.thumbnail-loja{
+ 	border: none; 
+ 	border-radius: 0px;
+    position: relative;
+    margin-bottom: 0px;
+    height: 250px;
+    margin-bottom: 25px;
+ }
