@@ -102,33 +102,36 @@
         
 
         function carregaProdutos(){
+          if(v_loading == 0){
+            if(next_page){
+              v_loading = 1;
+              carregaLoading();
 
-          if(next_page){
-
-            carregaLoading();
-
-            $.ajax({
-              url: next_page,
-              data: {termo: v_termo,ambiente_id: v_ambiente, tipo_id: v_tipo}
-            })
-            .done(function(retorno) {
-              next_page = retorno.next_page_url;
-              if(!next_page){
-                $('#btn_carrega_mais_produtos').hide('fast');
-              }else{
-                $('#btn_carrega_mais_produtos').show('fast');
-              }
-              fechaLoading();
-              html = Mustache.to_html(template_produtos, retorno);
-              $('#bloco_produtos').append(html);
-              $('.item-produto').show('fast',function(){
-                $('.tag-parcela').show('slow');
+              $.ajax({
+                url: next_page,
+                data: {termo: v_termo,ambiente_id: v_ambiente, tipo_id: v_tipo}
+              })
+              .done(function(retorno) {
+                next_page = retorno.next_page_url;
+                if(!next_page){
+                  $('#btn_carrega_mais_produtos').hide('fast');
+                }else{
+                  $('#btn_carrega_mais_produtos').show('fast');
+                }
+                fechaLoading();
+                v_loading = 0;
+                html = Mustache.to_html(template_produtos, retorno);
+                $('#bloco_produtos').append(html);
+                $('.item-produto').show('fast',function(){
+                  $('.tag-parcela').show('slow');
+                });
+              })
+              .fail(function() {
+                fechaLoading();
+                v_loading = 0;
               });
-            })
-            .fail(function() {
-              fechaLoading();
-            });
 
+            }
           }
         }
 
