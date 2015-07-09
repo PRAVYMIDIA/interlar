@@ -6,6 +6,7 @@ use App\Produto;
 use App\Loja;
 // use App\Fornecedor;
 use App\Banner;
+use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent;
 use Illuminate\Support\Facades\DB;
 
@@ -17,11 +18,24 @@ class ProdutosController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function data()
+	public function data(Request $request)
 	{
 
 		$produtos      	= new Produto();
-		$produtos 		= $produtos->with('fornecedor')->paginate(9);
+		$produtos 		= $produtos->with('fornecedor');
+		if(!empty($request->input('tipo_id'))){
+			$produtos->where('produto_tipo_id','=',$request->input('tipo_id'));
+		}
+		if(!empty($request->input('ambiente_id'))){
+			$produtos->whereHas('ambientes',function($query )use ($request) {
+				$query->where('ambiente_id','=',$request->input('ambiente_id'));
+			});
+		}
+		if(!empty($request->input('termo'))){
+			$produtos->where('nome','like','%'.$request->input('termo'));
+		}
+
+		$produtos 		= $produtos->paginate(9);
 
 		$produtos_array = array();
 		foreach ($produtos as $produto) {
