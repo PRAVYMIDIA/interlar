@@ -18,9 +18,9 @@
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <!-- CSS Site -->
-    <link rel="stylesheet" href="assets/site/css/siteinterlar.css">
+    <link rel="stylesheet" href="/assets/site/css/siteinterlar.css">
     <!-- CSS Leftnavi -->
-    <link rel="stylesheet" type="text/css" href="assets/site/css/bs_leftnavi.css">
+    <link rel="stylesheet" type="text/css" href="/assets/site/css/bs_leftnavi.css">
 
     @yield('styles')
 
@@ -59,7 +59,7 @@
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>    
 
-<script src="assets/site/js/bs_leftnavi.js"></script>
+<script src="/assets/site/js/bs_leftnavi.js"></script>
 
 <script>
     $('#flash-overlay-modal').modal();
