@@ -2,12 +2,6 @@
 @section('title') Home :: @parent @stop
 @section('content')
       <div class="row">
-          <div class="banner-faixa-top">
-            <p class="text-center banner-faixa-top-text">APROVEITE NOSSAS OFERTAS! DESCONTOS INCRÍVEIS DE ATÉ 70% SOMENTE NESTE FINAL DE SEMANA, NÃO PERCA!</p>
-          </div>
-      </div> <!-- /. row -->
-
-      <div class="row">
         <div class="row">
         <div class="col-sm-12 col-md-8">
           <div class="form-group has-feedback">

@@ -51,4 +51,4 @@ var template_lojas = '{{#data}}\
               </div>\
             </div>\
         </div>\
-        {{/data}};
+        {{/data}}';

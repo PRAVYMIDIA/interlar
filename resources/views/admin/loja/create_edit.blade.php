@@ -50,10 +50,10 @@
 						{!!$errors->first('localizacao', '<label class="control-label">:message</label>')!!}
 					</div>
 				</div>
-				<div class="form-group {{{ $errors->has('loja_tipo') ? 'error' : '' }}}">
+				<div class="form-group {{{ $errors->has('loja_tipo_id') ? 'error' : '' }}}">
 					<div class="col-lg-12">
-						<label class="control-label" for="loja_tipo">Tipo da Loja - Segmento</label>
-						{!! Form::select('loja_tipo',$lojastipos, (isset($loja) ? $loja->loja_tipo : null),array('class'=>'form-control','required'=>'required') );  !!}
+						<label class="control-label" for="loja_tipo_id">Tipo da Loja - Segmento</label>
+						{!! Form::select('loja_tipo_id',$lojastipos, (isset($loja) ? $loja->loja_tipo_id : null),array('class'=>'form-control','required'=>'required') );  !!}
 					</div>
 				</div>
 				@if((isset($loja) ? $loja->imagem : '')!='' )

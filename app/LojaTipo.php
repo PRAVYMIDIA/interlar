@@ -22,4 +22,8 @@ class LojaTipo extends Model
      */
     protected $dates = ['deleted_at'];
 
+    public function lojas(){
+        return $this->hasMany('App\Loja','loja_tipo_id');
+    }
+
 }

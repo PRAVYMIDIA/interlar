@@ -21,4 +21,9 @@ class Loja extends Model
      */
     protected $dates = ['deleted_at'];
 
+    public function tipo()
+    {
+        return $this->belongsTo('App\LojaTipo','loja_tipo_id');
+    }
+
 }

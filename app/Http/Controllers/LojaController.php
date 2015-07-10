@@ -60,7 +60,7 @@ class LojaController extends Controller {
 			if($segmento != '0')
 				$lojas 	= Loja::where('ativo', 1)
 								->where('nome', 'like', $letrainicial.'%')
-								->where('loja_tipo', $segmento)
+								->where('loja_tipo_id', $segmento)
 								->paginate(12);
 			else
 				$lojas 	= Loja::where('ativo', 1)
@@ -71,7 +71,7 @@ class LojaController extends Controller {
 			if($segmento != '0'){
 				$lojas 	= Loja::where('ativo', 1)
 								->where('nome', 'like', $nome.'%')
-								->where('loja_tipo', $segmento)
+								->where('loja_tipo_id', $segmento)
 								->paginate(12);
 			}
 			else

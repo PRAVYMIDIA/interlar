@@ -13,8 +13,8 @@ class AlterLojasTable extends Migration
     public function up()
     {
         Schema::table('lojas', function(Blueprint $table){
-            $table->unsignedInteger('loja_tipo');
-            $table->foreign('loja_tipo')->references('id')->on('lojas_tipo')->onDelete('RESTRICT')->onUpdate('CASCADE');
+            $table->integer('loja_tipo_id')->unsigned();
+            $table->foreign('loja_tipo_id')->references('id')->on('lojas_tipos')->onDelete('CASCADE')->onUpdate('CASCADE');
         });
     }
 
@@ -26,6 +26,7 @@ class AlterLojasTable extends Migration
     public function down()
     {
         Schema::table('lojas', function(Blueprint $table){
+            $table->dropForeign('fk_lojas_loja_tipo_id');
             $table->dropColumn('loja_tipo');
         });
     }

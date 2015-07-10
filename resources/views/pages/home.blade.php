@@ -61,7 +61,8 @@
               </ul>
             </div>
           </div>
-          <div class="row">
+          <!-- Escondido pq ainda não estava com nada definido -->
+          <div class="row" style="display:none;">
             <div class="col-sm-12 hidden-xs">
               <ul class="nav nav-pills nav-stacked" style="margin-top:15px;">
                 <li role="presentation" class="active"><a href="#">Lojas</a></li>
