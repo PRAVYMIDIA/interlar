@@ -49,7 +49,7 @@ class LojaController extends AdminController {
         $loja -> nome = $request->nome;
         $loja -> descricao = $request->descricao;
         $loja -> localizacao = $request->localizacao;
-        $loja -> loja_tipo = $request->loja_tipo;
+        $loja -> loja_tipo_id = $request->loja_tipo_id;
         $loja -> ativo = $request->ativo;
 
         $imagem = "";
@@ -98,7 +98,7 @@ class LojaController extends AdminController {
         $loja -> nome = $request->nome;
         $loja -> descricao = $request->descricao;
         $loja -> localizacao = $request->localizacao;
-        $loja -> loja_tipo = $request->loja_tipo;
+        $loja -> loja_tipo_id = $request->loja_tipo_id;
         $loja -> ativo = $request->ativo;
 
         if(Input::hasFile('imagem'))

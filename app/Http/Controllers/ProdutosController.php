@@ -32,7 +32,7 @@ class ProdutosController extends Controller {
 			});
 		}
 		if(!empty($request->input('termo'))){
-			$produtos->where('nome','like','%'.$request->input('termo'));
+			$produtos->where('nome','like','%'.$request->input('termo').'%');
 		}
 
 		$produtos 		= $produtos->paginate(9);
@@ -58,8 +58,7 @@ class ProdutosController extends Controller {
     {
         $produto = Produto::find($id);
 
-        dd($produto);
-        // return view('produto.view_produto', compact('produto'));
+        return view('produtos.detalhe', compact('produto'));
     }
 
 }

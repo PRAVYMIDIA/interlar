@@ -130,7 +130,7 @@ body {
     width: 100%;
     height: 100%;
     z-index: 99990;
-    background: url('/assets/site/images/ring.gif') 50% 50% no-repeat rgba(250,250,250,0.5);
+    background: url('/assets/site/images/ring.svg') 50% 50% no-repeat rgba(250,250,250,0.5);
 }
 
 .item-produto{

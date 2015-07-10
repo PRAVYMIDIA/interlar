@@ -13,7 +13,7 @@
 <!-- Tabs -->
 <ul class="nav nav-tabs">
 	<li class="active"><a href="#tab-general" data-toggle="tab"> Banner</a></li>
-	@if(isset($banner))
+	@if(isset($banner_edit))
 	<li><a href="#tab-visitas" data-toggle="tab"> Visitas</a></li>
 	@endif
 </ul>
@@ -21,7 +21,7 @@
 {{-- Edit Banner Form --}}
 <form class="form-horizontal" id="fupload" enctype="multipart/form-data"
 	method="post"
-	action="@if(isset($banner)){{ URL::to('admin/banner/'.$banner->id.'/edit') }}
+	action="@if(isset($banner_edit)){{ URL::to('admin/banner/'.$banner_edit->id.'/edit') }}
 	        @else{{ URL::to('admin/banner/create') }}@endif"
 	autocomplete="off">
 	<!-- CSRF Token -->
@@ -38,7 +38,7 @@
 					<div class="col-md-12">
 						<label class="control-label" for="nome"> Nome</label> <input
 							class="form-control" type="text" name="nome" id="nome"  required="required"
-							value="{{{ Input::old('nome', isset($banner) ? $banner->nome : null) }}}" />
+							value="{{{ Input::old('nome', isset($banner_edit) ? $banner_edit->nome : null) }}}" />
 						{!!$errors->first('nome', '<label class="control-label">:message</label>')!!}
 					</div>
 				</div>
@@ -47,7 +47,7 @@
 					<div class="col-md-12">
 						<label class="control-label" for="url"> URL (Link de destino)</label> <input
 							class="form-control" type="url" name="url" id="url" required="required"
-							value="{{{ Input::old('url', isset($banner) ? $banner->url : null) }}}" />
+							value="{{{ Input::old('url', isset($banner_edit) ? $banner_edit->url : null) }}}" />
 						{!!$errors->first('url', '<label class="control-label">:message</label>')!!}
 					</div>
 				</div>
@@ -59,7 +59,7 @@
 								<label class="control-label" for="dtinicio"> Início da Exibição</label> 
 								<input
 									class="form-control date" type="text" name="dtinicio" id="dtinicio" required="required"
-									value="{{{ Input::old('dtinicio', isset($banner) ? $banner->dtinicio : null) }}}" />
+									value="{{{ Input::old('dtinicio', isset($banner_edit) ? $banner_edit->dtinicio : null) }}}" />
 								{!!$errors->first('dtinicio', '<label class="control-label">:message</label>')!!}
 							</div>
 						</div>
@@ -70,7 +70,7 @@
 								<label class="control-label" for="dtfim"> Fim da Exibição</label> 
 								<input
 									class="form-control date" type="text" name="dtfim" id="dtfim" required="required"
-									value="{{{ Input::old('dtfim', isset($banner) ? $banner->dtfim : null) }}}" />
+									value="{{{ Input::old('dtfim', isset($banner_edit) ? $banner_edit->dtfim : null) }}}" />
 								{!!$errors->first('dtfim', '<label class="control-label">:message</label>')!!}
 							</div>
 						</div>
@@ -82,20 +82,20 @@
 					<div class="col-md-12">
 						<label class="control-label" for="html">HTML</label>
 						<textarea class="form-control full-width wysihtml5" name="html"
-							value="html" rows="10">{{{ Input::old('html', isset($banner) ? $banner->html : null) }}}</textarea>
+							value="html" rows="10">{{{ Input::old('html', isset($banner_edit) ? $banner_edit->html : null) }}}</textarea>
 						{!! $errors->first('html', '<label class="control-label">:message</label>')
 						!!}
 					</div>
 				</div>
-				@if((isset($banner) ? $banner->imagem : '')!='' )
+				@if((isset($banner_edit) ? $banner_edit->imagem : '')!='' )
 				<div class="form-group center-block">
-					<a href="/images/banner/{{$banner->id.'/'.$banner->imagem }}" target="_blank"><img class="img-responsive img-thumbnail center-block" title="imagem atual" src="/images/banner/{{$banner->id.'/'.$banner->thumb()}}" alt="Imagem atual"></a>
+					<a href="/images/banner/{{$banner_edit->id.'/'.$banner_edit->imagem }}" target="_blank"><img class="img-responsive img-thumbnail center-block" title="imagem atual" src="/images/banner/{{$banner_edit->id.'/'.$banner_edit->thumb()}}" alt="Imagem atual"></a>
 				</div>
 				@endif
 				<div
 					class="form-group {{{ $errors->has('imagem') ? 'error' : '' }}}">
 					<div class="col-lg-12">
-						<label class="control-label" for="imagem">{{ (isset($banner) ? $banner->imagem : '')!=''?'Trocar ':'Inserir ' }}Imagem</label> <input name="imagem"
+						<label class="control-label" for="imagem">{{ (isset($banner_edit) ? $banner_edit->imagem : '')!=''?'Trocar ':'Inserir ' }}Imagem</label> <input name="imagem"
 							type="file" class="uploader" id="imagem" value="Upload" />
 					</div>
 
@@ -104,7 +104,7 @@
 			</div>
 			<!-- ./ tabs content -->
 			
-			@if(isset($banner))
+			@if(isset($banner_edit))
 			<!-- Visitas tab -->
 			<div class="tab-pane" id="tab-visitas">
 				<br>
@@ -163,7 +163,7 @@
 					</button>
 					<button type="submit" class="btn btn-sm btn-success">
 						<span class="glyphicon glyphicon-ok-circle"></span> 
-						@if	(isset($banner)) 
+						@if	(isset($banner_edit)) 
 						  {{ trans("admin/modal.edit") }}
 						@else 
 						  {{trans("admin/modal.create") }}

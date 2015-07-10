@@ -32,9 +32,6 @@ var template_produtos = '{{#data}}\
               </span>\
             </div>\
         </div>\
-        {{/data}}\
-        {{^data}}\
-            <div class="col-md-4 col-md-offset-4 alert alert-warning">Não foram encontrados produtos</div>\
         {{/data}}';
 
 var template_lojas = '{{#data}}\

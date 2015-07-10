@@ -1,5 +1,5 @@
 <div class="barra-top">
-  <img src="{!!'assets/site/images/logo_aricanduva_top.png' !!}">
+  <img src="{!!'/assets/site/images/logo_aricanduva_top.png' !!}">
 </div>
 
 <div class="rectangle-3" style="background-color: #FFFFFF;">
@@ -7,7 +7,7 @@
     <div class="row">
       <div class="row">
         <div class="col-md-3">
-          <a href="/"><img src="assets/site/images/logo_shopping_interlar_aricanduva.png" /></a>
+          <img src="/assets/site/images/logo_shopping_interlar_aricanduva.png" />
         </div>
         <div class="col-md-6" style="margin-top: 30px;">
           <nav class="navbar navbar-default navbar-custom">
@@ -53,7 +53,7 @@
         </div>
         <div class="col-md-3" style="margin-top: 30px;">
           <div class="form-group has-feedback" style="margin-top: 5px;">
-            {!! Form::open(array('url'=>'/busca','method'=>'get')) !!}
+            {!! Form::open(array('url'=>'/busca','method'=>'get','id'=>'form-busca')) !!}
             <input type="search" class="form-control" id="termo" value="{{ isset($termo)?$termo:null }}" name="termo" placeholder="Encontre a melhor oferta">
             <span class="glyphicon glyphicon-search form-control-feedback"></span>
             {!! Form::close() !!}

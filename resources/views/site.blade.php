@@ -18,9 +18,9 @@
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <!-- CSS Site -->
-    <link rel="stylesheet" href="assets/site/css/siteinterlar.css">
+    <link rel="stylesheet" href="/assets/site/css/siteinterlar.css">
     <!-- CSS Leftnavi -->
-    <link rel="stylesheet" type="text/css" href="assets/site/css/bs_leftnavi.css">
+    <link rel="stylesheet" type="text/css" href="/assets/site/css/bs_leftnavi.css">
 
     @yield('styles')
 
@@ -64,7 +64,7 @@
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>    
 
-<script src="assets/site/js/bs_leftnavi.js"></script>
+<script src="/assets/site/js/bs_leftnavi.js"></script>
 
 <script>
     $('#flash-overlay-modal').modal();
@@ -87,6 +87,7 @@
     var v_termo = '{{ isset($termo)?$termo:null }}';
     var v_ambiente = {{ isset($ambiente_id)?($ambiente_id?$ambiente_id:'null'):'null' }};
     var v_tipo = {{ isset($tipo_id)?($tipo_id?$tipo_id:'null'):'null' }};
+    var v_loading = 0;
 
     $(document).ready(function() {
         $('#emailnewsletter').bind('keypress', function(e) {
@@ -94,6 +95,16 @@
             if(code == 13) { //Enter keycode
              salvaNewsletter();
             }
+        });
+
+        $('#form-busca').submit(function(event) {
+                if(pagina_exibicao_produtos){
+                    event.preventDefault();
+                    next_page = '/produtos/data';
+                    v_termo = $('#termo').val();
+                    $('#bloco_produtos').html('');
+                    carregaProdutos();
+                }
         });
 
         $('#termo').bind('keypress', function(e) {
@@ -118,11 +129,15 @@
     });
 
     function filtraProdutosPorAmbiente (filtro_id) {
-        v_ambiente = filtro_id;
+        if(v_ambiente != filtro_id){
+            v_ambiente = filtro_id;
+        }else{
+            v_ambiente = null;
+        }
         next_page = '/produtos/data';
-        $('.menu_ambientes').removeClass('active-item');
-        $('#item_ambiente_'+filtro_id).addClass('active-item');
+        
         if(pagina_exibicao_produtos){
+            $('#bloco_produtos').html('');
             carregaProdutos();
         }else{
             document.location = '/?ambiente='+v_ambiente;
@@ -130,14 +145,30 @@
     }
 
     function filtraProdutosPorTipo (filtro_id) {
-        v_tipo = filtro_id;
+        if(v_tipo==filtro_id){
+            v_tipo = null;
+        }else{
+            v_tipo = filtro_id;
+        }
         next_page = '/produtos/data';
-        $('.menu_tipos').removeClass('active-item');
-        $('#item_tipo_'+filtro_id).addClass('active-item');
+        
         if(pagina_exibicao_produtos){
+            $('#bloco_produtos').html('');
             carregaProdutos();
         }else{
-            document.location = '/?tipo='+v_ambiente;
+            document.location = '/?tipo='+v_tipo;
+        }
+    }
+
+    function ativaDesativaMenu(){
+        $('.menu_tipos').removeClass('active-item');
+        if(v_tipo){
+            $('#item_tipo_'+v_tipo).addClass('active-item');
+        }
+
+        $('.menu_ambientes').removeClass('active-item');
+        if(v_ambiente){
+            $('#item_ambiente_'+v_ambiente).addClass('active-item');
         }
     }
 

@@ -1,7 +1,6 @@
 @extends('site')
 @section('title') Home :: @parent @stop
 @section('content')
-
       <div class="row">
         <div class="row">
         <div class="col-sm-12 col-md-8">
