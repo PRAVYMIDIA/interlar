@@ -23,7 +23,7 @@ class AppServiceProvider extends ServiceProvider
         $tipos          = $tipos->lists('nome','id')->all();
 
         $banner     = new Banner();
-        $banner     = $banner->orderByRaw("RAND()")->first();
+        $banner     = $banner->where('dtinicio','<=',date('Y-m-d'))->where('dtfim','>=',date('Y-m-d'))->orderByRaw("RAND()")->first();
 
         view()->share('ambientes', $ambientes);
         view()->share('tipos', $tipos);

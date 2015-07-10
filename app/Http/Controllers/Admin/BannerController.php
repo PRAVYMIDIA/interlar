@@ -83,11 +83,11 @@ class BannerController extends AdminController {
      */
     public function getEdit($id)
     {
-        $banner = Banner::find($id);
+        $banner_edit = Banner::find($id);
 
         $title = 'Editar Banner';
 
-        return view('admin.banner.create_edit',compact('banner','title'));
+        return view('admin.banner.create_edit',compact('banner_edit','title'));
     }
 
     /**
@@ -138,10 +138,10 @@ class BannerController extends AdminController {
 
     public function getDelete($id)
     {
-        $banner = Banner::find($id);
+        $banner_edit = Banner::find($id);
         $title = "Remover Banner";
         // Show the page
-        return view('admin.banner.delete', compact('banner','title'));
+        return view('admin.banner.delete', compact('banner_edit','title'));
     }
 
     /**

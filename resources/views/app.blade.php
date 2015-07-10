@@ -24,6 +24,17 @@
           {{--href="{{asset('assets/site/css/justifiedGallery.min.css')}}"/>--}}
     {{--<link rel="stylesheet"--}}
           {{--href="{{asset('assets/site/css/lightbox.min.css')}}"/>--}}
+    <style type="text/css">
+    .loader {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 99990;
+        background: url('/assets/site/images/ring.svg') 50% 50% no-repeat rgba(250,250,250,0.5);
+    }
+    </style>
 
     @yield('styles')
 
@@ -59,16 +70,22 @@
     $('#flash-overlay-modal').modal();
     $('div.alert').not('.alert-danger').delay(3000).slideUp(300);
 
-    // Ajax loaders
-            
+    // Ajax loaders            
     function carregaLoading(){
-        $('body').append('<div class="loader"></div>');
+        // $('body').append('<div class="loader"></div>');
     }
+    $( document ).ajaxStart(function() {
+      $('body').append('<div class="loader"></div>');
+    });
 
-    function fechaLoading(){
-        $('.loader').hide('fast', function() {
+
+     $( document ).ajaxComplete(function() {
+      $('.loader').hide('fast', function() {
             $(this).remove();
         });
+    });
+    function fechaLoading(){
+       
     }  
             
 </script>
