@@ -58,7 +58,7 @@
               <input type="text" class="form-control" name="nome" placeholder="Nome" required="required">
             </div>
             <div class="form-group">
-              <input type="text" class="form-control" name="celular" placeholder="Celular" required="required">
+              <input type="text" class="form-control celular" name="celular" placeholder="Celular" required="required">
             </div>
             <div class="form-group">
               <input type="email" class="form-control" name="email" placeholder="E-Mail" required="required">
@@ -80,12 +80,24 @@
 @section('scripts')
     @parent
     <script src="{{asset('assets/site/js/jquery.imageLens.js')}}"></script>
+    <script src="{{asset('assets/site/js/jquery.mask.js')}}"></script>
 
     <script>
       var imagem_atual = '{{ '/images/produto/'.$produto->id.'/'.$produto->imagem }}';
         
 
         $(document).ready(function() {
+
+          var SPMaskBehavior = function (val) {
+            return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';
+          },
+          spOptions = {
+            onKeyPress: function(val, e, field, options) {
+                field.mask(SPMaskBehavior.apply({}, arguments), options);
+              }
+          };
+
+          $('.celular').mask(SPMaskBehavior, spOptions);
 
           $('#form-contato-vendedor').submit(function(event) {
                 
@@ -99,7 +111,7 @@
                       data: dados,
                     })
                     .done(function() {
-                      $('body').append('<div class="alert alert-success alert-dismissible" style="position:absolute; top:200px; left:40%;" role="alert">\
+                      $('body').append('<div class="alert alert-success alert-dismissible" style="position:absolute; top: 45%; left: 30%;" role="alert">\
   <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>\
   <strong>Sucesso!</strong> Sua mensagem foi enviada, em breve entraremos em contato!\
 </div>');
