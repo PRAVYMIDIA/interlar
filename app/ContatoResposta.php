@@ -3,7 +3,7 @@
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Contato extends Model
+class ContatoResposta extends Model
 {
     protected $table = "contato_respostas";
 	use SoftDeletes;
@@ -38,4 +38,6 @@ class Contato extends Model
     {
         return $this->belongsTo('App\User','user_id_created');
     }
+
+    
 }

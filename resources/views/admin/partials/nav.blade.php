@@ -58,6 +58,12 @@
             <span class="hidden-sm text"> Banners</span>
         </a>
     </li>
+    <li class="{{set_active('admin/contato*')}}">
+        <a href="{{url('admin/contato')}}">
+            <i class="fa fa-comments fa-fw"></i>
+            <span class="hidden-sm text"> Contatos</span>
+        </a>
+    </li>
     <!-- <li class="{{set_active('admin/news*')}}">
         <a href="#">
             <i class="glyphicon glyphicon-bullhorn"></i> Notícias

@@ -79,7 +79,7 @@
            
               <span style="color:#666666; font-size:18px;">Interlar Aricanduva</span><br>
               <span>Avenida Aricanduva, 5555 - Vila Matilde, <br>
-                    São Paulo - SP, 03527-900, Brasil</span>
+                    São Paulo - SP, 03527-900, Brasil</span><br>
               <span style="color:#666666; font-size:18px;clear:both;"> Tel.: (11) 3444-2000</span>
             
           </div>

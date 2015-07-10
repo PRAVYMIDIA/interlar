@@ -140,4 +140,13 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'namespace' => 'Admin
     Route::post('users/{id}/delete', 'UserController@postDelete');
     Route::get('users/data', 'UserController@data');
 
+
+    # Contatos
+    Route::get('contato', 'ContatoController@index');
+    Route::post('contato/create', 'ContatoController@postCreate');
+    Route::get('contato/{id}/visualizar', 'ContatoController@getVisualizar');
+    Route::get('contato/{id}/delete', 'ContatoController@getDelete');
+    Route::post('contato/{id}/delete', 'ContatoController@postDelete');
+    Route::get('contato/data', 'ContatoController@data');
+
 });

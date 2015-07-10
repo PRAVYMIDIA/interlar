@@ -48,4 +48,9 @@ class Contato extends Model
     {
         return $this->belongsTo('App\Loja');
     }
+
+    public function respostas()
+    {
+        return $this->hasMany('App\ContatoResposta');
+    }
 }
