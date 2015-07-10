@@ -99,8 +99,7 @@
             interval: 4000
         });
         var page = 1;
-        var next_page = '/produtos/data';
-        
+        var next_page = '/produtos/data';        
 
         function carregaProdutos(){
           if(v_loading == 0){

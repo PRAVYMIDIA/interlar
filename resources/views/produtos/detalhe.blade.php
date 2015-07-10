@@ -52,14 +52,16 @@
           <div class="col-md-12" style="background-color:#FFF; margin-bottom:30px;">
             <h4 class="text-center" style="color:#666666;">Fale com um vendedor</h4>
             {!! Form::open(array('url'=>'/emails/vendedor','id'=>'form-contato-vendedor')) !!}
+            {!! Form::hidden('produto_id',$produto->id) !!}
+            {!! Form::hidden('loja_id',NULL) !!}
             <div class="form-group">
-              <input type="text" class="form-control" name="nome" placeholder="Nome">
+              <input type="text" class="form-control" name="nome" placeholder="Nome" required="required">
             </div>
             <div class="form-group">
-              <input type="text" class="form-control" name="celular" placeholder="Celular">
+              <input type="text" class="form-control" name="celular" placeholder="Celular" required="required">
             </div>
             <div class="form-group">
-              <input type="email" class="form-control" name="email" placeholder="E-Mail">
+              <input type="email" class="form-control" name="email" placeholder="E-Mail" required="required">
             </div>
             <div class="form-group">
               <textarea class="form-control" name="mensagem" placeholder="Mensagem" rows="4">
@@ -88,7 +90,36 @@
           $('#form-contato-vendedor').submit(function(event) {
                 
                     event.preventDefault();
-                    alert('Em desenvolvimento.');
+                    carregaLoading();
+                    var dados = jQuery( this ).serialize();
+
+                    $.ajax({
+                      url: '/contatos/vendedor',
+                      type: 'POST',
+                      data: dados,
+                    })
+                    .done(function() {
+                      $('body').append('<div class="alert alert-success alert-dismissible" style="position:absolute; top:200px; left:40%;" role="alert">\
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>\
+  <strong>Sucesso!</strong> Sua mensagem foi enviada, em breve entraremos em contato!\
+</div>');
+                      $('#form-contato-vendedor').each(function(index, el) {
+                        if($(el).attr('name')!='produto_id'){
+                          el.reset();
+                        }
+                      });
+                     
+                    })
+                    .fail(function() {
+                      $('body').append('<div class="alert alert-danger alert-dismissible" style="position:absolute; top:200px; left:40%;" role="alert">\
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>\
+  <strong>Erro!</strong> Houve algum problema de conexão, por favor tente mais tarde!\
+</div>');
+                    })
+                    .always(function() {
+                      fechaLoading();
+                    });
+                    
                 
         });
           

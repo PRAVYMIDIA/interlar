@@ -31,6 +31,8 @@ Route::get('busca',  'HomeController@busca');
 
 Route::post('emails/salvar',  'EmailsController@salvar');
 
+Route::post('contatos/vendedor',  'ContatosController@vendedor');
+
 
 Route::controllers([
     'auth' => 'Auth\AuthController',

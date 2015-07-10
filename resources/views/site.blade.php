@@ -77,6 +77,8 @@
         });
     }
 
+    
+
     var pagina_exibicao_produtos = {{ isset($produto_grade)?1:0}};
 
     var v_termo = '{{ isset($termo)?$termo:null }}';
@@ -123,16 +125,25 @@
         });  
     });
 
+    function atualizaQueryString(){
+        if (history.pushState) {
+            var newurl = '/?ambiente='+v_ambiente+'&tipo='+v_tipo+'&termo='+v_termo;
+            window.history.pushState({path:newurl},'',newurl);
+        }
+    }
+
     function filtraProdutosPorAmbiente (filtro_id) {
         if(v_ambiente != filtro_id){
             v_ambiente = filtro_id;
         }else{
             v_ambiente = null;
         }
+
         next_page = '/produtos/data';
         
         if(pagina_exibicao_produtos){
             $('#bloco_produtos').html('');
+            atualizaQueryString();
             carregaProdutos();
         }else{
             document.location = '/?ambiente='+v_ambiente;
@@ -149,6 +160,7 @@
         
         if(pagina_exibicao_produtos){
             $('#bloco_produtos').html('');
+            atualizaQueryString();
             carregaProdutos();
         }else{
             document.location = '/?tipo='+v_tipo;
