@@ -48,7 +48,7 @@
             @endif
             </div>
           @endif
-      </div> <!-- /. row -->
+      </div> <!-- /. row -->      
 @yield('content')
 </div>
 @include('partials.footer')
