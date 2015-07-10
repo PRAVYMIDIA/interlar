@@ -61,6 +61,10 @@ class HomeController extends Controller {
 		return view('pages.home', compact('lojas','produto_grade','tipo_id','ambiente_id')); 
 	}
 
+	public function localizacao(){
+		return view('pages.localizacao');
+	}
+
 	/**
 	 * Busca de produtos
 	 *

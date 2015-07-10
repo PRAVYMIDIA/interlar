@@ -51,7 +51,7 @@
         <div class="col-md-3">
           <div class="col-md-12" style="background-color:#FFF; margin-bottom:30px;">
             <h4 class="text-center" style="color:#666666;">Fale com um vendedor</h4>
-            {!! Form::open(array('url'=>'/emails/vendedor','id'=>'form-contato-vendedor')) !!}
+            {!! Form::open(array('url'=>'/contatos/vendedor','id'=>'form-contato-vendedor')) !!}
             {!! Form::hidden('produto_id',$produto->id) !!}
             {!! Form::hidden('loja_id',NULL) !!}
             <div class="form-group">

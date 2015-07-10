@@ -32,6 +32,9 @@ Route::get('busca',  'HomeController@busca');
 Route::post('emails/salvar',  'EmailsController@salvar');
 
 Route::post('contatos/vendedor',  'ContatosController@vendedor');
+Route::post('contatos/contato',  'ContatosController@contato');
+
+Route::get('localizacao', 'HomeController@localizacao');
 
 
 Route::controllers([
