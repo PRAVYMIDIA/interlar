@@ -49,7 +49,7 @@ class HomeController extends Controller {
 
 		$tipo_id = null;
 		if(!empty($request->input('tipo'))){
-			$tipo_id = $request->input('tipo_id');
+			$tipo_id = $request->input('tipo');
 		}
 		$ambiente_id = null;
 		if(!empty($request->input('ambiente'))){
@@ -58,7 +58,7 @@ class HomeController extends Controller {
 
 		$produto_grade = 1;
 
-		return view('pages.home', compact('lojas','produto_grade')); 
+		return view('pages.home', compact('lojas','produto_grade','tipo_id','ambiente_id')); 
 	}
 
 	/**

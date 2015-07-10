@@ -133,7 +133,6 @@
         
         if(pagina_exibicao_produtos){
             $('#bloco_produtos').html('');
-            ativaDesativaMenu();
             carregaProdutos();
         }else{
             document.location = '/?ambiente='+v_ambiente;
@@ -150,7 +149,6 @@
         
         if(pagina_exibicao_produtos){
             $('#bloco_produtos').html('');
-            ativaDesativaMenu();
             carregaProdutos();
         }else{
             document.location = '/?tipo='+v_tipo;

@@ -104,6 +104,7 @@
 
         function carregaProdutos(){
           if(v_loading == 0){
+            ativaDesativaMenu();
             if(next_page){
               v_loading = 1;
               carregaLoading();
