@@ -198,13 +198,13 @@
             url: '/emails/salvar',
             type: 'POST',
             dataType: 'json',
-            data: {_token: '{{{ csrf_token() }}}', email:v_email},
+            data: {_token: '{{{ csrf_token() }}}', email:v_email, pagina: '{{ Request::path() }}', ambiente: v_ambiente, tipo: v_tipo},
         })
         .done(function(retorno) {
             fechaLoading();
             if(retorno.erro){
                 $('#emailnewsletter').parent().addClass('has-error');
-                $('#emailnewsletter').val('Houve algum erro ao salvar seu e-mail.');
+                $('#emailnewsletter').val(retorno.erro);
 
                 setTimeout(function() {
                    $('#emailnewsletter').val(''); 

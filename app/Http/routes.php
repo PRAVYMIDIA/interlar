@@ -149,4 +149,12 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'namespace' => 'Admin
     Route::post('contato/{id}/delete', 'ContatoController@postDelete');
     Route::get('contato/data', 'ContatoController@data');
 
+    # Emails
+    Route::get('email', 'EmailController@index');
+    Route::get('email/listagem', 'EmailController@getNewsletter');
+    Route::get('email/{id}/delete', 'EmailController@getDelete');
+    Route::post('email/{id}/delete', 'EmailController@postDelete');
+    Route::get('email/data', 'EmailController@data');
+
+
 });

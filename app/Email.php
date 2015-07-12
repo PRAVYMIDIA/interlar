@@ -19,4 +19,11 @@ class Email extends Model
      * @var array
      */
     protected $dates = ['deleted_at'];
+
+    public function setProdutoTipoIdAttribute($value){
+            $this->attributes['produto_tipo_id'] = ($value != "" && $value != "0" && !empty($value) ) ? $value  : NULL;
+    }
+    public function setAmbienteIdAttribute($value){
+            $this->attributes['ambiente_id'] = ($value != "" && $value != "0" && !empty($value) ) ? $value  : NULL;
+    }
 }

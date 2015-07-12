@@ -1,25 +1,32 @@
 @extends('admin.layouts.default')
 
 {{-- Web site Title --}}
-@section('title') Contato :: @parent @stop
+@section('title') Email :: @parent @stop
 
 {{-- Content --}}
 @section('main')
     <div class="page-header">
         <h3>
-            Contato
-            
+            Emails
+            <div class="pull-right">
+                <div class="pull-right">
+                    <a href="{{{ URL::to('admin/email/listagem') }}}" target="_blank"
+                       class="btn btn-sm  btn-success"><span
+                                class="glyphicon glyphicon-download-alt"></span> Exportar</a>
+                </div>
+            </div>
         </h3>
     </div>
 
     <table id="table" class="table table-striped table-hover">
         <thead>
         <tr>
-            <th>Nome</th>
-            <th width="10%">Qtd. Respostas</th>
-            <th width="10%">Meio</th>
-            <th>Enviada em</th>
-            <th width="10%">{{ trans("admin/admin.action") }}</th>
+            <th>E-Mail</th>
+            <th width="20%">Página</th>
+            <th width="20%">Ambiente</th>
+            <th width="15%">Produto</th>
+            <th width="10%">Cadastrado em</th>
+            <th width="5%">{{ trans("admin/admin.action") }}</th>
         </tr>
         </thead>
         <tbody></tbody>
@@ -38,7 +45,15 @@
                 "language": datatable_lang,
                 "processing": true,
                 "serverSide": true,
-                "ajax": "{{ URL::to('admin/contato/data/') }}",
+                "ajax": "{{ URL::to('admin/email/data/') }}",
+                "columns": [
+                {data: '0',  "orderable": true, "searchable":true},
+                {data: '1', "orderable": true, "searchable":true},
+                {data: '2', "orderable": true, "searchable":true},
+                {data: '3', "orderable": true, "searchable":false},
+                {data: '4', "orderable": true, "searchable":false},
+                {data: '5', "orderable": false, "searchable":false}
+                ],
                 "fnDrawCallback": function (oSettings) {
                     $(".iframe").colorbox({
                         iframe: true,
@@ -64,7 +79,7 @@
                     $('#table #row').each(function (i) {
                         navigationList = navigationList + ',' + $(this).val();
                     });
-                    $.getJSON("{{ URL::to('admin/contato/reorder') }}", {
+                    $.getJSON("{{ URL::to('admin/email/reorder') }}", {
                         list: navigationList
                     }, function (data) {
                     });

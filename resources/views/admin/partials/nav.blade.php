@@ -64,6 +64,12 @@
             <span class="hidden-sm text"> Contatos</span>
         </a>
     </li>
+    <li class="{{set_active('admin/email*')}}">
+        <a href="{{url('admin/email')}}">
+            <i class="fa fa-envelope-o fa-fw"></i>
+            <span class="hidden-sm text"> Newsletter</span>
+        </a>
+    </li>
     <!-- <li class="{{set_active('admin/news*')}}">
         <a href="#">
             <i class="glyphicon glyphicon-bullhorn"></i> Notícias

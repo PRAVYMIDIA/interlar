@@ -30,7 +30,8 @@
         "yajra\\Datatables\\DatatablesServiceProvider",
         "Laracasts\\Flash\\FlashServiceProvider",
         "Barryvdh\\Debugbar\\ServiceProvider",
-        "Intervention\\Image\\ImageServiceProvider"
+        "Intervention\\Image\\ImageServiceProvider",
+        "Maatwebsite\\Excel\\ExcelServiceProvider"
     ],
     "eager": [
         "Illuminate\\Auth\\AuthServiceProvider",
@@ -50,7 +51,8 @@
         "yajra\\Datatables\\DatatablesServiceProvider",
         "Laracasts\\Flash\\FlashServiceProvider",
         "Barryvdh\\Debugbar\\ServiceProvider",
-        "Intervention\\Image\\ImageServiceProvider"
+        "Intervention\\Image\\ImageServiceProvider",
+        "Maatwebsite\\Excel\\ExcelServiceProvider"
     ],
     "deferred": {
         "command.app.name": "Illuminate\\Foundation\\Providers\\ArtisanServiceProvider",

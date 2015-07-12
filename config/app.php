@@ -152,6 +152,8 @@ return [
 		Laracasts\Flash\FlashServiceProvider::class,
 		Barryvdh\Debugbar\ServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
+        // Excel
+        Maatwebsite\Excel\ExcelServiceProvider::class,
 
     ],
 
@@ -210,6 +212,9 @@ return [
 		'Flash'     =>  laracasts\Flash\Flash::class,
 		'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'Image' => Intervention\Image\Facades\Image::class,
+
+        
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
 
     ],
 
