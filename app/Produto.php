@@ -129,6 +129,10 @@ class Produto extends Model
         return $this->belongsToMany('App\Ambiente');
     }
 
+    public function lojasTipos(){
+        return $this->belongsToMany('App\LojaTipo','produtos_lojas_tipos');
+    }
+
 
 
 }

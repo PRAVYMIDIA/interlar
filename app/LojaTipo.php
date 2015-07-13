@@ -26,4 +26,8 @@ class LojaTipo extends Model
         return $this->hasMany('App\Loja','loja_tipo_id');
     }
 
+    public function produtos(){
+        return $this->belongsToMany('App\Produto','produtos_lojas_tipos');
+    }
+
 }

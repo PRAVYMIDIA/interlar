@@ -47,12 +47,12 @@
                 "serverSide": true,
                 "ajax": "{{ URL::to('admin/email/data/') }}",
                 "columns": [
-                {data: '0',  "orderable": true, "searchable":true},
-                {data: '1', "orderable": true, "searchable":true},
-                {data: '2', "orderable": true, "searchable":true},
-                {data: '3', "orderable": true, "searchable":false},
-                {data: '4', "orderable": true, "searchable":false},
-                {data: '5', "orderable": false, "searchable":false}
+                    {data: '0',  "orderable": true, "searchable":true},
+                    {data: '1', "orderable": true, "searchable":true},
+                    {data: '2', "orderable": true, "searchable":true},
+                    {data: '3', "orderable": true, "searchable":false},
+                    {data: '4', "orderable": true, "searchable":false},
+                    {data: '5', "orderable": false, "searchable":false}
                 ],
                 "fnDrawCallback": function (oSettings) {
                     $(".iframe").colorbox({

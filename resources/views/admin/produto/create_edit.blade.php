@@ -17,6 +17,7 @@
 	<li class="active"><a href="#tab-general" data-toggle="tab">Produto</a></li>
 	<li><a href="#tab-imagens" data-toggle="tab">Imagens Extras</a></li>
 	<li><a href="#tab-ambientes" data-toggle="tab">Ambientes</a></li>
+	<li><a href="#tab-lojas" data-toggle="tab">Lojas</a></li>
 </ul>
 <!-- ./ tabs -->
 {{-- Edit Produto Form --}}
@@ -168,6 +169,23 @@
 		</div>
 		<!-- ./ Ambientes tab -->
 
+		<!-- Lojas tab -->
+		<div class="tab-pane" id="tab-lojas">
+			<br>
+			<select class="form-control" multiple="multiple" size="10" name="produto_lojatipo[]">
+			@foreach($lojastipos as $id => $lojatipo)
+		      <option value="{{$id}}"
+		      @if(isset($produtos_lojastipos))
+		      	@if(isset($produtos_lojastipos[$id]))
+		      		selected="selected"
+		      	@endif
+		      @endif
+		      >{{$lojatipo}}</option>
+		    @endforeach
+		    </select>
+		</div>
+		<!-- ./ Lojas tab -->
+
 			<!-- ./ tabs content -->
 
 			<!-- Form Actions -->
@@ -206,6 +224,11 @@
 			var bootstrapduallist = $('select[name="produto_ambiente[]"]').bootstrapDualListbox({
 				 nonSelectedListLabel: 'Ambientes Disponíveis',
   				selectedListLabel: 'Ambientes Selecionados',
+			});
+
+			var bootstrapduallist2 = $('select[name="produto_lojatipo[]"]').bootstrapDualListbox({
+				 nonSelectedListLabel: 'Lojas (Segmentos) Disponíveis',
+  				selectedListLabel: 'Lojas (Segmentos) Selecionadas',
 			});
 		});
 		function remover (imagem_id) {

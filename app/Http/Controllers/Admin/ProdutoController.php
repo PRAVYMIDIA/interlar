@@ -6,6 +6,7 @@ use App\ProdutoTipo;
 use App\ProdutoImagem;
 use App\Fornecedor;
 use App\Ambiente;
+use App\LojaTipo;
 use Illuminate\Support\Facades\Input;
 use App\Http\Requests\Admin\ProdutoRequest;
 use App\Http\Requests\Admin\DeleteRequest;
@@ -13,6 +14,9 @@ use App\Http\Requests\Admin\ReorderRequest;
 use Illuminate\Support\Facades\Auth;
 use Datatables;
 use DB;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+
 
 class ProdutoController extends AdminController {
 
@@ -40,8 +44,11 @@ class ProdutoController extends AdminController {
 
         $ambientes = new Ambiente();
         $ambientes = $ambientes->lists('nome','id')->all();
+
+        $lojastipos = new LojaTipo();
+        $lojastipos = $lojastipos->lists('nome','id')->all();
         // Show the page
-        return view('admin.produto.create_edit', compact('title','produtos_tipos','fornecedores','ambientes'));
+        return view('admin.produto.create_edit', compact('title','produtos_tipos','fornecedores','lojastipos'));
     }
 
     /**
@@ -86,6 +93,11 @@ class ProdutoController extends AdminController {
             $produto->ambientes()->sync($request->produto_ambiente);
         }
 
+        # Salva o relacionamento muitos pra muitos do produtos->lojasTipos
+        if($request->produto_lojatipo){
+            $produto->lojasTipos()->sync($request->produto_lojatipo);
+        }
+
         // Demais imagens do produto
         $imagens = $request->produto_imagem;
 
@@ -118,6 +130,9 @@ class ProdutoController extends AdminController {
         $ambientes = new Ambiente();
         $ambientes = $ambientes->lists('nome','id')->all();
 
+        $lojastipos = new LojaTipo();
+        $lojastipos = $lojastipos->lists('nome','id')->all();
+
         $produtos_ambientes = array();
         if( $produto->ambientes ){
             foreach ($produto->ambientes as $ambiente) {
@@ -125,9 +140,16 @@ class ProdutoController extends AdminController {
             }
         }
 
+        $produtos_lojastipos = array();
+        if( $produto->lojasTipos ){
+            foreach ($produto->lojasTipos as $lojatipo) {
+                $produtos_lojastipos[$lojatipo->id] = $lojatipo->nome;
+            }
+        }
+
         $title = 'Editar Produto';
 
-        return view('admin.produto.create_edit',compact('produto','title','produtos_tipos','fornecedores','ambientes','produtos_ambientes'));
+        return view('admin.produto.create_edit',compact('produto','title','produtos_tipos','fornecedores','ambientes','lojastipos','produtos_lojastipos','produtos_ambientes'));
     }
 
     /**
@@ -161,11 +183,21 @@ class ProdutoController extends AdminController {
         $produto -> save();
 
         # Salva o relacionamento muitos pra muitos do produtos->ambientes
+        $produto_ambiente = array();
         if($request->produto_ambiente){
-            
-            // $produto->ambientes()->attach($ambiente_id,['user_id_created' => Auth::id()]);
-            $produto->ambientes()->sync($request->produto_ambiente);
-        }
+            $produto_ambiente = $request->produto_ambiente;
+        }    
+        // $produto->ambientes()->attach($ambiente_id,['user_id_created' => Auth::id()]);
+        $produto->ambientes()->sync($produto_ambiente);
+        
+
+
+        # Salva o relacionamento muitos pra muitos do produtos->lojasTipos
+
+        $produto_lojatipo = ($request->produto_lojatipo? $request->produto_lojatipo: array());
+        
+        $produto->lojasTipos()->sync($produto_lojatipo);
+        
 
         // Demais imagens do produto
         $imagens = $request->produto_imagem;
@@ -220,33 +252,52 @@ class ProdutoController extends AdminController {
      *
      * @return Datatables JSON
      */
-    public function data()
+    public function data(Request $request)
     {
         $produto = Produto::leftJoin('produtos_tipos','produtos_tipos.id','=','produtos.produto_tipo_id')
             // ->leftJoin('fornecedores','fornecedores.id','=','produtos.fornecedor_id')
             ->select(array(
                                         'produtos.id',
                                         'produtos.nome', 
-                                        'produtos_tipos.nome as tipo', 
+                                        'produtos_tipos.nome as nometipo', 
                                         'produtos.valor',
                                         'produtos.valor_promocional',
                                         'produtos.parcelas',
                                         'produtos.imagem',
-                                        DB::raw('DATE_FORMAT(produtos.created_at,\'%d/%m/%Y %H:%i\') as criado_em')
+                                        'produtos.created_at'
                                         )
                                     )
             ->orderBy('produtos.nome', 'ASC');
 
-        return Datatables::of($produto)
+        $dt = Datatables::of($produto);
 
-            ->edit_column('valor_promocional','{!! $valor_promocional!=\'\'? \'<span class="label label-danger">\'.  $valor_promocional. \'</span>\' : \'\' !!}')
+        $dt->edit_column('valor_promocional','{!! $valor_promocional!=\'\'? \'<span class="label label-danger">\'.  $valor_promocional. \'</span>\' : \'\' !!}')
             ->edit_column('imagem','{!! strlen($imagem)? \'<img src="/images/produto/\' . $id . \'/thumb_200x200_\' . $imagem . \'" width="100" />\':\'\' !!}')
+            ->editColumn('created_at', function ($produto) {
+                return $produto->created_at ? with(new Carbon($produto->created_at))->format('d/m/Y H:i') : '';
+
+            })
             ->add_column('actions', '<a href="{{{ URL::to(\'admin/produto/\' . $id . \'/edit\' ) }}}" class="btn btn-success btn-xs iframe" title="{{ trans("admin/modal.edit") }}" ><span class="glyphicon glyphicon-pencil"></span></a>
                     <a href="{{{ URL::to(\'admin/produto/\' . $id . \'/delete\' ) }}}" class="btn btn-xs btn-danger iframe" title="{{ trans("admin/modal.delete") }}"><span class="glyphicon glyphicon-trash"></span></a>
                     <input type="hidden" name="row" value="{{$id}}" id="row">')
-            ->remove_column('id')
+            ->remove_column('id');
 
-            ->make();
+        $dt->filter(function ($q) use ($request) {
+            if ( $term = strtolower($request['search']['value']) ) {
+                $q->where('produtos.nome', 'like', "%{$term}%");
+                $q->Orwhere('produtos_tipos.nome', 'like', "%{$term}%");
+                $q->Orwhere('produtos.valor', 'like', "%{$term}%");
+                $q->Orwhere('produtos.valor_promocional', 'like', "%{$term}%");
+                $q->Orwhere('produtos.parcelas', 'like', "%{$term}%");
+                try {
+                    $date = new \Carbon\Carbon($term);
+                    $q->orWhere(DB::raw('DATE(produtos.created_at)'), '=', $date->format('Y-m-d'));
+                } catch (Exception $e) {
+                    // \_(''/)_/
+                }
+            }
+        });
+        return     $dt->make();
     }
 
     /**

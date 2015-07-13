@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Datatables;
 use DB;
 use Excel;
+use Illuminate\Http\Request;
 
 class EmailController extends AdminController {
 
@@ -77,18 +78,25 @@ class EmailController extends AdminController {
      *
      * @return Datatables JSON
      */
-    public function data()
+    public function data(Request $request)
     {
         $email = Email::select(array('emails.id','emails.email','emails.pagina','ambientes.nome','produtos_tipos.nome as tipo',DB::raw('DATE_FORMAT(emails.created_at,\'%d/%m/%Y %H:%i\') as criado_em')))
             ->leftJoin('ambientes','ambientes.id','=','emails.ambiente_id')
             ->leftJoin('produtos_tipos','produtos_tipos.id','=','emails.produto_tipo_id')
             ->orderBy('emails.id', 'DESC');
 
-        return Datatables::of($email)
+        $datatables = Datatables::of($email)
             ->add_column('actions', '<a href="{{{ URL::to(\'admin/email/\' . $id . \'/delete\' ) }}}" class="btn btn-xs btn-danger iframe" title="{{ trans("admin/modal.delete") }}"><span class="glyphicon glyphicon-trash"></span></a>')
-            ->remove_column('id')
+            ->remove_column('id');
+        
 
-            ->make();
+        // Global search function
+        /*if ($keyword = $request->input('search')) {
+            $datatables->filterColumn('tipo', 'whereRaw', "produtos_tipos.nome IS NOT NULL");
+            // $datatables->filterColumn('tipo', 'whereRaw', "produtos_tipos.nome like ?", ["%{$keyword}%"]);
+        }*/
+
+        return    $datatables->make();
     }
 
     

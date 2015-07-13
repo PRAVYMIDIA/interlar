@@ -48,6 +48,17 @@
                 "language": datatable_lang,
                 "processing": true,
                 "serverSide": true,
+                "columns": [
+
+                    {data: '0',  "orderable": true, "searchable":true, name:'produtos.nome'},
+                    {data: '1', "orderable": true, "searchable":true, name:'produtos_tipos.nome'},
+                    {data: '2', "orderable": true, "searchable":true, name:'produtos.valor'},
+                    {data: '3', "orderable": true, "searchable":true, name:'produtos.valor_promocional'},
+                    {data: '4', "orderable": true, "searchable":true, name:'produtos.parcelas'},
+                    {data: '5', "orderable": false, "searchable":false, name:'produtos.imagem'},
+                    {data: '6', "orderable": false, "searchable":true, name:'produtos.created_at'},
+                    {data: '7', "orderable": false, "searchable":false},
+                ],
                 "ajax": "{{ URL::to('admin/produto/data/') }}",
                 "fnDrawCallback": function (oSettings) {
                     $(".iframe").colorbox({
