@@ -26,13 +26,46 @@ class ProdutosController extends Controller {
 		if(!empty($request->input('tipo_id'))){
 			$produtos->where('produto_tipo_id','=',$request->input('tipo_id'));
 		}
+
 		if(!empty($request->input('ambiente_id'))){
 			$produtos->whereHas('ambientes',function($query )use ($request) {
 				$query->where('ambiente_id','=',$request->input('ambiente_id'));
 			});
 		}
+
+		if(!empty($request->input('loja_tipo_id'))){
+			$produtos->whereHas('lojasTipos',function($query )use ($request) {
+				$query->where('loja_tipo_id','=',$request->input('loja_tipo_id'));
+			});
+		}
 		if(!empty($request->input('termo'))){
 			$produtos->where('nome','like','%'.$request->input('termo').'%');
+		}
+
+		if(!empty($request->input('ordenacao'))){
+			switch ($request->input('ordenacao')) {
+				case 'menor_preco':
+					$produtos->orderBy('valor_promocional','ASC');
+					$produtos->orderBy('valor','ASC');
+					break;
+				case 'maior_preco':
+					$produtos->orderBy('valor_promocional','DESC');
+					$produtos->orderBy('valor','DESC');
+					break;
+				case 'visitas':
+					/**
+					* @TODO salvar visitas e ordenar
+					*/
+					$produtos->orderBy('id','DESC');
+					break;
+				
+				default:
+					$produtos->orderBy('id','DESC');
+					break;
+			}
+
+		}else{
+			$produtos->orderBy('id','DESC');
 		}
 
 		$produtos 		= $produtos->paginate(9);

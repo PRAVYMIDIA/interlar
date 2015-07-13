@@ -61,13 +61,13 @@
               </ul>
             </div>
           </div>
-          <!-- Escondido pq ainda não estava com nada definido -->
-          <div class="row" style="display:none;">
+          
+          <div class="row">
             <div class="col-sm-12 hidden-xs">
               <ul class="nav nav-pills nav-stacked" style="margin-top:15px;">
                 <li role="presentation" class="active"><a href="#">Lojas</a></li>
-                @foreach($lojas as $id=>$loja)
-                <li role="presentation" class="{{set_active('loja/'.str_slug($loja, '-').'*')}}-item"> <a href="/lojas/{{str_slug($loja, '-').'/'. $id }}">{{$loja}}</a> </li>
+                @foreach($lojastipos as $id=>$loja)
+                <li role="presentation"  class="menu_lojatipos" id="item_lojatipo_{{$id}}"> <a href="#" lojatipo="{{ $id }}" class="bt_lojatipo">{{$loja}}</a> </li>
                 @endforeach
               </ul>
             </div>
@@ -75,6 +75,19 @@
           <br />
         </div> <!-- /. col-lg-3 -->
         <div class="col-lg-9">
+          <div id="header_produtos" style="display:none;height: 25px;">
+            <h5 style="color:#999999">
+              <div id="bloco_breadcrumb" class="pull-left">
+                
+              </div>
+              <div id="bloco_ordenacao" class="pull-right">
+                Ordenar por:
+                <a href="#" class="bt_ordenacao" class="btn btn-link" ordenacao="menor_preco" id="bt_ordenacao_menor_preco">Menor Preço</a>
+                <a href="#" class="bt_ordenacao" class="btn btn-link" ordenacao="maior_preco" id="bt_ordenacao_maior_preco">Maior Preço</a>
+                <a href="#" class="bt_ordenacao" class="btn btn-link" ordenacao="visitas" id="bt_ordenacao_visitas">Mais Visitados</a>
+              </div>
+            </h5>
+          </div>
           <div class="row" id="bloco_produtos">
             
            
@@ -110,7 +123,7 @@
 
               $.ajax({
                 url: next_page,
-                data: {termo: v_termo,ambiente_id: v_ambiente, tipo_id: v_tipo}
+                data: {termo: v_termo,ambiente_id: v_ambiente, tipo_id: v_tipo, loja_tipo_id: v_lojatipo, ordenacao: v_ordenacao }
               })
               .done(function(retorno) {
                 next_page = retorno.next_page_url;

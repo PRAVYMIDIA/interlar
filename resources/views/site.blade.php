@@ -84,6 +84,8 @@
     var v_termo = '{{ isset($termo)?$termo:null }}';
     var v_ambiente = {{ isset($ambiente_id)?($ambiente_id?$ambiente_id:'null'):'null' }};
     var v_tipo = {{ isset($tipo_id)?($tipo_id?$tipo_id:'null'):'null' }};
+    var v_lojatipo = {{ isset($loja_tipo_id)?($loja_tipo_id?$loja_tipo_id:'null'):'null' }};
+    var v_ordenacao = {{ isset($ordenacao)?($ordenacao?$ordenacao:'null'):'null' }};
     var v_loading = 0;
 
     $(document).ready(function() {
@@ -122,12 +124,53 @@
         $('.bt_tipo').click(function(e) {
             e.preventDefault();
             filtraProdutosPorTipo( $(this).attr('tipo') );
+        });
+        $('.bt_lojatipo').click(function(e) {
+            e.preventDefault();
+            filtraProdutosPorLojaTipo( $(this).attr('lojatipo') );
+        });
+
+        $('.bt_ordenacao').click(function(e) {
+            e.preventDefault();
+            ordenaResultados( $(this).attr('ordenacao') );
         });  
     });
 
     function atualizaQueryString(){
         if (history.pushState) {
-            var newurl = '/?ambiente='+v_ambiente+'&tipo='+v_tipo+'&termo='+v_termo;
+            var newurl = '';
+            if(v_ambiente){
+                newurl += 'ambiente='+v_ambiente;
+            } 
+            if(v_tipo){
+                if(newurl.length > 0){
+                    newurl += '&';
+                }
+                newurl += 'tipo='+v_tipo;
+            }
+            if(v_lojatipo){
+                if(newurl.length > 0){
+                    newurl += '&';
+                }
+                newurl += 'lojatipo='+v_lojatipo;
+            }
+            if(v_termo){
+                if(newurl.length > 0){
+                    newurl += '&';
+                }
+                newurl += 'termo='+v_termo;
+            }
+
+            if(v_ordenacao){
+                if(newurl.length > 0){
+                    newurl += '&';
+                }
+                newurl += 'ordenacao='+v_ordenacao;
+            }
+
+            if(newurl.length > 0){
+                newurl = '/?'+newurl;
+            }
             window.history.pushState({path:newurl},'',newurl);
         }
     }
@@ -167,15 +210,70 @@
         }
     }
 
-    function ativaDesativaMenu(){
-        $('.menu_tipos').removeClass('active-item');
-        if(v_tipo){
-            $('#item_tipo_'+v_tipo).addClass('active-item');
+    function filtraProdutosPorLojaTipo (filtro_id) {
+        if(v_lojatipo==filtro_id){
+            v_lojatipo = null;
+        }else{
+            v_lojatipo = filtro_id;
         }
+        next_page = '/produtos/data';
+        
+        if(pagina_exibicao_produtos){
+            $('#bloco_produtos').html('');
+            atualizaQueryString();
+            carregaProdutos();
+        }else{
+            document.location = '/?lojatipo='+v_lojatipo;
+        }
+    }
+
+    function ordenaResultados (ordenacao) {
+        if(v_ordenacao == ordenacao){
+            v_ordenacao = null;
+        }else{
+            v_ordenacao = ordenacao;
+        }
+        next_page = '/produtos/data';
+        
+        if(pagina_exibicao_produtos){
+            $('#bloco_produtos').html('');
+            atualizaQueryString();
+            carregaProdutos();
+        }else{
+            document.location = '/?lojatipo='+v_lojatipo;
+        }
+    }
+
+    function ativaDesativaMenu(){
+        var texto_breadcrumb = '';
 
         $('.menu_ambientes').removeClass('active-item');
         if(v_ambiente){
             $('#item_ambiente_'+v_ambiente).addClass('active-item');
+            texto_breadcrumb += $('#item_ambiente_'+v_ambiente).children().html();
+        }
+
+        $('.menu_tipos').removeClass('active-item');
+        if(v_tipo){
+            $('#item_tipo_'+v_tipo).addClass('active-item');
+            if(texto_breadcrumb.length){
+                texto_breadcrumb += ' &nbsp; &gt; &nbsp; ';
+            }
+            texto_breadcrumb += $('#item_tipo_'+v_tipo).children().html();
+        }
+
+        $('.menu_lojatipos').removeClass('active-item');
+        if(v_lojatipo){
+            $('#item_lojatipo_'+v_lojatipo).addClass('active-item');
+            if(texto_breadcrumb.length){
+                texto_breadcrumb += ' &nbsp; &gt; &nbsp; ';
+            }
+            texto_breadcrumb += $('#item_lojatipo_'+v_lojatipo).children().html();
+        }
+
+        if(texto_breadcrumb.length > 0){
+            $('#bloco_breadcrumb').html(texto_breadcrumb);
+            $('#header_produtos').show('fast');
         }
     }
 

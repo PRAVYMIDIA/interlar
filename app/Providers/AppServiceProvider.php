@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use App\Ambiente;
 use App\ProdutoTipo;
 use App\Banner;
+use App\LojaTipo;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -22,11 +23,15 @@ class AppServiceProvider extends ServiceProvider
         $tipos          = new ProdutoTipo();
         $tipos          = $tipos->lists('nome','id')->all();
 
+        $lojastipos          = new LojaTipo();
+        $lojastipos          = $lojastipos->lists('nome','id')->all();
+
         $banner     = new Banner();
         $banner     = $banner->where('dtinicio','<=',date('Y-m-d'))->where('dtfim','>=',date('Y-m-d'))->orderByRaw("RAND()")->first();
 
         view()->share('ambientes', $ambientes);
         view()->share('tipos', $tipos);
+        view()->share('lojastipos', $lojastipos);
         view()->share('banner', $banner);
 
     }
