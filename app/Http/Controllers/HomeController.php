@@ -60,9 +60,13 @@ class HomeController extends Controller {
 			$ambiente_id = $request->input('ambiente');
 		}
 
+		if(!empty($request->input('ordenacao'))){
+			$ordenacao = $request->input('ordenacao');
+		}
+
 		$produto_grade = 1;
 
-		return view('pages.home', compact('lojas','produto_grade','tipo_id','loja_tipo_id','ambiente_id')); 
+		return view('pages.home', compact('lojas','produto_grade','tipo_id','loja_tipo_id','ambiente_id','ordenacao')); 
 	}
 
 	public function localizacao(){

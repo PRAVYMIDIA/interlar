@@ -4,7 +4,7 @@ use App\Ambiente;
 use App\ProdutoTipo;
 use App\Produto;
 use App\Loja;
-// use App\Fornecedor;
+use App\Visita;
 use App\Banner;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent;
@@ -22,21 +22,48 @@ class ProdutosController extends Controller {
 	{
 
 		$produtos      	= new Produto();
+
 		$produtos 		= $produtos->with('fornecedor');
 		if(!empty($request->input('tipo_id'))){
 			$produtos->where('produto_tipo_id','=',$request->input('tipo_id'));
+
+			$produtoTipo = new ProdutoTipo();
+			$produtoTipo = $produtoTipo->find($request->input('tipo_id'));
+			if($produtoTipo){
+				$visita = new Visita();
+		        $visita->ip = $request->ip();
+		        $produtoTipo->visitas()->save($visita);
+			}
 		}
 
 		if(!empty($request->input('ambiente_id'))){
 			$produtos->whereHas('ambientes',function($query )use ($request) {
 				$query->where('ambiente_id','=',$request->input('ambiente_id'));
 			});
+
+			$ambiente = new Ambiente();
+			$ambiente = $ambiente->find($request->input('ambiente_id'));
+			if($ambiente){
+				$visita = new Visita();
+		        $visita->ip = $request->ip();
+		        $ambiente->visitas()->save($visita);
+			}
 		}
 
 		if(!empty($request->input('loja_tipo_id'))){
 			$produtos->whereHas('lojasTipos',function($query )use ($request) {
 				$query->where('loja_tipo_id','=',$request->input('loja_tipo_id'));
 			});
+
+
+			$lojatipo = new LojaTipo();
+			$lojatipo = $lojatipo->find($request->input('loja_tipo_id'));
+			if($lojatipo){
+				$visita = new Visita();
+		        $visita->ip = $request->ip();
+		        $lojatipo->visitas()->save($visita);
+			}
+
 		}
 		if(!empty($request->input('termo'))){
 			$produtos->where('nome','like','%'.$request->input('termo').'%');
@@ -53,10 +80,20 @@ class ProdutosController extends Controller {
 					$produtos->orderBy('valor','DESC');
 					break;
 				case 'visitas':
-					/**
-					* @TODO salvar visitas e ordenar
-					*/
-					$produtos->orderBy('id','DESC');
+					$produtos->select(	'id',
+										'valor_promocional',
+										'valor',
+										'parcelas',
+										'fornecedor_id',
+										'produto_tipo_id',
+										'nome',
+										'valor',
+										'descricao',
+										DB::raw("(SELECT COUNT(1) FROM visitas WHERE recurso_type = 'App\\\Produto' AND recurso_id = produtos.id) as visitas"),
+										'imagem'
+					);
+
+					$produtos->orderBy('visitas','DESC');
 					break;
 				
 				default:
@@ -87,9 +124,12 @@ class ProdutosController extends Controller {
 		return $produtos;
 	}
 
-	public function show($slug,$id)
+	public function show($slug,$id,Request $request)
     {
         $produto = Produto::find($id);
+        $visita = new Visita();
+        $visita->ip = $request->ip();
+        $produto->visitas()->save($visita);
 
         return view('produtos.detalhe', compact('produto'));
     }

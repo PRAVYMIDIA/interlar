@@ -23,6 +23,10 @@ class Produto extends Model
                             'imagem'
                         ];
 
+    public function visitas()
+    {
+        return $this->morphMany('App\Visita', 'recurso');
+    }
 
 	/**
      * The attributes that should be mutated to dates.
@@ -91,19 +95,19 @@ class Produto extends Model
     }
 
     public function thumb($largura=200, $altura=200,$qualidade = 60){
-        
-        $image_path = public_path() . '/images/produto/'.$this->attributes['id'].'/';
+        if(isset($this->attributes['id'])){
+            $image_path = public_path() . '/images/produto/'.$this->attributes['id'].'/';
+            if(file_exists( $image_path.$this->attributes['imagem'] )){
+                # Verifica se existe a miniatura
+                if(!file_exists( $image_path.'thumb_'.$largura.'x'.$altura.'_'.$this->attributes['imagem'] )){
 
-        if(file_exists( $image_path.$this->attributes['imagem'] )){
-            # Verifica se existe a miniatura
-            if(!file_exists( $image_path.'thumb_'.$largura.'x'.$altura.'_'.$this->attributes['imagem'] )){
-
-                $img_thumb = Image::make($image_path.$this->attributes['imagem'])->fit($largura, $altura, function($constraint){
-                    $constraint->upsize();
-                });
-                $img_thumb->save($image_path.'thumb_'.$largura.'x'.$altura.'_'.$this->attributes['imagem'],$qualidade);
+                    $img_thumb = Image::make($image_path.$this->attributes['imagem'])->fit($largura, $altura, function($constraint){
+                        $constraint->upsize();
+                    });
+                    $img_thumb->save($image_path.'thumb_'.$largura.'x'.$altura.'_'.$this->attributes['imagem'],$qualidade);
+                }
+                return 'thumb_'.$largura.'x'.$altura.'_'.$this->attributes['imagem'];
             }
-            return 'thumb_'.$largura.'x'.$altura.'_'.$this->attributes['imagem'];
         }
     }
 

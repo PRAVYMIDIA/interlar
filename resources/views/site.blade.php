@@ -85,7 +85,7 @@
     var v_ambiente = {{ isset($ambiente_id)?($ambiente_id?$ambiente_id:'null'):'null' }};
     var v_tipo = {{ isset($tipo_id)?($tipo_id?$tipo_id:'null'):'null' }};
     var v_lojatipo = {{ isset($loja_tipo_id)?($loja_tipo_id?$loja_tipo_id:'null'):'null' }};
-    var v_ordenacao = {{ isset($ordenacao)?($ordenacao?$ordenacao:'null'):'null' }};
+    var v_ordenacao = '{{ isset($ordenacao)?($ordenacao?$ordenacao:'null'):'null' }}';
     var v_loading = 0;
 
     $(document).ready(function() {
@@ -161,7 +161,7 @@
                 newurl += 'termo='+v_termo;
             }
 
-            if(v_ordenacao){
+            if(v_ordenacao!=''&&v_ordenacao){
                 if(newurl.length > 0){
                     newurl += '&';
                 }
@@ -269,6 +269,13 @@
                 texto_breadcrumb += ' &nbsp; &gt; &nbsp; ';
             }
             texto_breadcrumb += $('#item_lojatipo_'+v_lojatipo).children().html();
+        }
+
+        $('.bt_ordenacao').removeClass('red');
+        $('.remove_ordenacao').remove();
+        if(v_ordenacao){
+            $('#bt_ordenacao_'+v_ordenacao).addClass('red');
+            $('#bt_ordenacao_'+v_ordenacao).append(' &nbsp; <i class="fa fa-times remove_ordenacao"></i>');
         }
 
         if(texto_breadcrumb.length > 0){

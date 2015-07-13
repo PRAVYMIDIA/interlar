@@ -14,6 +14,11 @@ class ProdutoTipo extends Model
 	 */
 	protected $fillable = ['descricao','nome','user_id_created'];
 
+    public function visitas()
+    {
+        return $this->morphMany('App\Visita', 'recurso');
+    }
+
 
 	/**
      * The attributes that should be mutated to dates.

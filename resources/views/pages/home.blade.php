@@ -1,5 +1,12 @@
 @extends('site')
 @section('title') Home :: @parent @stop
+@section('styles')
+<style type="text/css">
+.red{
+  color:#ed1d24;
+}
+</style>
+@stop
 @section('content')
       <div class="row">
         <div class="col-lg-3">
@@ -82,9 +89,9 @@
               </div>
               <div id="bloco_ordenacao" class="pull-right">
                 Ordenar por:
-                <a href="#" class="bt_ordenacao" class="btn btn-link" ordenacao="menor_preco" id="bt_ordenacao_menor_preco">Menor Preço</a>
-                <a href="#" class="bt_ordenacao" class="btn btn-link" ordenacao="maior_preco" id="bt_ordenacao_maior_preco">Maior Preço</a>
-                <a href="#" class="bt_ordenacao" class="btn btn-link" ordenacao="visitas" id="bt_ordenacao_visitas">Mais Visitados</a>
+                <a href="#" class="bt_ordenacao btn btn-link" ordenacao="menor_preco" id="bt_ordenacao_menor_preco">Menor Preço</a>
+                <a href="#" class="bt_ordenacao btn btn-link" ordenacao="maior_preco" id="bt_ordenacao_maior_preco">Maior Preço</a>
+                <a href="#" class="bt_ordenacao btn btn-link" ordenacao="visitas" id="bt_ordenacao_visitas">Mais Visitados</a>
               </div>
             </h5>
           </div>

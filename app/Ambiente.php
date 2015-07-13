@@ -26,6 +26,11 @@ class Ambiente extends Model
         return $this->belongsToMany('App\Produto');
     }
 
+    public function visitas()
+    {
+        return $this->morphMany('App\Visita', 'recurso');
+    }
+
     /**
     *   Mutator para remover a imagem antiga (caso houver)
     */
