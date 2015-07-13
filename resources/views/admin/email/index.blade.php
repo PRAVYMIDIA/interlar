@@ -10,9 +10,9 @@
             Emails
             <div class="pull-right">
                 <div class="pull-right">
-                    <a href="{{{ URL::to('admin/email/listagem') }}}" target="_blank"
+                    <a title="Exportar todos os emails" href="{{{ URL::to('admin/email/listagem') }}}" target="_blank"
                        class="btn btn-sm  btn-success"><span
-                                class="glyphicon glyphicon-download-alt"></span> Exportar</a>
+                                class="glyphicon glyphicon-download-alt"></span> Exportar tudo</a>
                 </div>
             </div>
         </h3>
@@ -46,14 +46,6 @@
                 "processing": true,
                 "serverSide": true,
                 "ajax": "{{ URL::to('admin/email/data/') }}",
-                "columns": [
-                    {data: '0',  "orderable": true, "searchable":true},
-                    {data: '1', "orderable": true, "searchable":true},
-                    {data: '2', "orderable": true, "searchable":true},
-                    {data: '3', "orderable": true, "searchable":false},
-                    {data: '4', "orderable": true, "searchable":false},
-                    {data: '5', "orderable": false, "searchable":false}
-                ],
                 "fnDrawCallback": function (oSettings) {
                     $(".iframe").colorbox({
                         iframe: true,

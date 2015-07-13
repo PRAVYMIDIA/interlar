@@ -123,18 +123,95 @@ class ContatoController extends AdminController {
      *
      * @return Datatables JSON
      */
-    public function data()
+    public function data(\Illuminate\Http\Request $request)
     {
-        $contato = Contato::select(array('contatos.id','contatos.nome',DB::raw('(SELECT COUNT(1) FROM contato_respostas WHERE contato_respostas.contato_id = contatos.id) as qtd_respostas'),'contatos.produto_id',DB::raw('DATE_FORMAT(contatos.created_at,\'%d/%m/%Y %H:%i\') as criado_em')))
+        $contato = Contato::select(array('contatos.id',
+                                        'contatos.nome',
+                                        DB::raw('(SELECT COUNT(1) FROM contato_respostas WHERE contato_respostas.contato_id = contatos.id) as qtd_respostas'),
+                                        'contatos.produto_id',
+                                        'contatos.created_at'))
             ->orderBy('contatos.nome', 'ASC');
 
-        return Datatables::of($contato)
+        $dt = Datatables::of($contato)
+            ->editColumn('created_at', function ($contato) {
+                return $contato->created_at ? with(new \Carbon\Carbon($contato->created_at))->format('d/m/Y H:i') : '';
+            })
             ->edit_column('produto_id','{{ $produto_id ? \'PRODUTO\':\'CONTATO\' }}')
             ->add_column('actions', '<a href="{{{ URL::to(\'admin/contato/\' . $id . \'/visualizar\' ) }}}" class="btn btn-success btn-xs iframe" title="Visualizar/Responder" ><span class="fa fa-eye"></span></a>
                     <a href="{{{ URL::to(\'admin/contato/\' . $id . \'/delete\' ) }}}" class="btn btn-xs btn-danger iframe" title="{{ trans("admin/modal.delete") }}"><span class="glyphicon glyphicon-trash"></span></a>')
-            ->remove_column('id')
+            ->remove_column('id');
 
-            ->make();
+        $dt->filter(function ($q) use ($request) {
+            if ( $term = strtolower($request['search']['value']) ) {
+                $q->where('contatos.nome', 'like', "%{$term}%");
+
+                // verifica se é uma data
+                if(strpos($term, '/')){
+                    $data_array = explode('/', $term);
+                    if(count($data_array)==3){
+                        $formato_db = '%Y-%m-%d';
+                        if( strlen( $data_array[2] ) == 4  ){
+                            $format = 'd/m/Y';
+                        }elseif( strlen( $data_array[2] ) == 2  ){
+                            $format = 'd/m/y';
+                        }else{
+                            $format = null;
+                        }
+                        // se existe espaço logo busca o horário
+                        $format_time = '';
+                        if(strpos($term, ' ')){
+                            $data_hora_array = explode(' ', $term);
+                            $horario_array = explode(':', $data_hora_array[1]);
+                            if(count($horario_array)==3){
+                                if( strlen($horario_array[2])==2 ){
+                                    $format_time = ' H:i:s';
+                                    $formato_db = '%Y-%m-%d %H:%i:%s';
+                                    $format = 'd/m/Y'.$format_time;
+                                }else{
+                                    $format = null;
+                                }
+                            }elseif(count($horario_array)==2){
+                                if( strlen($horario_array[1])==2 ){
+                                    $format_time = ' H:i';
+                                    $formato_db = '%Y-%m-%d %H:%i';
+                                    $format = 'd/m/Y'.$format_time;
+                                }else{
+                                    $format = null;
+                                }
+                            }elseif(count($horario_array)==1){
+                                if( strlen($horario_array[0])==2 ){
+                                    $format_time = ' H';
+                                    $formato_db = '%Y-%m-%d %H';
+                                    $format = 'd/m/Y'.$format_time;
+                                }else{
+                                    $format = null;
+                                }
+                            }else{
+                                $format = null;
+                            }
+                        }
+                        if($format){
+                            try {
+                                $date =  \Carbon\Carbon::createFromFormat($format ,$term);
+                                $q->orWhere(DB::raw("DATE_FORMAT(contatos.created_at,'".$formato_db."')"), '=', $date->format('Y-m-d'.$format_time));
+                            } catch (Exception $e) {
+                                // \_(''/)_/
+                            }
+                        }else{
+                            $q->orWhere( 'contatos.created_at' , 'LIKE', '%'. $term. '%');
+                        }
+                        
+                    }else{
+                        $q->orWhere( 'contatos.created_at' , 'LIKE', '%'. $data_array[0].isset($data_array[1])?'-'.$data_array[1]:null. '%');
+                    }
+                }else{
+                    $q->orWhere( 'contatos.created_at' , 'LIKE', '%'. $term. '%');
+                }
+                
+            }
+        });
+
+        return $dt->make();
     }
 
     

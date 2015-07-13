@@ -162,18 +162,101 @@ class BannerController extends AdminController {
      *
      * @return Datatables JSON
      */
-    public function data()
+    public function data(\Illuminate\Http\Request $request)
     {
-        $banner = Banner::select(array('banners.id','banners.nome', DB::raw('DATE_FORMAT(banners.dtinicio,\'%d/%m/%Y\') as vigencia_inicio'), DB::raw('DATE_FORMAT(banners.dtfim,\'%d/%m/%Y\') as vigencia_termino'), DB::raw('DATE_FORMAT(banners.created_at,\'%d/%m/%Y %H:%i\') as criado_em')))
+        $banner = Banner::select(array('banners.id',
+                                    'banners.nome',
+                                    'banners.dtinicio', 
+                                    'banners.dtfim', 
+                                    'banners.created_at'))
             ->orderBy('banners.nome', 'ASC');
 
-        return Datatables::of($banner)
+        $dt = Datatables::of($banner)
+            ->editColumn('dtinicio', function ($banner) {
+                return $banner->dtinicio ? $banner->dtinicio : '';
+            })
+            ->editColumn('dtfim', function ($banner) {
+                return $banner->dtfim ? $banner->dtfim : '';
+            })
+            ->editColumn('created_at', function ($banner) {
+                return $banner->created_at ? with(new \Carbon\Carbon($banner->created_at))->format('d/m/Y H:i') : '';
+            })
             ->add_column('actions', '<a href="{{{ URL::to(\'admin/banner/\' . $id . \'/edit\' ) }}}" class="btn btn-success btn-xs iframe" title="{{ trans("admin/modal.edit") }}" ><span class="glyphicon glyphicon-pencil"></span></a>
                     <a href="{{{ URL::to(\'admin/banner/\' . $id . \'/delete\' ) }}}" class="btn btn-xs btn-danger iframe" title="{{ trans("admin/modal.delete") }}"><span class="glyphicon glyphicon-trash"></span></a>
                     <input type="hidden" name="row" value="{{$id}}" id="row">')
-            ->remove_column('id')
+            ->remove_column('id');
 
-            ->make();
+        $dt->filter(function ($q) use ($request) {
+            if ( $term = strtolower($request['search']['value']) ) {
+                $q->where('banners.nome', 'like', "%{$term}%");
+
+                // verifica se é uma data
+                if(strpos($term, '/')){
+                    $data_array = explode('/', $term);
+                    if(count($data_array)==3){
+                        $formato_db = '%Y-%m-%d';
+                        if( strlen( $data_array[2] ) == 4  ){
+                            $format = 'd/m/Y';
+                        }elseif( strlen( $data_array[2] ) == 2  ){
+                            $format = 'd/m/y';
+                        }else{
+                            $format = null;
+                        }
+                        // se existe espaço logo busca o horário
+                        $format_time = '';
+                        if(strpos($term, ' ')){
+                            $data_hora_array = explode(' ', $term);
+                            $horario_array = explode(':', $data_hora_array[1]);
+                            if(count($horario_array)==3){
+                                if( strlen($horario_array[2])==2 ){
+                                    $format_time = ' H:i:s';
+                                    $formato_db = '%Y-%m-%d %H:%i:%s';
+                                    $format = 'd/m/Y'.$format_time;
+                                }else{
+                                    $format = null;
+                                }
+                            }elseif(count($horario_array)==2){
+                                if( strlen($horario_array[1])==2 ){
+                                    $format_time = ' H:i';
+                                    $formato_db = '%Y-%m-%d %H:%i';
+                                    $format = 'd/m/Y'.$format_time;
+                                }else{
+                                    $format = null;
+                                }
+                            }elseif(count($horario_array)==1){
+                                if( strlen($horario_array[0])==2 ){
+                                    $format_time = ' H';
+                                    $formato_db = '%Y-%m-%d %H';
+                                    $format = 'd/m/Y'.$format_time;
+                                }else{
+                                    $format = null;
+                                }
+                            }else{
+                                $format = null;
+                            }
+                        }
+                        if($format){
+                            try {
+                                $date =  \Carbon\Carbon::createFromFormat($format ,$term);
+                                $q->orWhere(DB::raw("DATE_FORMAT(banners.dtinicio,'".$formato_db."')"), '=', $date->format('Y-m-d'.$format_time));
+                                $q->orWhere(DB::raw("DATE_FORMAT(banners.dtfim,'".$formato_db."')"), '=', $date->format('Y-m-d'.$format_time));
+                                $q->orWhere(DB::raw("DATE_FORMAT(banners.created_at,'".$formato_db."')"), '=', $date->format('Y-m-d'.$format_time));
+                            } catch (Exception $e) {
+                                // \_(''/)_/
+                            }
+                        }
+                        
+                    }else{
+                        $q->orWhere( 'banners.dtinicio' , 'LIKE', '%'. $data_array[0].isset($data_array[1])?'-'.$data_array[1]:null. '%');
+                        $q->orWhere( 'banners.dtfim' , 'LIKE', '%'. $data_array[0].isset($data_array[1])?'-'.$data_array[1]:null. '%');
+                        $q->orWhere( 'banners.created_at' , 'LIKE', '%'. $data_array[0].isset($data_array[1])?'-'.$data_array[1]:null. '%');
+                    }
+                }
+                
+            }
+        });
+
+        return    $dt->make();
     }
 
     /**
@@ -182,16 +265,16 @@ class BannerController extends AdminController {
      * @param items list
      * @return items from @param
      */
-    public function getReorder(ReorderRequest $request) {
-        $list = $request->list;
-        $items = explode(",", $list);
-        $order = 1;
-        foreach ($items as $value) {
-            if ($value != '') {
-                Banner::where('id', '=', $value) -> update(array('position' => $order));
-                $order++;
-            }
-        }
-        return $list;
-    }
+    // public function getReorder(ReorderRequest $request) {
+    //     $list = $request->list;
+    //     $items = explode(",", $list);
+    //     $order = 1;
+    //     foreach ($items as $value) {
+    //         if ($value != '') {
+    //             Banner::where('id', '=', $value) -> update(array('position' => $order));
+    //             $order++;
+    //         }
+    //     }
+    //     return $list;
+    // }
 }

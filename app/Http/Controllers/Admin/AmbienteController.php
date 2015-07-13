@@ -4,6 +4,8 @@ use App\Http\Controllers\AdminController;
 use App\Ambiente;
 use App\Produto;
 use Illuminate\Support\Facades\Input;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 use App\Http\Requests\Admin\AmbienteRequest;
 use App\Http\Requests\Admin\DeleteRequest;
 use App\Http\Requests\Admin\ReorderRequest;
@@ -163,18 +165,88 @@ class AmbienteController extends AdminController {
      *
      * @return Datatables JSON
      */
-    public function data()
+    public function data(Request $request)
     {
-        $ambiente = Ambiente::select(array('ambientes.id','ambientes.nome',DB::raw('(SELECT COUNT(1) FROM ambiente_produto WHERE ambiente_produto.ambiente_id = ambientes.id) as qtd_produtos') ,DB::raw('DATE_FORMAT(ambientes.created_at,\'%d/%m/%Y %H:%i\') as criado_em')))
+        $ambiente = Ambiente::select(array('ambientes.id','ambientes.nome',DB::raw('(SELECT COUNT(1) FROM ambiente_produto WHERE ambiente_produto.ambiente_id = ambientes.id) as qtd_produtos') ,'ambientes.created_at'))
             ->orderBy('ambientes.nome', 'ASC');
 
-        return Datatables::of($ambiente)
+        $dt = Datatables::of($ambiente)
+            ->editColumn('created_at', function ($produto) {
+                return $produto->created_at ? with(new \Carbon\Carbon($produto->created_at))->format('d/m/Y H:i') : '';
+
+            })
             ->add_column('actions', '<a href="{{{ URL::to(\'admin/ambiente/\' . $id . \'/edit\' ) }}}" class="btn btn-success btn-xs iframe" title="{{ trans("admin/modal.edit") }}" ><span class="glyphicon glyphicon-pencil"></span></a>
                     <a href="{{{ URL::to(\'admin/ambiente/\' . $id . \'/delete\' ) }}}" class="btn btn-xs btn-danger iframe" title="{{ trans("admin/modal.delete") }}"><span class="glyphicon glyphicon-trash"></span></a>
                     <input type="hidden" name="row" value="{{$id}}" id="row">')
-            ->remove_column('id')
+            ->remove_column('id');
 
-            ->make();
+        $dt->filter(function ($q) use ($request) {
+            if ( $term = strtolower($request['search']['value']) ) {
+                $q->where('ambientes.nome', 'like', "%{$term}%");
+
+                // verifica se é uma data
+                if(strpos($term, '/')){
+                    $data_array = explode('/', $term);
+                    if(count($data_array)==3){
+                        $formato_db = '%Y-%m-%d';
+                        if( strlen( $data_array[2] ) == 4  ){
+                            $format = 'd/m/Y';
+                        }elseif( strlen( $data_array[2] ) == 2  ){
+                            $format = 'd/m/y';
+                        }else{
+                            $format = null;
+                        }
+                        // se existe espaço logo busca o horário
+                        $format_time = '';
+                        if(strpos($term, ' ')){
+                            $data_hora_array = explode(' ', $term);
+                            $horario_array = explode(':', $data_hora_array[1]);
+                            if(count($horario_array)==3){
+                                if( strlen($horario_array[2])==2 ){
+                                    $format_time = ' H:i:s';
+                                    $formato_db = '%Y-%m-%d %H:%i:%s';
+                                    $format = 'd/m/Y'.$format_time;
+                                }else{
+                                    $format = null;
+                                }
+                            }elseif(count($horario_array)==2){
+                                if( strlen($horario_array[1])==2 ){
+                                    $format_time = ' H:i';
+                                    $formato_db = '%Y-%m-%d %H:%i';
+                                    $format = 'd/m/Y'.$format_time;
+                                }else{
+                                    $format = null;
+                                }
+                            }elseif(count($horario_array)==1){
+                                if( strlen($horario_array[0])==2 ){
+                                    $format_time = ' H';
+                                    $formato_db = '%Y-%m-%d %H';
+                                    $format = 'd/m/Y'.$format_time;
+                                }else{
+                                    $format = null;
+                                }
+                            }else{
+                                $format = null;
+                            }
+                        }
+                        if($format){
+                            try {
+                                $date =  \Carbon\Carbon::createFromFormat($format ,$term);
+                                $q->orWhere(DB::raw("DATE_FORMAT(ambientes.created_at,'".$formato_db."')"), '=', $date->format('Y-m-d'.$format_time));
+                            } catch (Exception $e) {
+                                // \_(''/)_/
+                            }
+                        }
+                        
+                    }else{
+                        $q->orWhere( 'ambientes.created_at' , 'LIKE', '%'. $data_array[0].isset($data_array[1])?'-'.$data_array[1]:null. '%');
+                    }
+                }
+                
+            }
+        });
+
+        return    $dt->make();
     }
 
     /**

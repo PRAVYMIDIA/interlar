@@ -117,18 +117,91 @@ class UserController extends AdminController {
      *
      * @return Datatables JSON
      */
-    public function data()
+    public function data(\Illuminate\Http\Request $request)
     {
         $users = User::select(array('users.id','users.name','users.email','users.confirmed', DB::raw('DATE_FORMAT(users.created_at,\'%d/%m/%Y %H:%i\') as criado_em') ));
 
-        return Datatables::of($users)
+        $dt = Datatables::of($users)
             ->edit_column('confirmed', '@if ($confirmed=="1") <span class="glyphicon glyphicon-ok"></span> @else <span class=\'glyphicon glyphicon-remove\'></span> @endif')
             ->add_column('actions', '@if ($id!="1")<a href="{{{ URL::to(\'admin/users/\' . $id . \'/edit\' ) }}}" class="btn btn-success btn-sm iframe" title="{{ trans("admin/modal.edit") }}" ><span class="glyphicon glyphicon-pencil"></span> </a>
                     <a href="{{{ URL::to(\'admin/users/\' . $id . \'/delete\' ) }}}" class="btn btn-sm btn-danger iframe" title="{{ trans("admin/modal.delete") }}"><span class="glyphicon glyphicon-trash"></span> </a>
                 @endif')
-            ->remove_column('id')
+            ->remove_column('id');
 
-            ->make();
+
+        $dt->filter(function ($q) use ($request) {
+            if ( $term = strtolower($request['search']['value']) ) {
+                $q->where('users.name', 'like', "%{$term}%");
+                $q->orWhere('users.email', 'like', "%{$term}%");
+
+                // verifica se é uma data
+                if(strpos($term, '/')){
+                    $data_array = explode('/', $term);
+                    if(count($data_array)==3){
+                        $formato_db = '%Y-%m-%d';
+                        if( strlen( $data_array[2] ) == 4  ){
+                            $format = 'd/m/Y';
+                        }elseif( strlen( $data_array[2] ) == 2  ){
+                            $format = 'd/m/y';
+                        }else{
+                            $format = null;
+                        }
+                        // se existe espaço logo busca o horário
+                        $format_time = '';
+                        if(strpos($term, ' ')){
+                            $data_hora_array = explode(' ', $term);
+                            $horario_array = explode(':', $data_hora_array[1]);
+                            if(count($horario_array)==3){
+                                if( strlen($horario_array[2])==2 ){
+                                    $format_time = ' H:i:s';
+                                    $formato_db = '%Y-%m-%d %H:%i:%s';
+                                    $format = 'd/m/Y'.$format_time;
+                                }else{
+                                    $format = null;
+                                }
+                            }elseif(count($horario_array)==2){
+                                if( strlen($horario_array[1])==2 ){
+                                    $format_time = ' H:i';
+                                    $formato_db = '%Y-%m-%d %H:%i';
+                                    $format = 'd/m/Y'.$format_time;
+                                }else{
+                                    $format = null;
+                                }
+                            }elseif(count($horario_array)==1){
+                                if( strlen($horario_array[0])==2 ){
+                                    $format_time = ' H';
+                                    $formato_db = '%Y-%m-%d %H';
+                                    $format = 'd/m/Y'.$format_time;
+                                }else{
+                                    $format = null;
+                                }
+                            }else{
+                                $format = null;
+                            }
+                        }
+                        if($format){
+                            try {
+                                $date =  \Carbon\Carbon::createFromFormat($format ,$term);
+                                $q->orWhere(DB::raw("DATE_FORMAT(users.created_at,'".$formato_db."')"), '=', $date->format('Y-m-d'.$format_time));
+                            } catch (Exception $e) {
+                                // \_(''/)_/
+                            }
+                        }else{
+                            $q->orWhere( 'users.created_at' , 'LIKE', '%'. $term. '%');
+                        }
+                        
+                    }else{
+                        $q->orWhere( 'users.created_at' , 'LIKE', '%'. $data_array[0].isset($data_array[1])?'-'.$data_array[1]:null. '%');
+                    }
+                }else{
+                    $q->orWhere( 'users.created_at' , 'LIKE', '%'. $term. '%');
+                }
+                
+            }
+        });
+
+        return $dt->make();
+
     }
 
 }
