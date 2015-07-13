@@ -3,9 +3,11 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Http\Request;
 use App\Ambiente;
 use App\ProdutoTipo;
 use App\Banner;
+use App\Visita;
 use App\LojaTipo;
 
 class AppServiceProvider extends ServiceProvider
@@ -15,7 +17,7 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(Request $request)
     {
         $ambientes      = new Ambiente();
         $ambientes      = $ambientes->lists('nome','id')->all();
@@ -28,6 +30,13 @@ class AppServiceProvider extends ServiceProvider
 
         $banner     = new Banner();
         $banner     = $banner->where('dtinicio','<=',date('Y-m-d'))->where('dtfim','>=',date('Y-m-d'))->orderByRaw("RAND()")->first();
+
+
+        if($banner){
+            $visita = new Visita();
+            $visita->ip = $request->ip();
+            $banner->visitas()->save($visita);
+        }
 
         view()->share('ambientes', $ambientes);
         view()->share('tipos', $tipos);

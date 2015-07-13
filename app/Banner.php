@@ -20,7 +20,6 @@ class Banner extends Model
                             'user_id_created'
                             ];
 
-
 	/**
      * The attributes that should be mutated to dates.
      *
@@ -28,6 +27,11 @@ class Banner extends Model
      */
     protected $dates = ['deleted_at','dtinicio','dtfim'];
 
+    public function visitas()
+    {
+        return $this->morphMany('App\Visita', 'recurso');
+    }
+    
     public function getDtinicioAttribute(){
         $dt_array = explode('-', $this->attributes['dtinicio']);
         return $dt_array[2].'/'.$dt_array[1].'/'.$dt_array[0];
