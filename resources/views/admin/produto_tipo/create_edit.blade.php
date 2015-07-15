@@ -24,7 +24,7 @@
 					class="form-group {{{ $errors->has('nome') ? 'has-error' : '' }}}">
 					<div class="col-md-12">
 						<label class="control-label" for="nome"> Nome</label> <input
-							class="form-control" type="text" name="nome" id="nome"
+							class="form-control" maxlenght="255" type="text" name="nome" id="nome"
 							value="{{{ Input::old('nome', isset($produto_tipo) ? $produto_tipo->nome : null) }}}" />
 						{!!$errors->first('nome', '<label class="control-label">:message</label>')!!}
 					</div>
@@ -34,8 +34,8 @@
 					class="form-group {{{ $errors->has('descricao') ? 'has-error' : '' }}}">
 					<div class="col-md-12">
 						<label class="control-label" for="descricao">Descrição</label>
-						<textarea class="form-control full-width wysihtml5" name="descricao"
-							value="descricao" rows="10">{{{ Input::old('descricao', isset($produto_tipo) ? $produto_tipo->descricao : null) }}}</textarea>
+						<input type="text" class="form-control" maxlenght="255" name="descricao"
+							value="{{{ Input::old('descricao', isset($produto_tipo) ? $produto_tipo->descricao : null) }}}" />
 						{!! $errors->first('descricao', '<label class="control-label">:message</label>')
 						!!}
 					</div>
@@ -52,10 +52,6 @@
 					<button type="reset" class="btn btn-sm btn-warning close_popup">
 						<span class="glyphicon glyphicon-ban-circle"></span> {{
 						trans("admin/modal.cancel") }}
-					</button>
-					<button type="reset" class="btn btn-sm btn-default">
-						<span class="glyphicon glyphicon-remove-circle"></span> {{
-						trans("admin/modal.reset") }}
 					</button>
 					<button type="submit" class="btn btn-sm btn-success">
 						<span class="glyphicon glyphicon-ok-circle"></span> 

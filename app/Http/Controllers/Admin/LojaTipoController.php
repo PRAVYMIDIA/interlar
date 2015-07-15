@@ -117,8 +117,7 @@ class LojaTipoController extends AdminController {
      */
     public function data(\Illuminate\Http\Request $request)
     {
-        $lojatipo = LojaTipo::select(array('lojas_tipos.id','lojas_tipos.nome', 'lojas_tipos.ativo',  DB::raw('DATE_FORMAT(lojas_tipos.created_at,\'%d/%m/%Y %H:%i\') as criado_em')))
-            ->orderBy('lojas_tipos.nome', 'ASC');
+        $lojatipo = LojaTipo::select(array('lojas_tipos.id','lojas_tipos.nome', 'lojas_tipos.ativo',  DB::raw('DATE_FORMAT(lojas_tipos.created_at,\'%d/%m/%Y %H:%i\') as criado_em')));
 
         $dt =  Datatables::of($lojatipo)
             ->add_column('actions', '<a href="{{{ URL::to(\'admin/lojatipo/\' . $id . \'/edit\' ) }}}" class="btn btn-success btn-xs iframe" title="{{ trans("admin/modal.edit") }}" ><span class="glyphicon glyphicon-pencil"></span></a>

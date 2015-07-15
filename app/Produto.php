@@ -63,7 +63,16 @@ class Produto extends Model
     }
 
     public function setValorPromocionalAttribute($value){
-            $this->attributes['valor_promocional'] = $value ?  str_replace(',', '.', str_replace('.', '',  $value)) : NULL;
+        if($value){
+            $valor_promocional = str_replace(',', '.', str_replace('.', '',  $value));
+            if($valor_promocional > $this->attributes['valor'] ){
+                # restringe a valor promocional ser menor que o valor de venda;
+                $valor_promocional = $this->attributes['valor'] - 0.01;
+            }
+            $this->attributes['valor_promocional'] = $valor_promocional ;
+        }else{
+            $this->attributes['valor_promocional'] = NULL;
+        }
     }
 
     public function getValorPromocionalAttribute($value){

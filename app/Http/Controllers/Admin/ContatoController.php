@@ -129,8 +129,7 @@ class ContatoController extends AdminController {
                                         'contatos.nome',
                                         DB::raw('(SELECT COUNT(1) FROM contato_respostas WHERE contato_respostas.contato_id = contatos.id) as qtd_respostas'),
                                         'contatos.produto_id',
-                                        'contatos.created_at'))
-            ->orderBy('contatos.nome', 'ASC');
+                                        'contatos.created_at'));
 
         $dt = Datatables::of($contato)
             ->editColumn('created_at', function ($contato) {

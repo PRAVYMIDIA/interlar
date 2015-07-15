@@ -266,8 +266,7 @@ class ProdutoController extends AdminController {
                                         'produtos.imagem',
                                         'produtos.created_at'
                                         )
-                                    )
-            ->orderBy('produtos.nome', 'ASC');
+                                    );
 
         $dt = Datatables::of($produto);
 
@@ -289,11 +288,63 @@ class ProdutoController extends AdminController {
                 $q->Orwhere('produtos.valor', 'like', "%{$term}%");
                 $q->Orwhere('produtos.valor_promocional', 'like', "%{$term}%");
                 $q->Orwhere('produtos.parcelas', 'like', "%{$term}%");
-                try {
-                    $date = new \Carbon\Carbon($term);
-                    $q->orWhere(DB::raw('DATE(produtos.created_at)'), '=', $date->format('Y-m-d'));
-                } catch (Exception $e) {
-                    // \_(''/)_/
+
+                if(strpos($term, '/')){
+                    $data_array = explode('/', $term);
+                    if(count($data_array)==3){
+                        $formato_db = '%Y-%m-%d';
+                        if( strlen( $data_array[2] ) == 4  ){
+                            $format = 'd/m/Y';
+                        }elseif( strlen( $data_array[2] ) == 2  ){
+                            $format = 'd/m/y';
+                        }else{
+                            $format = null;
+                        }
+                        // se existe espaço logo busca o horário
+                        $format_time = '';
+                        if(strpos($term, ' ')){
+                            $data_hora_array = explode(' ', $term);
+                            $horario_array = explode(':', $data_hora_array[1]);
+                            if(count($horario_array)==3){
+                                if( strlen($horario_array[2])==2 ){
+                                    $format_time = ' H:i:s';
+                                    $formato_db = '%Y-%m-%d %H:%i:%s';
+                                    $format = 'd/m/Y'.$format_time;
+                                }else{
+                                    $format = null;
+                                }
+                            }elseif(count($horario_array)==2){
+                                if( strlen($horario_array[1])==2 ){
+                                    $format_time = ' H:i';
+                                    $formato_db = '%Y-%m-%d %H:%i';
+                                    $format = 'd/m/Y'.$format_time;
+                                }else{
+                                    $format = null;
+                                }
+                            }elseif(count($horario_array)==1){
+                                if( strlen($horario_array[0])==2 ){
+                                    $format_time = ' H';
+                                    $formato_db = '%Y-%m-%d %H';
+                                    $format = 'd/m/Y'.$format_time;
+                                }else{
+                                    $format = null;
+                                }
+                            }else{
+                                $format = null;
+                            }
+                        }
+                        if($format){
+                            try {
+                                $date =  \Carbon\Carbon::createFromFormat($format ,$term);
+                                $q->orWhere(DB::raw("DATE_FORMAT(produtos.created_at,'".$formato_db."')"), '=', $date->format('Y-m-d'.$format_time));
+                            } catch (Exception $e) {
+                                // \_(''/)_/
+                            }
+                        }
+                        
+                    }else{
+                        $q->orWhere( 'produtos.created_at' , 'LIKE', '%'. $data_array[0].isset($data_array[1])?'-'.$data_array[1]:null. '%');
+                    }
                 }
             }
         });

@@ -90,10 +90,7 @@
 						<span class="glyphicon glyphicon-ban-circle"></span> {{
 						trans("admin/modal.cancel") }}
 					</button>
-					<button type="reset" class="btn btn-sm btn-default">
-						<span class="glyphicon glyphicon-remove-circle"></span> {{
-						trans("admin/modal.reset") }}
-					</button>
+					
 					<button type="submit" class="btn btn-sm btn-success">
 						<span class="glyphicon glyphicon-ok-circle"></span> 
 						@if	(isset($ambiente)) 

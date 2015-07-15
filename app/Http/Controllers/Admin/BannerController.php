@@ -168,8 +168,7 @@ class BannerController extends AdminController {
                                     'banners.nome',
                                     'banners.dtinicio', 
                                     'banners.dtfim', 
-                                    'banners.created_at'))
-            ->orderBy('banners.nome', 'ASC');
+                                    'banners.created_at'));
 
         $dt = Datatables::of($banner)
             ->editColumn('dtinicio', function ($banner) {

@@ -87,8 +87,7 @@ class EmailController extends AdminController {
                                         'produtos_tipos.nome as tipo',
                                         'emails.created_at'))
             ->leftJoin('ambientes','ambientes.id','=','emails.ambiente_id')
-            ->leftJoin('produtos_tipos','produtos_tipos.id','=','emails.produto_tipo_id')
-            ->orderBy('emails.id', 'DESC');
+            ->leftJoin('produtos_tipos','produtos_tipos.id','=','emails.produto_tipo_id');
 
         $dt = Datatables::of($email)
             ->editColumn('created_at', function ($email) {

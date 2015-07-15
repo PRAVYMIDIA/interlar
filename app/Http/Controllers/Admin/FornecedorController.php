@@ -116,8 +116,7 @@ class FornecedorController extends AdminController {
     {
         $fornecedor = Fornecedor::select(array( 'fornecedores.id',
                                                 'fornecedores.nome',
-                                                'fornecedores.created_at'))
-            ->orderBy('fornecedores.nome','ASC');
+                                                'fornecedores.created_at'));
 
         $dt =  Datatables::of($fornecedor)
             ->editColumn('created_at', function ($fornecedor) {
