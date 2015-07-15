@@ -167,8 +167,7 @@ class AmbienteController extends AdminController {
      */
     public function data(Request $request)
     {
-        $ambiente = Ambiente::select(array('ambientes.id','ambientes.nome',DB::raw('(SELECT COUNT(1) FROM ambiente_produto WHERE ambiente_produto.ambiente_id = ambientes.id) as qtd_produtos') ,'ambientes.created_at'))
-            ->orderBy('ambientes.nome', 'ASC');
+        $ambiente = Ambiente::select(array('ambientes.id','ambientes.nome',DB::raw('(SELECT COUNT(1) FROM ambiente_produto WHERE ambiente_produto.ambiente_id = ambientes.id)') ,'ambientes.created_at'));
 
         $dt = Datatables::of($ambiente)
             ->editColumn('created_at', function ($produto) {
