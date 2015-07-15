@@ -57,6 +57,7 @@ class BannerController extends AdminController {
         $banner -> dtinicio = $dtinicio;
         $banner -> dtfim = $dtfim;
         $banner -> html = $request->html;
+        $banner -> bgcolor = $request->bgcolor;
 
         $imagem = "";
         if(Input::hasFile('imagem'))
@@ -111,6 +112,7 @@ class BannerController extends AdminController {
         $banner -> dtinicio         = $dtinicio;
         $banner -> dtfim            = $dtfim;
         $banner -> html             = $request->html;
+        $banner -> bgcolor          = $request->bgcolor;
 
         if(Input::hasFile('imagem'))
         {

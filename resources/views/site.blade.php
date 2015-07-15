@@ -40,7 +40,7 @@
 <div class="container">
     <div class="row">
           @if($banner)
-            <div onclick="document.location='{{ $banner->url }}';" style="cursor:pointer;">
+            <div onclick="document.location='{{ $banner->url }}';" style="cursor:pointer; padding:0px; margin-top:14px; margin-bottom:14px;{{ $banner->bgcolor?'background-color:'.$banner->bgcolor:'' }}">
             @if(strlen($banner->html) )
               {!! $banner->html !!}
             @else

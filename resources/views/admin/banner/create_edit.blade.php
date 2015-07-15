@@ -53,7 +53,7 @@
 				</div>
 
 				<div class="row">
-					<div class="col-md-6">
+					<div class="col-md-4">
 						<div class="form-group {{{ $errors->has('dtinicio') ? 'has-error' : '' }}}">
 							<div class="col-md-12">
 								<label class="control-label" for="dtinicio"> Início da Exibição</label> 
@@ -64,7 +64,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-md-6">
+					<div class="col-md-4">
 						<div class="form-group {{{ $errors->has('dtfim') ? 'has-error' : '' }}}">
 							<div class="col-md-12">
 								<label class="control-label" for="dtfim"> Fim da Exibição</label> 
@@ -72,6 +72,16 @@
 									class="form-control date" type="text" name="dtfim" id="dtfim" required="required"
 									value="{{{ Input::old('dtfim', isset($banner_edit) ? $banner_edit->dtfim : null) }}}" />
 								{!!$errors->first('dtfim', '<label class="control-label">:message</label>')!!}
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group {{{ $errors->has('bgcolor') ? 'has-error' : '' }}}">
+							<div class="col-md-12">
+								<label class="control-label" for="bgcolor"> Cor de fundo do banner</label> 
+								<input	class="form-control" type="color" name="bgcolor" id="bgcolor" 
+										value="{{{ Input::old('bgcolor', isset($banner_edit) ? $banner_edit->bgcolor : null) }}}" />
+								{!!$errors->first('bgcolor', '<label class="control-label">:message</label>')!!}
 							</div>
 						</div>
 					</div>
