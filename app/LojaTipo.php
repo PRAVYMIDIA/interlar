@@ -15,10 +15,6 @@ class LojaTipo extends Model
 	protected $fillable = ['nome','descricao','ativo','user_id_created'];
 
 
-    public function visitas()
-    {
-        return $this->morphMany('App\Visita', 'recurso');
-    }
     
 	/**
      * The attributes that should be mutated to dates.
@@ -29,10 +25,6 @@ class LojaTipo extends Model
 
     public function lojas(){
         return $this->hasMany('App\Loja','loja_tipo_id');
-    }
-
-    public function produtos(){
-        return $this->belongsToMany('App\Produto','produtos_lojas_tipos');
     }
 
 }

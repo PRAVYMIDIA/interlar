@@ -73,8 +73,8 @@
             <div class="col-sm-12 hidden-xs">
               <ul class="nav nav-pills nav-stacked" style="margin-top:15px;">
                 <li role="presentation" class="active"><a href="#">Lojas</a></li>
-                @foreach($lojastipos as $id=>$loja)
-                <li role="presentation"  class="menu_lojatipos" id="item_lojatipo_{{$id}}"> <a href="#" lojatipo="{{ $id }}" class="bt_lojatipo">{{$loja}}</a> </li>
+                @foreach($lojas as $id=>$loja)
+                <li role="presentation"  class="menu_loja" id="item_loja_{{$id}}"> <a href="#" loja="{{ $id }}" class="bt_loja">{{$loja}}</a> </li>
                 @endforeach
               </ul>
             </div>
@@ -130,7 +130,7 @@
 
               $.ajax({
                 url: next_page,
-                data: {termo: v_termo,ambiente_id: v_ambiente, tipo_id: v_tipo, loja_tipo_id: v_lojatipo, ordenacao: v_ordenacao }
+                data: {termo: v_termo,ambiente_id: v_ambiente, tipo_id: v_tipo, loja_id: v_loja, ordenacao: v_ordenacao }
               })
               .done(function(retorno) {
                 next_page = retorno.next_page_url;

@@ -54,6 +54,10 @@ class Produto extends Model
             $this->attributes['fornecedor_id'] = ($value != "" && $value != "0" && !empty($value) ) ? $value  : NULL;
     }
 
+    public function setLojaIdAttribute($value){
+            $this->attributes['loja_id'] = ($value != "" && $value != "0" && !empty($value) ) ? $value  : NULL;
+    }
+
     public function setValorAttribute($value){
             $this->attributes['valor'] = $value ?  str_replace(',', '.', str_replace('.', '',  $value)) : NULL;
     }
@@ -142,8 +146,8 @@ class Produto extends Model
         return $this->belongsToMany('App\Ambiente');
     }
 
-    public function lojasTipos(){
-        return $this->belongsToMany('App\LojaTipo','produtos_lojas_tipos');
+    public function loja(){
+        return $this->belongsTo('App\Loja','loja_id');
     }
 
 

@@ -17,7 +17,6 @@
 	<li class="active"><a href="#tab-general" data-toggle="tab">Produto</a></li>
 	<li><a href="#tab-imagens" data-toggle="tab">Imagens Extras</a></li>
 	<li><a href="#tab-ambientes" data-toggle="tab">Ambientes</a></li>
-	<li><a href="#tab-lojas" data-toggle="tab">Lojas</a></li>
 </ul>
 <!-- ./ tabs -->
 {{-- Edit Produto Form --}}
@@ -63,6 +62,13 @@
 			</div>
 
 			<div class="form-group {{{ $errors->has('produto_tipo_id') ? 'error' : '' }}}">
+				<div class="col-lg-12">
+					<label class="control-label" for="loja_id">Loja</label>
+					{!!  Form::select('loja_id',(array(''=>'Não informada')+$lojas), (isset($produto) ? $produto->loja_id : null),array('class'=>'form-control') );  !!}
+				</div>
+			</div>
+
+			<div class="form-group {{{ $errors->has('fornecedor_id') ? 'error' : '' }}}">
 				<div class="col-lg-12">
 					<label class="control-label" for="fornecedor_id">Fornecedor</label>
 					{!!  Form::select('fornecedor_id',(array(''=>'Não informado')+$fornecedores), (isset($produto) ? $produto->fornecedor_id : null),array('class'=>'form-control') );  !!}
@@ -169,22 +175,6 @@
 		</div>
 		<!-- ./ Ambientes tab -->
 
-		<!-- Lojas tab -->
-		<div class="tab-pane" id="tab-lojas">
-			<br>
-			<select class="form-control" multiple="multiple" size="10" name="produto_lojatipo[]">
-			@foreach($lojastipos as $id => $lojatipo)
-		      <option value="{{$id}}"
-		      @if(isset($produtos_lojastipos))
-		      	@if(isset($produtos_lojastipos[$id]))
-		      		selected="selected"
-		      	@endif
-		      @endif
-		      >{{$lojatipo}}</option>
-		    @endforeach
-		    </select>
-		</div>
-		<!-- ./ Lojas tab -->
 
 			<!-- ./ tabs content -->
 

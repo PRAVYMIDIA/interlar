@@ -51,9 +51,9 @@ class HomeController extends Controller {
 		if(!empty($request->input('tipo'))){
 			$tipo_id = $request->input('tipo');
 		}
-		$loja_tipo_id = null;
-		if(!empty($request->input('lojatipo'))){
-			$loja_tipo_id = $request->input('lojatipo');
+		$loja_id = null;
+		if(!empty($request->input('loja'))){
+			$loja_id = $request->input('loja');
 		}
 		$ambiente_id = null;
 		if(!empty($request->input('ambiente'))){
@@ -66,7 +66,7 @@ class HomeController extends Controller {
 
 		$produto_grade = 1;
 
-		return view('pages.home', compact('lojas','produto_grade','tipo_id','loja_tipo_id','ambiente_id','ordenacao')); 
+		return view('pages.home', compact('lojas','produto_grade','tipo_id','loja_id','ambiente_id','ordenacao')); 
 	}
 
 	public function localizacao(){

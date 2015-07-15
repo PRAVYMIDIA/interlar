@@ -73,6 +73,14 @@
             </div>
             {!! Form::close() !!}
           </div>
+          @if($produto->loja)
+          <div class="col-md-12" style="background-color:#FFF; margin-bottom:30px; text-align:center;">
+              <img title="{{ $produto->loja->nome }}" src="/images/loja/{{$produto->loja->id.'/'.$produto->loja->imagemResize(230) }}" class="thumbnail thumbnail-custom" alt="{{ $produto->loja->nome }}">
+              <h3>{{ $produto->loja->nome }}</h3>
+              <p>{{ $produto->loja->descricao }}</p>
+              <h4>{{ $produto->loja->localizacao }}</h4>
+          </div>
+          @endif
         </div>
       </div>
 @endsection

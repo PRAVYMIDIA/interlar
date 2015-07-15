@@ -6,7 +6,7 @@ use App\ProdutoTipo;
 use App\ProdutoImagem;
 use App\Fornecedor;
 use App\Ambiente;
-use App\LojaTipo;
+use App\Loja;
 use Illuminate\Support\Facades\Input;
 use App\Http\Requests\Admin\ProdutoRequest;
 use App\Http\Requests\Admin\DeleteRequest;
@@ -45,10 +45,10 @@ class ProdutoController extends AdminController {
         $ambientes = new Ambiente();
         $ambientes = $ambientes->lists('nome','id')->all();
 
-        $lojastipos = new LojaTipo();
-        $lojastipos = $lojastipos->lists('nome','id')->all();
+        $lojas = new Loja();
+        $lojas = $lojas->lists('nome','id')->all();
         // Show the page
-        return view('admin.produto.create_edit', compact('title','produtos_tipos','fornecedores','lojastipos'));
+        return view('admin.produto.create_edit', compact('title','produtos_tipos','fornecedores','lojas'));
     }
 
     /**
@@ -63,6 +63,7 @@ class ProdutoController extends AdminController {
         $produto -> nome = $request->nome;
         $produto -> produto_tipo_id = $request->produto_tipo_id;
         $produto -> fornecedor_id = $request->fornecedor_id;
+        $produto -> loja_id = $request->loja_id;
         $produto -> valor = $request->valor;
         $produto -> valor_promocional = $request->valor_promocional;
         $produto -> parcelas = $request->parcelas;
@@ -91,11 +92,6 @@ class ProdutoController extends AdminController {
         # Salva o relacionamento muitos pra muitos do produtos->ambientes
         if($request->produto_ambiente){
             $produto->ambientes()->sync($request->produto_ambiente);
-        }
-
-        # Salva o relacionamento muitos pra muitos do produtos->lojasTipos
-        if($request->produto_lojatipo){
-            $produto->lojasTipos()->sync($request->produto_lojatipo);
         }
 
         // Demais imagens do produto
@@ -130,8 +126,8 @@ class ProdutoController extends AdminController {
         $ambientes = new Ambiente();
         $ambientes = $ambientes->lists('nome','id')->all();
 
-        $lojastipos = new LojaTipo();
-        $lojastipos = $lojastipos->lists('nome','id')->all();
+        $lojas = new Loja();
+        $lojas = $lojas->lists('nome','id')->all();
 
         $produtos_ambientes = array();
         if( $produto->ambientes ){
@@ -140,16 +136,10 @@ class ProdutoController extends AdminController {
             }
         }
 
-        $produtos_lojastipos = array();
-        if( $produto->lojasTipos ){
-            foreach ($produto->lojasTipos as $lojatipo) {
-                $produtos_lojastipos[$lojatipo->id] = $lojatipo->nome;
-            }
-        }
 
         $title = 'Editar Produto';
 
-        return view('admin.produto.create_edit',compact('produto','title','produtos_tipos','fornecedores','ambientes','lojastipos','produtos_lojastipos','produtos_ambientes'));
+        return view('admin.produto.create_edit',compact('produto','title','produtos_tipos','fornecedores','ambientes','lojas','produtos_ambientes'));
     }
 
     /**
@@ -165,6 +155,7 @@ class ProdutoController extends AdminController {
         $produto -> nome                = $request->nome;
         $produto -> produto_tipo_id     = $request->produto_tipo_id;
         $produto -> fornecedor_id       = $request->fornecedor_id;
+        $produto -> loja_id       = $request->loja_id;
         $produto -> valor               = $request->valor;
         $produto -> valor_promocional   = $request->valor_promocional;
         $produto -> parcelas            = $request->parcelas;
@@ -188,16 +179,7 @@ class ProdutoController extends AdminController {
             $produto_ambiente = $request->produto_ambiente;
         }    
         // $produto->ambientes()->attach($ambiente_id,['user_id_created' => Auth::id()]);
-        $produto->ambientes()->sync($produto_ambiente);
-        
-
-
-        # Salva o relacionamento muitos pra muitos do produtos->lojasTipos
-
-        $produto_lojatipo = ($request->produto_lojatipo? $request->produto_lojatipo: array());
-        
-        $produto->lojasTipos()->sync($produto_lojatipo);
-        
+        $produto->ambientes()->sync($produto_ambiente);        
 
         // Demais imagens do produto
         $imagens = $request->produto_imagem;

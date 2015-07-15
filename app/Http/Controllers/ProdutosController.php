@@ -50,21 +50,18 @@ class ProdutosController extends Controller {
 			}
 		}
 
-		if(!empty($request->input('loja_tipo_id'))){
-			$produtos->whereHas('lojasTipos',function($query )use ($request) {
-				$query->where('loja_tipo_id','=',$request->input('loja_tipo_id'));
-			});
+		if(!empty($request->input('loja_id'))){
+			$produtos->where('loja_id','=',$request->input('loja_id'));
 
-
-			$lojatipo = new LojaTipo();
-			$lojatipo = $lojatipo->find($request->input('loja_tipo_id'));
-			if($lojatipo){
+			$loja = new Loja();
+			$loja = $loja->find($request->input('loja_id'));
+			if($loja){
 				$visita = new Visita();
 		        $visita->ip = $request->ip();
-		        $lojatipo->visitas()->save($visita);
+		        $loja->visitas()->save($visita);
 			}
-
 		}
+
 		if(!empty($request->input('termo'))){
 			$produtos->where('nome','like','%'.$request->input('termo').'%');
 		}

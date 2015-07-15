@@ -25,8 +25,6 @@ class AppServiceProvider extends ServiceProvider
         $tipos          = new ProdutoTipo();
         $tipos          = $tipos->lists('nome','id')->all();
 
-        $lojastipos          = new LojaTipo();
-        $lojastipos          = $lojastipos->where('ativo', 1)->lists('nome','id')->all();
 
         $banner     = new Banner();
         $banner     = $banner->where('dtinicio','<=',date('Y-m-d'))->where('dtfim','>=',date('Y-m-d'))->orderByRaw("RAND()")->first();
@@ -40,7 +38,6 @@ class AppServiceProvider extends ServiceProvider
 
         view()->share('ambientes', $ambientes);
         view()->share('tipos', $tipos);
-        view()->share('lojastipos', $lojastipos);
         view()->share('banner', $banner);
 
     }
