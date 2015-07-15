@@ -154,9 +154,13 @@ class LojaController extends AdminController {
     public function data(\Illuminate\Http\Request $request)
     {
         
-        $loja = Loja::select(array('lojas.nome', 'lojas.localizacao', 'lojas.ativo',  DB::raw('DATE_FORMAT(lojas.created_at,\'%d/%m/%Y %H:%i\') as criado_em'),'lojas.id'));
+        $loja = Loja::select(array('lojas.nome', 'lojas.localizacao', 'lojas.ativo', 'lojas.created_at','lojas.id'));
 
         $dt =  Datatables::of($loja)
+            ->editColumn('created_at', function ($lojatipo) {
+                return $lojatipo->created_at ? with(new \Carbon\Carbon($lojatipo->created_at))->format('d/m/Y H:i') : '';
+
+            })
             ->editColumn('ativo', '{!! $ativo?\'<i class="fa fa-check"></i>\':\'<i class="fa fa-times"></i>\'!!}')
             ->add_column('actions', '<a href="{{{ URL::to(\'admin/loja/\' . $id . \'/edit\' ) }}}" class="btn btn-success btn-xs iframe" title="{{ trans("admin/modal.edit") }}" ><span class="glyphicon glyphicon-pencil"></span></a>
                     <a href="{{{ URL::to(\'admin/loja/\' . $id . \'/delete\' ) }}}" class="btn btn-xs btn-danger iframe" title="{{ trans("admin/modal.delete") }}"><span class="glyphicon glyphicon-trash"></span></a>
