@@ -32,7 +32,7 @@
 					class="form-group {{{ $errors->has('nome') ? 'has-error' : '' }}}">
 					<div class="col-md-12">
 						<label class="control-label" for="nome"> Nome</label> <input
-							class="form-control" type="text" name="nome" id="nome"
+							class="form-control" type="text" name="nome" id="nome" maxlenght="255"
 							value="{{{ Input::old('nome', isset($ambiente) ? $ambiente->nome : null) }}}" />
 						{!!$errors->first('nome', '<label class="control-label">:message</label>')!!}
 					</div>
@@ -42,8 +42,8 @@
 					class="form-group {{{ $errors->has('descricao') ? 'has-error' : '' }}}">
 					<div class="col-md-12">
 						<label class="control-label" for="descricao">Descrição</label>
-						<textarea class="form-control full-width wysihtml5" name="descricao"
-							value="descricao" rows="10">{{{ Input::old('descricao', isset($ambiente) ? $ambiente->descricao : null) }}}</textarea>
+						<input  maxlenght="255" class="form-control" type="text" name="descricao"
+							value="{{{ Input::old('descricao', isset($ambiente) ? $ambiente->descricao : null) }}}" />
 						{!! $errors->first('descricao', '<label class="control-label">:message</label>')
 						!!}
 					</div>
