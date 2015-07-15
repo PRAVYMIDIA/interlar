@@ -17,6 +17,8 @@
             @else
                 <span>R$</span><span style="color:red; font-size:30px;">{{$produto->valor}}</span>
             @endif
+          @else
+            <h4>Sob Consulta</h4>
           @endif
           @if($produto->parcelas)
             <span style="font-size:16px; clear:both;"> em até {{ $produto->parcelas }}x s/Juros</span>

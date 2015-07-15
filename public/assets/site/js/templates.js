@@ -26,6 +26,9 @@ var template_produtos = '{{#data}}\
                         <span>R$</span><span style="color:red; font-size:20px;">{{valor}}</span>\
                     {{/valor_promocional}}\
                 {{/valor}}\
+                {{^valor}}\
+                  &nbsp; por: &nbsp; <span style="color:#333; font-weight:bold;">Sob consulta</span>\
+                {{/valor}}\
                 {{#parcelas}}\
                     <span> em até {{ parcelas }}x s/Juros</span>\
                 {{/parcelas}}\
