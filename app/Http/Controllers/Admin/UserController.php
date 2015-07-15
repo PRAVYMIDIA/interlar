@@ -119,7 +119,7 @@ class UserController extends AdminController {
      */
     public function data(\Illuminate\Http\Request $request)
     {
-        $users = User::select(array('users.id','users.name','users.email','users.confirmed', DB::raw('DATE_FORMAT(users.created_at,\'%d/%m/%Y %H:%i\') as criado_em') ));
+        $users = User::select(array('users.name','users.email','users.confirmed', DB::raw('DATE_FORMAT(users.created_at,\'%d/%m/%Y %H:%i\') as criado_em','users.id') ));
 
         $dt = Datatables::of($users)
             ->edit_column('confirmed', '@if ($confirmed=="1") <span class="glyphicon glyphicon-ok"></span> @else <span class=\'glyphicon glyphicon-remove\'></span> @endif')

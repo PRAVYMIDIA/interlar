@@ -154,9 +154,10 @@ class LojaController extends AdminController {
     public function data(\Illuminate\Http\Request $request)
     {
         
-        $loja = Loja::select(array('lojas.id','lojas.nome', 'lojas.localizacao', 'lojas.ativo',  DB::raw('DATE_FORMAT(lojas.created_at,\'%d/%m/%Y %H:%i\') as criado_em')));
+        $loja = Loja::select(array('lojas.nome', 'lojas.localizacao', 'lojas.ativo',  DB::raw('DATE_FORMAT(lojas.created_at,\'%d/%m/%Y %H:%i\') as criado_em'),'lojas.id'));
 
         $dt =  Datatables::of($loja)
+            ->editColumn('ativo', '{!! $ativo?\'<i class="fa fa-check"></i>\':\'<i class="fa fa-times"></i>\'!!}')
             ->add_column('actions', '<a href="{{{ URL::to(\'admin/loja/\' . $id . \'/edit\' ) }}}" class="btn btn-success btn-xs iframe" title="{{ trans("admin/modal.edit") }}" ><span class="glyphicon glyphicon-pencil"></span></a>
                     <a href="{{{ URL::to(\'admin/loja/\' . $id . \'/delete\' ) }}}" class="btn btn-xs btn-danger iframe" title="{{ trans("admin/modal.delete") }}"><span class="glyphicon glyphicon-trash"></span></a>
                     <input type="hidden" name="row" value="{{$id}}" id="row">')

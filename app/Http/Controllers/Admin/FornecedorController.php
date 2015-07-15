@@ -114,9 +114,10 @@ class FornecedorController extends AdminController {
      */
     public function data(\Illuminate\Http\Request $request)
     {
-        $fornecedor = Fornecedor::select(array( 'fornecedores.id',
+        $fornecedor = Fornecedor::select(array( 
                                                 'fornecedores.nome',
-                                                'fornecedores.created_at'));
+                                                'fornecedores.created_at',
+                                                'fornecedores.id'));
 
         $dt =  Datatables::of($fornecedor)
             ->editColumn('created_at', function ($fornecedor) {

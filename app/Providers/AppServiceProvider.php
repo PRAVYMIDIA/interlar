@@ -26,7 +26,7 @@ class AppServiceProvider extends ServiceProvider
         $tipos          = $tipos->lists('nome','id')->all();
 
         $lojastipos          = new LojaTipo();
-        $lojastipos          = $lojastipos->lists('nome','id')->all();
+        $lojastipos          = $lojastipos->where('ativo', 1)->lists('nome','id')->all();
 
         $banner     = new Banner();
         $banner     = $banner->where('dtinicio','<=',date('Y-m-d'))->where('dtfim','>=',date('Y-m-d'))->orderByRaw("RAND()")->first();

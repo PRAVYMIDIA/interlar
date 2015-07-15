@@ -114,7 +114,7 @@ class ProdutoTipoController extends AdminController {
      */
     public function data(\Illuminate\Http\Request $request)
     {
-        $produto_tipo = ProdutoTipo::select(array('produtos_tipos.id','produtos_tipos.nome', DB::raw('DATE_FORMAT(produtos_tipos.created_at,\'%d/%m/%Y %H:%i\') as criado_em')));
+        $produto_tipo = ProdutoTipo::select(array('produtos_tipos.nome', DB::raw('DATE_FORMAT(produtos_tipos.created_at,\'%d/%m/%Y %H:%i\') as criado_em'),'produtos_tipos.id'));
 
         $dt = Datatables::of($produto_tipo)
             ->add_column('actions', '<a href="{{{ URL::to(\'admin/produtotipo/\' . $id . \'/edit\' ) }}}" class="btn btn-success btn-xs iframe" title="{{ trans("admin/modal.edit") }}" ><span class="glyphicon glyphicon-pencil"></span></a>

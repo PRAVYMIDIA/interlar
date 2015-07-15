@@ -257,14 +257,15 @@ class ProdutoController extends AdminController {
         $produto = Produto::leftJoin('produtos_tipos','produtos_tipos.id','=','produtos.produto_tipo_id')
             // ->leftJoin('fornecedores','fornecedores.id','=','produtos.fornecedor_id')
             ->select(array(
-                                        'produtos.id',
+                                        
                                         'produtos.nome', 
                                         'produtos_tipos.nome as nometipo', 
                                         'produtos.valor',
                                         'produtos.valor_promocional',
                                         'produtos.parcelas',
                                         'produtos.imagem',
-                                        'produtos.created_at'
+                                        'produtos.created_at',
+                                        'produtos.id'
                                         )
                                     );
 

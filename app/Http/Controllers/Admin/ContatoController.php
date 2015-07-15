@@ -125,11 +125,12 @@ class ContatoController extends AdminController {
      */
     public function data(\Illuminate\Http\Request $request)
     {
-        $contato = Contato::select(array('contatos.id',
+        $contato = Contato::select(array(
                                         'contatos.nome',
                                         DB::raw('(SELECT COUNT(1) FROM contato_respostas WHERE contato_respostas.contato_id = contatos.id) as qtd_respostas'),
                                         'contatos.produto_id',
-                                        'contatos.created_at'));
+                                        'contatos.created_at',
+                                        'contatos.id'));
 
         $dt = Datatables::of($contato)
             ->editColumn('created_at', function ($contato) {

@@ -80,12 +80,12 @@ class EmailController extends AdminController {
      */
     public function data(Request $request)
     {
-        $email = Email::select(array('emails.id',
-                                        'emails.email',
+        $email = Email::select(array(   'emails.email',
                                         'emails.pagina',
                                         'ambientes.nome',
                                         'produtos_tipos.nome as tipo',
-                                        'emails.created_at'))
+                                        'emails.created_at',
+                                        'emails.id'))
             ->leftJoin('ambientes','ambientes.id','=','emails.ambiente_id')
             ->leftJoin('produtos_tipos','produtos_tipos.id','=','emails.produto_tipo_id');
 

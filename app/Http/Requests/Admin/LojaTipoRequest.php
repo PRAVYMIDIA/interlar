@@ -12,7 +12,7 @@ class LojaTipoRequest extends FormRequest {
 	public function rules()
 	{
 		return [
-            'nome' => 'required|unique:lojas_tipos|min:3',
+            'nome' => 'required|unique:lojas_tipos,id,:id',
 		];
 	}
 

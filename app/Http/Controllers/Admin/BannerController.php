@@ -164,11 +164,13 @@ class BannerController extends AdminController {
      */
     public function data(\Illuminate\Http\Request $request)
     {
-        $banner = Banner::select(array('banners.id',
+        $banner = Banner::select(array(
                                     'banners.nome',
                                     'banners.dtinicio', 
                                     'banners.dtfim', 
-                                    'banners.created_at'));
+                                    'banners.created_at',
+                                    'banners.id'
+                                    ));
 
         $dt = Datatables::of($banner)
             ->editColumn('dtinicio', function ($banner) {

@@ -117,13 +117,17 @@ class LojaTipoController extends AdminController {
      */
     public function data(\Illuminate\Http\Request $request)
     {
-        $lojatipo = LojaTipo::select(array('lojas_tipos.id','lojas_tipos.nome', 'lojas_tipos.ativo',  DB::raw('DATE_FORMAT(lojas_tipos.created_at,\'%d/%m/%Y %H:%i\') as criado_em')));
+        $lojatipo = LojaTipo::select(array('lojas_tipos.nome', 'lojas_tipos.ativo', 'lojas_tipos.created_at','lojas_tipos.id'));
 
         $dt =  Datatables::of($lojatipo)
+            ->editColumn('created_at', function ($lojatipo) {
+                return $lojatipo->created_at ? with(new \Carbon\Carbon($lojatipo->created_at))->format('d/m/Y H:i') : '';
+
+            })
+            ->editColumn('ativo', '{!! $ativo?\'<i class="fa fa-check"></i>\':\'<i class="fa fa-times"></i>\'!!}')
             ->add_column('actions', '<a href="{{{ URL::to(\'admin/lojatipo/\' . $id . \'/edit\' ) }}}" class="btn btn-success btn-xs iframe" title="{{ trans("admin/modal.edit") }}" ><span class="glyphicon glyphicon-pencil"></span></a>
                     <a href="{{{ URL::to(\'admin/lojatipo/\' . $id . \'/delete\' ) }}}" class="btn btn-xs btn-danger iframe" title="{{ trans("admin/modal.delete") }}"><span class="glyphicon glyphicon-trash"></span></a>
-                    <input type="hidden" name="row" value="{{$id}}" id="row">')
-            ->remove_column('id');
+                    <input type="hidden" name="row" value="{{$id}}" id="row">');
 
          
 
@@ -199,7 +203,7 @@ class LojaTipoController extends AdminController {
             }
         });
 
-        return  $dt->make();
+        return  $dt->remove_column('id')->make();
     }
 
     /**

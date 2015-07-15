@@ -8,7 +8,7 @@
 {{-- Edit Loja Form --}}
 <form class="form-horizontal" id="fupload" enctype="multipart/form-data"
 	method="post"
-	action="@if(isset($loja)){{ URL::to('admin/lojatipo/'.$lojatipo->id.'/edit') }}
+	action="@if(isset($lojatipo)){{ URL::to('admin/lojatipo/'.$lojatipo->id.'/edit') }}
 	        @else{{ URL::to('admin/lojatipo/create') }}@endif"
 	autocomplete="off">
 	<!-- CSRF Token -->
