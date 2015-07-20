@@ -27,7 +27,7 @@ class ProdutoTipo extends Model
      */
     protected $dates = ['deleted_at'];
 
-    public function Produtos()
+    public function produtos()
     {
         return $this->hasMany('App\Produto');
     }

@@ -15,11 +15,12 @@ var template_produtos = '{{#data}}\
                 {{#fornecedor_nome}}\
                 &nbsp;-&nbsp; {{fornecedor_nome}} \
                 {{/fornecedor_nome}}\
+                <br>\
                 {{#valor}}\
                     {{#valor_promocional}}\
-                        <span style="text-decoration:line-through;">De: R$ {{valor}} </span>\
+                        <span style="text-decoration:line-through;color:#999999;">De: R$ {{valor}} </span>\
                         <span>por apenas: </span>\
-                        <span>R$</span><span style="color:red; font-size:20px;">{{valor_promocional}}</span>\
+                        <br><span>R$</span><span style="color:red; font-size:20px;">{{valor_promocional}}</span>\
                     {{/valor_promocional}}\
                     \
                     {{^valor_promocional}}\

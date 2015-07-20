@@ -3,7 +3,30 @@
 @section('styles')
 <style type="text/css">
 .red{
-  color:#ed1d24;
+  color:#ed1d24 !important;
+}
+.bt_ordenacao,.bt_ordenacao:link {
+  color:#999999;
+}
+.bt_ordenacao:active{
+  color:#ed1d24 !important;
+}
+.remove_ordenacao{
+  margin-left: 10px;
+}
+.titulo_filtro{
+  cursor: default;
+}
+.breadcrumb_texto{
+  display: inline-block;
+  padding: 6px 12px;
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.42857143;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
 }
 </style>
 @stop
@@ -49,7 +72,7 @@
           <div class="row">
             <div class="col-sm-12 hidden-xs" style="padding-top: 8px;">
               <ul class="nav nav-pills nav-stacked">
-                <li role="presentation" class="active"><a href="#">Ambientes</a></li>
+                <li role="presentation" class="active"><a href="#" class="titulo_filtro">Ambientes</a></li>
                 @foreach($ambientes as $id=>$ambiente)
                 <li role="presentation" class="menu_ambientes" id="item_ambiente_{{$id}}"> <a href="#" ambiente="{{ $id }}" class="bt_ambiente">{{$ambiente}}</a> </li>
                 @endforeach
@@ -60,7 +83,7 @@
           <div class="row">
             <div class="col-sm-12 hidden-xs">
               <ul class="nav nav-pills nav-stacked" style="margin-top:15px;">
-                <li role="presentation" class="active"><a href="#">Produtos</a></li>
+                <li role="presentation" class="active"><a href="#" class="titulo_filtro">Produtos</a></li>
                 @foreach($tipos as $id=>$tipo)
                 <li role="presentation" class="menu_tipos" id="item_tipo_{{$id}}"> <a href="#" tipo="{{ $id }}" class="bt_tipo">{{$tipo}}</a> </li>
                 @endforeach
@@ -72,7 +95,7 @@
           <div class="row">
             <div class="col-sm-12 hidden-xs">
               <ul class="nav nav-pills nav-stacked" style="margin-top:15px;">
-                <li role="presentation" class="active"><a href="#">Lojas</a></li>
+                <li role="presentation" class="active"><a href="#" class="titulo_filtro">Lojas</a></li>
                 @foreach($lojas as $id=>$loja)
                 <li role="presentation"  class="menu_loja" id="item_loja_{{$id}}"> <a href="#" loja="{{ $id }}" class="bt_loja">{{$loja}}</a> </li>
                 @endforeach
@@ -82,7 +105,7 @@
           <br />
         </div> <!-- /. col-lg-3 -->
         <div class="col-lg-9">
-          <div id="header_produtos" style="display:none;height: 25px;">
+          <div id="header_produtos" style="display:none;height: 35px;">
             <h5 style="color:#999999">
               <div id="bloco_breadcrumb" class="pull-left">
                 
@@ -150,6 +173,36 @@
               .fail(function() {
                 fechaLoading();
                 v_loading = 0;
+              });
+
+              $.ajax({
+                url: '/produtos/filtro',
+                data: {termo: v_termo,ambiente_id: v_ambiente, tipo_id: v_tipo, loja_id: v_loja, ordenacao: v_ordenacao }
+              })
+              .done(function(retorno) {
+                
+                if(!next_page){
+                  $('#btn_carrega_mais_produtos').hide('fast');
+                }else{
+                  $('#btn_carrega_mais_produtos').show('fast');
+                }
+                console.log(retorno);
+                // Filtros
+                $('.menu_ambientes').hide();
+                $.each(retorno.ambientes, function(index, val) {
+                   $('#item_ambiente_'+index).show();
+                });
+
+                $('.menu_tipos').hide();
+                $.each(retorno.tipos, function(index, val) {
+                   $('#item_tipo_'+index).show();
+                });
+
+                $('.menu_loja').hide();
+                $.each(retorno.lojas, function(index, val) {
+                   $('#item_loja_'+index).show();
+                });
+
               });
 
             }

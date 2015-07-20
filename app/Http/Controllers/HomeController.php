@@ -45,7 +45,6 @@ class HomeController extends Controller {
 	{
 
 		$lojas			= new Loja();
-		$lojas			= $lojas->lists('nome','id')->all();
 
 		$tipo_id = null;
 		if(!empty($request->input('tipo'))){
@@ -63,6 +62,19 @@ class HomeController extends Controller {
 		if(!empty($request->input('ordenacao'))){
 			$ordenacao = $request->input('ordenacao');
 		}
+		// if($ambiente_id || $tipo_id){
+		// 	$lojas			= $lojas->whereHas('produtos',function ($query) use ($ambiente_id,$tipo_id){
+		// 		if($tipo_id){
+		// 			$query->where('produto_tipo_id','=',$tipo_id);
+		// 		}
+		// 		if($ambiente_id){
+		// 			$query->join('ambiente_produto','produtos.id','=','ambiente_produto.produto_id')
+		// 					->where('ambiente_id','=',$ambiente_id);
+		// 		}
+		// 	})->lists('nome','id')->all();
+		// }else{
+			$lojas			= $lojas->has('produtos')->lists('nome','id')->all();
+		// }
 
 		$produto_grade = 1;
 

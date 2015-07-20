@@ -121,6 +121,72 @@ class ProdutosController extends Controller {
 		return $produtos;
 	}
 
+	public function filtro(Request $request){
+
+		$tipo_id = null;
+		$loja_id = null;
+		$ambiente_id = null;
+		
+		if(!empty($request->input('tipo_id'))){
+			$tipo_id = $request->input('tipo_id');
+		}
+		
+		if(!empty($request->input('loja_id'))){
+			$loja_id = $request->input('loja_id');
+		}
+		
+		if(!empty($request->input('ambiente_id'))){
+			$ambiente_id = $request->input('ambiente_id');
+		}
+
+		$ambientes      = new Ambiente();
+		if($loja_id || $tipo_id){
+			$ambientes      = $ambientes->whereHas('produtos',function ($query) use ($loja_id,$tipo_id){
+				if($tipo_id){
+					$query->where('produto_tipo_id','=',$tipo_id);
+				}
+				if($loja_id){
+					$query->where('loja_id','=',$loja_id);
+				}
+			})->lists('nome','id')->all();
+		}else{
+	        $ambientes      = $ambientes->has('produtos')->lists('nome','id')->all();
+	    }
+
+        $tipos          = new ProdutoTipo();
+        if($ambiente_id || $loja_id){
+			$tipos			= $tipos->whereHas('produtos',function ($query) use ($ambiente_id,$loja_id){
+				if($loja_id){
+					$query->where('loja_id','=',$loja_id);
+				}
+				if($ambiente_id){
+					$query->join('ambiente_produto','produtos.id','=','ambiente_produto.produto_id')
+							->where('ambiente_id','=',$ambiente_id);
+				}
+			})->lists('nome','id')->all();
+		}else{
+			$tipos          = $tipos->has('produtos')->lists('nome','id')->all();
+		}
+        
+
+        $lojas			= new Loja();
+		if($ambiente_id || $tipo_id){
+			$lojas			= $lojas->whereHas('produtos',function ($query) use ($ambiente_id,$tipo_id){
+				if($tipo_id){
+					$query->where('produto_tipo_id','=',$tipo_id);
+				}
+				if($ambiente_id){
+					$query->join('ambiente_produto','produtos.id','=','ambiente_produto.produto_id')
+							->where('ambiente_id','=',$ambiente_id);
+				}
+			})->lists('nome','id')->all();
+		}else{
+			$lojas			= $lojas->has('produtos')->lists('nome','id')->all();
+		}
+
+		return array('ambientes'=>$ambientes,'tipos'=>$tipos,'lojas'=>$lojas);
+	}
+
 	public function show($slug,$id,Request $request)
     {
         $produto = Produto::find($id);

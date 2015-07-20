@@ -23,6 +23,7 @@ Route::post('loja/buscar',          'LojaController@buscar');
 Route::get('ambientes/{slug}/{id}', 'AmbientesController@show');
 
 Route::get('produtos/data',         'ProdutosController@data');
+Route::get('produtos/filtro',       'ProdutosController@filtro');
 Route::get('produtos/{slug}/{id}',  'ProdutosController@show');
 
 

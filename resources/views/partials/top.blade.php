@@ -7,7 +7,7 @@
     <div class="row">
       <div class="row">
         <div class="col-md-3">
-          <img src="/assets/site/images/logo_shopping_interlar_aricanduva.png" />
+          <a href="/"><img src="/assets/site/images/logo_shopping_interlar_aricanduva.png" /></a>
         </div>
         <div class="col-md-6" style="margin-top: 30px;">
           <nav class="navbar navbar-default navbar-custom">

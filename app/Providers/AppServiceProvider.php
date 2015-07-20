@@ -20,11 +20,10 @@ class AppServiceProvider extends ServiceProvider
     public function boot(Request $request)
     {
         $ambientes      = new Ambiente();
-        $ambientes      = $ambientes->lists('nome','id')->all();
+        $ambientes      = $ambientes->has('produtos')->lists('nome','id')->all();
 
         $tipos          = new ProdutoTipo();
-        $tipos          = $tipos->lists('nome','id')->all();
-
+        $tipos          = $tipos->has('produtos')->lists('nome','id')->all();
 
         $banner     = new Banner();
         $banner     = $banner->where('dtinicio','<=',date('Y-m-d'))->where('dtfim','>=',date('Y-m-d'))->orderByRaw("RAND()")->first();

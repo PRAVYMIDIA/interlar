@@ -48,7 +48,19 @@
             @endif
             </div>
           @endif
-      </div> <!-- /. row -->      
+      </div> <!-- /. row -->
+
+    <div id="bloco_newsletter_topo" style="display:none" role="alert">
+        <button class="close" type="button" data-dismiss="alert" aria-label="Close"><span>&times;</span></button>
+        <label for="email">Cadastre seu email e receba novas ofertas de produtos em promoção.</label>
+        <div class="row">
+            <span class="col-md-10"><input type="email" class="form-control" id="emailnewslettertopo" placeholder="Digite seu E-Mail"></span>
+            <span class="col-md-2"><button type="button" id="bt_cadastra_newsletter_topo" class="btn btn-warning btn-block">Cadastrar</button></span>
+        </div>
+        
+        
+    </div>
+
 @yield('content')
 </div>
 @include('partials.footer')
@@ -64,6 +76,17 @@
 <script>
     $('#flash-overlay-modal').modal();
     $('div.alert').not('.alert-danger').delay(3000).slideUp(300);
+
+    function getCookie(cname) {
+        var name = cname + "=";
+        var ca = document.cookie.split(';');
+        for(var i=0; i<ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0)==' ') c = c.substring(1);
+            if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
+        }
+        return 0;
+    }
 
     // Ajax loaders
             
@@ -117,6 +140,10 @@
             salvaNewsletter();
         });
 
+        $('#bt_cadastra_newsletter_topo').click(function() {
+            salvaNewsletter2();
+        });
+
         $('.bt_ambiente').click(function(e) {
             e.preventDefault();
             filtraProdutosPorAmbiente( $(this).attr('ambiente') );
@@ -133,7 +160,13 @@
         $('.bt_ordenacao').click(function(e) {
             e.preventDefault();
             ordenaResultados( $(this).attr('ordenacao') );
-        });  
+        });
+
+        var nws = getCookie('newsletter');
+        if(nws ==0){
+            $('#bloco_newsletter_topo').addClass('alert').addClass('alert-warning').show('fast');
+        }
+
     });
 
     function atualizaQueryString(){
@@ -170,6 +203,8 @@
 
             if(newurl.length > 0){
                 newurl = '/?'+newurl;
+            }else{
+                newurl = '/';
             }
             window.history.pushState({path:newurl},'',newurl);
         }
@@ -245,12 +280,14 @@
     }
 
     function ativaDesativaMenu(){
+        $('.remove_ordenacao').remove();
         var texto_breadcrumb = '';
 
         $('.menu_ambientes').removeClass('active-item');
         if(v_ambiente){
             $('#item_ambiente_'+v_ambiente).addClass('active-item');
-            texto_breadcrumb += $('#item_ambiente_'+v_ambiente).children().html();
+            texto_breadcrumb += '<span id="breadcrumb_txt_1">'+$('#item_ambiente_'+v_ambiente).children().html()+'</span>';
+            $('#item_ambiente_'+v_ambiente).children().append('<i class="glyphicon glyphicon-remove remove_ordenacao pull-right" style="color:#fff;"></i>');
         }
 
         $('.menu_tipos').removeClass('active-item');
@@ -259,7 +296,8 @@
             if(texto_breadcrumb.length){
                 texto_breadcrumb += ' &nbsp; &gt; &nbsp; ';
             }
-            texto_breadcrumb += $('#item_tipo_'+v_tipo).children().html();
+            texto_breadcrumb += '<span id="breadcrumb_txt_2">'+$('#item_tipo_'+v_tipo).children().html()+'</span>';
+            $('#item_tipo_'+v_tipo).children().append('<i class="glyphicon glyphicon-remove remove_ordenacao pull-right" style="color:#fff;"></i>');
         }
 
         $('.menu_loja').removeClass('active-item');
@@ -268,19 +306,33 @@
             if(texto_breadcrumb.length){
                 texto_breadcrumb += ' &nbsp; &gt; &nbsp; ';
             }
-            texto_breadcrumb += $('#item_loja_'+v_loja).children().html();
+            texto_breadcrumb += '<span id="breadcrumb_txt_3">'+$('#item_loja_'+v_loja).children().html()+'</span>';
+            $('#item_loja_'+v_loja).children().append('<i class="glyphicon glyphicon-remove remove_ordenacao pull-right" style="color:#fff;"></i>');
         }
 
         $('.bt_ordenacao').removeClass('red');
-        $('.remove_ordenacao').remove();
         if(v_ordenacao){
             $('#bt_ordenacao_'+v_ordenacao).addClass('red');
-            $('#bt_ordenacao_'+v_ordenacao).append(' &nbsp; <i class="fa fa-times remove_ordenacao"></i>');
+            $('#bt_ordenacao_'+v_ordenacao).append('<i class="glyphicon glyphicon-remove remove_ordenacao"></i>');
         }
 
         if(texto_breadcrumb.length > 0){
-            $('#bloco_breadcrumb').html(texto_breadcrumb);
+            $('#bloco_breadcrumb').html('<div class="breadcrumb_texto">'+texto_breadcrumb+'</div>');
+            if($('#breadcrumb_txt_3').length){
+                $('#breadcrumb_txt_3').addClass('red');
+            }else{
+                if($('#breadcrumb_txt_2').length){
+                    $('#breadcrumb_txt_2').addClass('red');
+                }else{
+                    if($('#breadcrumb_txt_1').length){
+                        $('#breadcrumb_txt_1').addClass('red');
+                    }
+                }
+            }
+
             $('#header_produtos').show('fast');
+        }else{
+            $('#bloco_breadcrumb').html('');
         }
     }
 
@@ -289,6 +341,53 @@
         return re.test(email);
     }
 
+    function salvaNewsletter2(){
+
+        var v_email = $('#emailnewslettertopo').val();
+        var re = /[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}/igm;
+        if (!validateEmail(v_email))
+        {
+            alert('Por favor coloque um e-mail válido.');
+            return false;
+        }
+        carregaLoading();
+        $.ajax({
+            url: '/emails/salvar',
+            type: 'POST',
+            dataType: 'json',
+            data: {_token: '{{{ csrf_token() }}}', email:v_email, pagina: '{{ Request::path() }}', ambiente: v_ambiente, tipo: v_tipo},
+        })
+        .done(function(retorno) {
+            fechaLoading();
+            if(retorno.erro){
+                $('body').append('<div class="alert alert-danger alert-dismissible" style="position:absolute; top:200px; left:40%;" role="alert">\
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>\
+                  <strong>Erro!</strong> '+retorno.erro+'!\
+                </div>');
+
+            }else{
+                $('#bloco_newsletter_topo').hide('fast', function() {
+                    $(this).remove();
+                });
+                $('body').append('<div class="alert alert-success alert-dismissible" style="position:absolute; top: 45%; left: 30%;" role="alert">\
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>\
+                  <strong>Sucesso!</strong> Agora você receberá todas as promoções no seu e-mail!\
+                </div>');
+
+                document.cookie="newsletter=1; expires=Thu, 31 Dec {{date('Y')}} 23:59:59 UTC; path=/";
+                
+            }
+            
+        })
+        .fail(function() {
+            fechaLoading();
+            $('body').append('<div class="alert alert-danger alert-dismissible" style="position:absolute; top:200px; left:40%;" role="alert">\
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>\
+                  <strong>Erro!</strong> Houve algum erro de conexão, por favor tente mais tarde!\
+                </div>');
+        });
+        
+    } 
     function salvaNewsletter(){
 
         var v_email = $('#emailnewsletter').val();
@@ -318,6 +417,7 @@
             }else{
                 $('#emailnewsletter').val('E-Mail salvo com sucesso!');
                 $('#emailnewsletter').parent().addClass('has-success');
+                document.cookie="newsletter=1; expires=Thu, 31 Dec {{date('Y')}} 23:59:59 UTC; path=/";
             }
             setTimeout(function() {
                $('#emailnewsletter').parent().removeClass('has-success');
