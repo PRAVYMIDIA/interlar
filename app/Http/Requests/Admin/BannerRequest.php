@@ -15,7 +15,16 @@ class BannerRequest extends FormRequest {
             'nome' => 'required|min:3',
             'url' => 'required',
             'dtinicio' => 'required|date_format:d/m/Y',
-            'dtfim' => 'required|date_format:d/m/Y',
+            'dtfim' => 'required|date_format:d/m/Y|after:dtinicio',
+		];
+	}
+
+	public function messages(){
+		return [
+			'dtinicio.required' => 'É necessário uma data inicial de exibição',
+			'dtfim.required' => 'É necessário uma data inicial de exibição',
+			'dtfim.after' => 'É necessário que a data de fim de exibição seja maior que data inicial de exibição.',
+			
 		];
 	}
 

@@ -12,6 +12,7 @@ use Datatables;
 use DB;
 use Mail;
 
+
 class ContatoController extends AdminController {
 
     /*
@@ -39,6 +40,10 @@ class ContatoController extends AdminController {
         $contatoResposta -> mensagem    = $request->mensagem;
         $contatoResposta -> contato_id  = $request->contato_id;
         $contatoResposta -> tipo        = $request->tipo;
+        if($request->tipo == 'SMS'){
+            $contatoResposta -> mensagem    = $request->mensagem_sms;
+        }
+
         $contatoResposta->save();
         
         if($contatoResposta->tipo=='EMAIL')
@@ -65,11 +70,66 @@ class ContatoController extends AdminController {
                 $contatoResposta->save();
             }
         }else{
-            // @TODO Integração Zenvia
+            $celular = $contatoResposta->contato->celular;
+            $celular = preg_replace("/[^0-9]+/", "", $celular);
+
+            // Integração Zenvia
+            $ch = curl_init();
+
+            curl_setopt($ch, CURLOPT_URL, "https://api-rest.zenvia360.com.br/services/send-sms");
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+            curl_setopt($ch, CURLOPT_HEADER, FALSE);
+
+            curl_setopt($ch, CURLOPT_POST, TRUE);
+
+            curl_setopt($ch, CURLOPT_POSTFIELDS, "{
+              \"sendSmsRequest\": {
+                \"from\": \"Interlar\",
+                \"to\": \"55".$celular."\",
+                \"msg\": \"".$contatoResposta->mensagem."\",
+                \"callbackOption\": \"ALL\",
+                \"id\": \"".$contatoResposta->id."\"
+              }
+            }");
+
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+              "Content-Type: application/json",
+              "Authorization: Basic ". base64_encode('raemp.corp:IqEPsgtp6G'),
+              "Accept: application/json"
+            ));
+
+            $response = curl_exec($ch);
+            curl_close($ch);
+            /*$response = '{
+              "sendSmsResponse" : {
+                "statusCode" : "00",
+                "statusDescription" : "Ok",
+                "detailCode" : "000",
+                "detailDescription" : "Message Sent"
+              }
+            }';*/
+            $response = json_decode($response);
+            
+            if($response->sendSmsResponse){
+                if($response->sendSmsResponse->statusCode == '00'){
+                    $envio = 1;
+                }else{
+                    $envio = 0;
+                }
+            }else{
+                $envio = 0;
+            }
+
+            if($envio){
+                $contatoResposta->enviada = 1;
+                $contatoResposta->save();
+            }
         }
         
 
     }
+
+    
     /**
      * Show the form for editing the specified resource.
      *

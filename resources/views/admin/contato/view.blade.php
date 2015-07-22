@@ -92,8 +92,12 @@
 						     	<tr>
 						          <th scope="row">{{$resposta->id}}</th>
 						          <td>{{$resposta->usuario->username}}</td>
-						          <td>{{$resposta->created_at}}</td>
-						          <td>{{$resposta->tipo}}</td>
+						          <?php
+						          $data_contato = new \Carbon\Carbon($resposta->created_at);
+						          $data_contato = $data_contato->format('d/m/Y H:i');
+						          ?>
+						          <td>{{ $data_contato }}</td>
+						          <td><span class="label label-{{ $resposta->enviada ? 'success':'danger' }}" title="{{ $resposta->enviada ? 'ENVIADA':'NÃO ENVIADA' }}"><i class="fa fa-{{ $resposta->tipo=='SMS' ? 'mobile':'envelope-o' }}"></i>  &nbsp;  {{$resposta->tipo}}</span></td>
 						          <td>{{$resposta->mensagem}}</td>
 						        </tr>
 					    	@endforeach
@@ -111,7 +115,7 @@
 					  	<div class="form-group">
 							<div class="col-md-12">
 								<label class="control-label" for="Tipo">Tipo de Resposta</label>
-								{!!  Form::select('tipo',(array('EMAIL'=>'E-MAIL','SMS'=>'SMS')),NULL,array('class'=>'form-control') );  !!}
+								{!!  Form::select('tipo',(array('EMAIL'=>'E-MAIL','SMS'=>'SMS')),NULL,array('class'=>'form-control','onChange'=>'exibeCampo(this.value);') );  !!}
 
 							</div>
 						</div>
@@ -120,9 +124,9 @@
 							class="form-group {{{ $errors->has('mensagem') ? 'has-error' : '' }}}">
 							<div class="col-md-12">
 								<label class="control-label" for="mensagem">Mensagem</label>
-								<textarea required="required" class="form-control full-width" name="mensagem"
+								<textarea required="required" class="form-control full-width" id="mensagem_email" name="mensagem"
 									value="mensagem" rows="10" placeholder="Mensagem Recebida: {{{ $contato->mensagem }}}"></textarea>
-		
+								<input type="text" maxlength="150" name="mensagem_sms" id="mensagem_sms" class="form-control" style="display:none">
 							</div>
 						</div>
 				    	<div class="form-group">
@@ -165,6 +169,25 @@
 	@parent
 	<script src="{{  asset('assets/admin/js/jquery.bootstrap-duallistbox.js') }}"></script>
 	<script type="text/javascript">
+		function exibeCampo(qual){
+			if(qual=='EMAIL'){
+				$('#mensagem_email').show();
+				$('#mensagem_email').attr('required','required');
+				$('#mensagem_email').focus();
+
+				$('#mensagem_sms').hide();
+				$('#mensagem_sms').attr('required',false);
+			}else{
+				$('#mensagem_email').hide();
+				$('#mensagem_email').attr('required',false);
+
+				$('#mensagem_sms').show();
+				$('#mensagem_sms').attr('required','required');
+				$('#mensagem_sms').focus();
+
+			}
+		}
+
 		$(document).ready(function($) {
 			var bootstrapduallist = $('select[name="resposta_contato[]"]').bootstrapDualListbox({
 				 nonSelectedListLabel: 'Respostas Disponíveis',

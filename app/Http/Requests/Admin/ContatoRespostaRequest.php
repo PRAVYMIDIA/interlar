@@ -12,8 +12,9 @@ class ContatoRespostaRequest extends FormRequest {
 	public function rules()
 	{
 		return [
-            'mensagem' 	=> 'required|min:3',
-            'tipo' 		=> 'required',
+            'mensagem' 		=> 'required_if:tipo,EMAIL',
+            'mensagem_sms' 	=> 'required_if:tipo,SMS',
+            'tipo' 			=> 'required',
 		];
 	}
 
