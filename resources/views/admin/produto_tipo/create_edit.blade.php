@@ -14,6 +14,9 @@
 	<!-- CSRF Token -->
 	<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
 	<!-- ./ csrf token -->
+	@if(isset($produto_tipo))
+	<input type="hidden" name="id" value="{{{ $produto_tipo->id }}}" />
+	@endif
 	<!-- Tabs Content -->
 	<div class="tab-content">
 		<!-- General tab -->
@@ -24,7 +27,7 @@
 					class="form-group {{{ $errors->has('nome') ? 'has-error' : '' }}}">
 					<div class="col-md-12">
 						<label class="control-label" for="nome"> Nome</label> <input
-							class="form-control" maxlenght="255" type="text" name="nome" id="nome"
+							class="form-control" maxlength="255" type="text" name="nome" id="nome"
 							value="{{{ Input::old('nome', isset($produto_tipo) ? $produto_tipo->nome : null) }}}" />
 						{!!$errors->first('nome', '<label class="control-label">:message</label>')!!}
 					</div>
@@ -34,7 +37,7 @@
 					class="form-group {{{ $errors->has('descricao') ? 'has-error' : '' }}}">
 					<div class="col-md-12">
 						<label class="control-label" for="descricao">Descrição</label>
-						<input type="text" class="form-control" maxlenght="255" name="descricao"
+						<input type="text" class="form-control" maxlength="255" name="descricao"
 							value="{{{ Input::old('descricao', isset($produto_tipo) ? $produto_tipo->descricao : null) }}}" />
 						{!! $errors->first('descricao', '<label class="control-label">:message</label>')
 						!!}

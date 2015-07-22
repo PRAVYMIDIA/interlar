@@ -82,13 +82,24 @@ body {
 	color: #ffffff;
 	background-color: #00a651; }	
 
+html {
+  position: relative;
+  min-height: 100%; }
+
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 180px !important;
+}
 .footer {
+    position: absolute;
+    bottom: 0; 
 	width: 100%;
-	height: auto;
+	/* Set the fixed height of the footer here */
+    height: 180px;
 	padding-top: 20px;
 	background-color: #dddddd;
     border-top: 1px #cccccc solid;
-    margin-top: 10px; 
+    margin-top: 10px;
 }
 
 .footer-text {

@@ -9,10 +9,10 @@ class LojaTipoRequest extends FormRequest {
 	 *
 	 * @return array
 	 */
-	public function rules()
+	public function rules(\Illuminate\Http\Request $request)
 	{
 		return [
-            'nome' => 'required|unique:lojas_tipos,id,:id',
+            'nome' => 'required|unique:lojas_tipos,nome,'.$request->input('id'),
 		];
 	}
 

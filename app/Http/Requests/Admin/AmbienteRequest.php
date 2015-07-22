@@ -1,6 +1,7 @@
 <?php namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Request;
 
 class AmbienteRequest extends FormRequest {
 
@@ -9,10 +10,10 @@ class AmbienteRequest extends FormRequest {
 	 *
 	 * @return array
 	 */
-	public function rules()
+	public function rules(Request $request)
 	{
 		return [
-            'nome' => 'required|unique:ambientes,id,:id',
+            'nome' => 'required|unique:ambientes,nome,'.$request->input('id'),
 		];
 	}
 

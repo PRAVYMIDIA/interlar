@@ -34,7 +34,7 @@
 					class="form-group {{{ $errors->has('descricao') ? 'has-error' : '' }}}">
 					<div class="col-md-12">
 						<label class="control-label" for="descricao">Descrição</label>
-						<input type="text" maxlenght="255" class="form-control" name="descricao" value="{{ Input::old('descricao', isset($fornecedor) ? $fornecedor->descricao : null) }}" />
+						<input type="text" maxlength="255" class="form-control" name="descricao" value="{{ Input::old('descricao', isset($fornecedor) ? $fornecedor->descricao : null) }}" />
 						{!! $errors->first('descricao', '<label class="control-label">:message</label>')
 						!!}
 					</div>

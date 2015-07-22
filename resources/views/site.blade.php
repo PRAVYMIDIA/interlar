@@ -38,7 +38,7 @@
 
 @include('flash::message')
 <div class="container">
-    <div class="row">
+    <div class="row" id="bloco_banner">
           @if($banner)
             <div onclick="document.location='{{ $banner->url }}';" style="cursor:pointer; padding:0px; margin-top:14px; margin-bottom:14px;{{ $banner->bgcolor?'background-color:'.$banner->bgcolor:'' }}">
             @if(strlen($banner->html) )

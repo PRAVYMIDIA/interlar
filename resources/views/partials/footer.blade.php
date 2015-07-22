@@ -21,8 +21,8 @@
           </div>
           <div class="col-xs-12 col-sm-2 hidden-xs"><br />
             <b>Siga-nos</b><br />
-            <img src="/assets/site/images/twitter_footer.png" style="margin-top: 5px;" />
-            <img src="/assets/site/images/face_footer.png" style="margin-top: 5px;" />
+            <a href="https://twitter.com/aricanduva" target="_blank"><img src="/assets/site/images/twitter_footer.png" style="margin-top: 5px;" /></a>
+            <a href="https://www.facebook.com/aricanduva" target="_blank"><img src="/assets/site/images/face_footer.png" style="margin-top: 5px;" /></a>
           </div>
           <div class="col-xs-12 col-sm-2 visible-xs">
             <img src="/assets/site/images/navegar_footer.png" class="img-responsive" style="margin-top: 5px;" />

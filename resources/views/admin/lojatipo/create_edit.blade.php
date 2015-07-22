@@ -13,6 +13,9 @@
 	autocomplete="off">
 	<!-- CSRF Token -->
 	<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
+	@if(isset($lojatipo))
+	<input type="hidden" name="id" value="{{{ $lojatipo->id }}}" />
+	@endif
 	<!-- ./ csrf token -->
 	<!-- Tabs Content -->
 	<div class="tab-content">
@@ -24,7 +27,7 @@
 					class="form-group {{{ $errors->has('nome') ? 'has-error' : '' }}}">
 					<div class="col-md-12">
 						<label class="control-label" for="nome"> Nome</label> <input
-							class="form-control" type="text" name="nome" id="nome"
+							class="form-control" type="text" name="nome" id="nome" maxlength="255"
 							value="{{{ Input::old('nome', isset($lojatipo) ? $lojatipo->nome : null) }}}" />
 						{!!$errors->first('nome', '<label class="control-label">:message</label>')!!}
 					</div>

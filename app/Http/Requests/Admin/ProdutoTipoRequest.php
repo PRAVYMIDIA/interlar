@@ -9,10 +9,10 @@ class ProdutoTipoRequest extends FormRequest {
 	 *
 	 * @return array
 	 */
-	public function rules()
+	public function rules(\Illuminate\Http\Request $request)
 	{
 		return [
-            'nome' => 'required|min:3',
+            'nome' => 'required|unique:produtos_tipos,nome,'.$request->input('id'),
 		];
 	}
 
