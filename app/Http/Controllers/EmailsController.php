@@ -21,6 +21,7 @@ class EmailsController extends Controller {
 			$email->ambiente_id	= $request->input('ambiente');
 			$email->produto_tipo_id	= $request->input('tipo');
 			if(!$email->save()){
+				Log::error('Erro ao salvar E-Mail',$email);
 				return response()->json(['erro' => 'Erro ao salvar']);
 			}else{
 				return response()->json(['erro' => null]);

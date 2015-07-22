@@ -355,7 +355,7 @@
             url: '/emails/salvar',
             type: 'POST',
             dataType: 'json',
-            data: {_token: '{{{ csrf_token() }}}', email:v_email, pagina: '{{ Request::path() }}', ambiente: v_ambiente, tipo: v_tipo},
+            data: { email:v_email, pagina: '{{ Request::path() }}', ambiente: v_ambiente, tipo: v_tipo},
         })
         .done(function(retorno) {
             fechaLoading();
@@ -402,7 +402,7 @@
             url: '/emails/salvar',
             type: 'POST',
             dataType: 'json',
-            data: {_token: '{{{ csrf_token() }}}', email:v_email, pagina: '{{ Request::path() }}', ambiente: v_ambiente, tipo: v_tipo},
+            data: { email:v_email, pagina: '{{ Request::path() }}', ambiente: v_ambiente, tipo: v_tipo},
         })
         .done(function(retorno) {
             fechaLoading();
