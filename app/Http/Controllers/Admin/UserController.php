@@ -119,9 +119,12 @@ class UserController extends AdminController {
      */
     public function data(\Illuminate\Http\Request $request)
     {
-        $users = User::select(array('users.name','users.email','users.confirmed', DB::raw('DATE_FORMAT(users.created_at,\'%d/%m/%Y %H:%i\') as criado_em','users.id') ));
+        $users = User::select(array('users.name','users.email','users.confirmed', 'users.created_at','users.id' ));
 
         $dt = Datatables::of($users)
+            ->editColumn('created_at', function ($produto_tipo) {
+                return $produto_tipo->created_at ? with(new \Carbon\Carbon($produto_tipo->created_at))->format('d/m/Y H:i') : '';
+            })
             ->edit_column('confirmed', '@if ($confirmed=="1") <span class="glyphicon glyphicon-ok"></span> @else <span class=\'glyphicon glyphicon-remove\'></span> @endif')
             ->add_column('actions', '@if ($id!="1")<a href="{{{ URL::to(\'admin/users/\' . $id . \'/edit\' ) }}}" class="btn btn-success btn-sm iframe" title="{{ trans("admin/modal.edit") }}" ><span class="glyphicon glyphicon-pencil"></span> </a>
                     <a href="{{{ URL::to(\'admin/users/\' . $id . \'/delete\' ) }}}" class="btn btn-sm btn-danger iframe" title="{{ trans("admin/modal.delete") }}"><span class="glyphicon glyphicon-trash"></span> </a>

@@ -114,9 +114,13 @@ class ProdutoTipoController extends AdminController {
      */
     public function data(\Illuminate\Http\Request $request)
     {
-        $produto_tipo = ProdutoTipo::select(array('produtos_tipos.nome', DB::raw('DATE_FORMAT(produtos_tipos.created_at,\'%d/%m/%Y %H:%i\') as criado_em'),'produtos_tipos.id'));
+        $produto_tipo = ProdutoTipo::select(array('produtos_tipos.nome', 'produtos_tipos.created_at','produtos_tipos.id'));
 
         $dt = Datatables::of($produto_tipo)
+            ->editColumn('created_at', function ($produto_tipo) {
+                return $produto_tipo->created_at ? with(new \Carbon\Carbon($produto_tipo->created_at))->format('d/m/Y H:i') : '';
+
+            })
             ->add_column('actions', '<a href="{{{ URL::to(\'admin/produtotipo/\' . $id . \'/edit\' ) }}}" class="btn btn-success btn-xs iframe" title="{{ trans("admin/modal.edit") }}" ><span class="glyphicon glyphicon-pencil"></span></a>
                     <a href="{{{ URL::to(\'admin/produtotipo/\' . $id . \'/delete\' ) }}}" class="btn btn-xs btn-danger iframe" title="{{ trans("admin/modal.delete") }}"><span class="glyphicon glyphicon-trash"></span></a>
                     <input type="hidden" name="row" value="{{$id}}" id="row">')
