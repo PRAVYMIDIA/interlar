@@ -19,6 +19,7 @@
             <th width="10%">Qtd. Respostas</th>
             <th width="10%">Meio</th>
             <th>Enviada em</th>
+            <th width="10%">Aceita publicidade</th>
             <th width="10%">{{ trans("admin/admin.action") }}</th>
         </tr>
         </thead>

@@ -21,6 +21,7 @@ class ContatosController extends Controller {
 		$contato->mensagem	= $request->input('mensagem');
 		$contato->produto_id= $request->input('produto_id');
 		$contato->loja_id	= $request->input('loja_id');
+		$contato->aceita_receber_mensagens	= $request->input('aceita_receber_mensagens');
 
 
 		if(!$contato->save()){
@@ -55,6 +56,7 @@ class ContatosController extends Controller {
 		$contato->celular	= $request->input('celular');
 		$contato->email	 	= $request->input('email');
 		$contato->mensagem	= $request->input('mensagem');
+		$contato->aceita_receber_mensagens	= $request->input('aceita_receber_mensagens');
 
 
 		if(!$contato->save()){

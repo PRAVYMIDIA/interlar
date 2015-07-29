@@ -11,7 +11,7 @@
 
 body {
 	font-family: "Aller";
-    background-image: url('/assets/site/images/bkg_quadriculado.png');
+  /*background-image: url('/assets/site/images/bkg_quadriculado.png');*/
 }
 
 .nav>li {

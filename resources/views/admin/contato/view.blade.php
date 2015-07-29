@@ -59,6 +59,15 @@
 						!!}
 					</div>
 				</div>
+				<div
+					class="form-group">
+					<div class="col-md-12">
+						<label class="control-label" for="aceita_receber_mensagens"> O visitante aceita receber mensagens do complexo Aricanduva?</label> 
+						<input
+							class="form-control" type="checkbox" name="aceita_receber_mensagens" id="aceita_receber_mensagens" disabled="disabled"
+							value="1" {{{ $contato->aceita_receber_mensagens ? 'checked="checked"':'' }}}" />
+					</div>
+				</div>
 				
 				
 				<!-- ./ general tab -->
@@ -67,6 +76,11 @@
 
 			<!-- Respostas tab -->
 			<div class="tab-pane" id="tab-respostas">
+				@if(!$contato->aceita_receber_mensagens)
+				<div class="alert alert-danger" role="alert">
+			      <strong>Atenção!</strong> Este visitante não autorizou receber mensagens do Complexo Aricanduva.
+			    </div>
+				@endif
 				<form class="form-horizontal" id="fupload" enctype="multipart/form-data"
 					method="post"
 					action="{{ URL::to('admin/contato/create') }}"

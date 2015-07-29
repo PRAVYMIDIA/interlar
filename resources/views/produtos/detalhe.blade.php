@@ -88,9 +88,12 @@
               <input type="email" class="form-control" name="email" placeholder="E-Mail" required="required">
             </div>
             <div class="form-group">
-              <textarea class="form-control" name="mensagem" placeholder="Mensagem" rows="4">
-
-              </textarea>
+              <textarea class="form-control" name="mensagem" placeholder="Mensagem" rows="4"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="aceita_receber_mensagens" class="form-label small">
+                <input type="checkbox" name="aceita_receber_mensagens" id="aceita_receber_mensagens" value="1"> Aceito receber mensagens do Complexo Aricanduva
+              </label>
             </div>
             <div class="form-group">
               <button class="btn btn-block btn-success">Enviar</button>

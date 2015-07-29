@@ -190,6 +190,7 @@ class ContatoController extends AdminController {
                                         DB::raw('(SELECT COUNT(1) FROM contato_respostas WHERE contato_respostas.contato_id = contatos.id) as qtd_respostas'),
                                         'contatos.produto_id',
                                         'contatos.created_at',
+                                        'contatos.aceita_receber_mensagens',
                                         'contatos.id'));
 
         $dt = Datatables::of($contato)
@@ -197,6 +198,7 @@ class ContatoController extends AdminController {
                 return $contato->created_at ? with(new \Carbon\Carbon($contato->created_at))->format('d/m/Y H:i') : '';
             })
             ->edit_column('produto_id','{{ $produto_id ? \'PRODUTO\':\'CONTATO\' }}')
+            ->edit_column('aceita_receber_mensagens','@if ($aceita_receber_mensagens) <span class="glyphicon glyphicon-ok" style="color:#3c9a5f"></span> @else <span class="glyphicon glyphicon-remove" style="color:#ea2f10"></span> @endif')
             ->add_column('actions', '<a href="{{{ URL::to(\'admin/contato/\' . $id . \'/visualizar\' ) }}}" class="btn btn-success btn-xs iframe" title="Visualizar/Responder" ><span class="fa fa-eye"></span></a>
                     <a href="{{{ URL::to(\'admin/contato/\' . $id . \'/delete\' ) }}}" class="btn btn-xs btn-danger iframe" title="{{ trans("admin/modal.delete") }}"><span class="glyphicon glyphicon-trash"></span></a>')
             ->remove_column('id');
