@@ -49,6 +49,7 @@ class LojaController extends AdminController {
         $loja -> nome = $request->nome;
         $loja -> descricao = $request->descricao;
         $loja -> localizacao = $request->localizacao;
+        $loja -> telefone = $request->telefone;
         $loja -> loja_tipo_id = $request->loja_tipo_id;
         $loja -> ativo = $request->ativo;
 
@@ -98,6 +99,7 @@ class LojaController extends AdminController {
         $loja -> nome = $request->nome;
         $loja -> descricao = $request->descricao;
         $loja -> localizacao = $request->localizacao;
+        $loja -> telefone = $request->telefone;
         $loja -> loja_tipo_id = $request->loja_tipo_id;
         $loja -> ativo = $request->ativo;
 
