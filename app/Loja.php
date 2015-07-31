@@ -11,7 +11,7 @@ class Loja extends Model
 	 *
 	 * @var array
 	 */
-	protected $fillable = ['nome','descricao','imagem','localizacao','telefone','ativo','user_id_created'];
+	protected $fillable = ['nome','descricao','imagem','localizacao','telefone','celular','ativo','user_id_created'];
 
 
     public function visitas()

@@ -52,13 +52,23 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-md-6">
+					<div class="col-md-3">
 						<div class="form-group {{{ $errors->has('telefone') ? 'has-error' : '' }}}">
 							<div class="col-md-12">
-								<label class="control-label" for="telefone">Tel. Celular</label><input
+								<label class="control-label" for="telefone">Telefone</label><input
 									class="form-control sp_celphones" type="text" name="telefone" id="telefone"
 									value="{{{ Input::old('telefone', isset($loja) ? $loja->telefone : null) }}}" />
 								{!!$errors->first('telefone', '<label class="control-label">:message</label>')!!}
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div class="form-group {{{ $errors->has('celular') ? 'has-error' : '' }}}">
+							<div class="col-md-12">
+								<label class="control-label" for="celular">Celular Responsável</label><input
+									class="form-control sp_celphones" type="text" name="celular" id="celular"
+									value="{{{ Input::old('celular', isset($loja) ? $loja->celular : null) }}}" />
+								{!!$errors->first('celular', '<label class="control-label">:message</label>')!!}
 							</div>
 						</div>
 					</div>
