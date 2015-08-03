@@ -88,7 +88,10 @@
               <input type="email" class="form-control" name="email" placeholder="E-Mail" required="required">
             </div>
             <div class="form-group">
-              <textarea class="form-control" name="mensagem" placeholder="Mensagem" rows="4"></textarea>
+              <textarea class="form-control" name="mensagem" id="mensagem" placeholder="Mensagem" rows="4"></textarea>
+              <span class="help-text" style="font-size:10px; text-align:left;">
+                <span id="caracteres"></span> &nbsp; Caracteres restantes
+              </span>
             </div>
             <div class="form-group">
               <label for="aceita_receber_mensagens" class="form-label small">
@@ -113,6 +116,7 @@
     <script src="{{asset('assets/site/js/jquery.mask.js')}}"></script>
 
     <script>
+
       var imagem_atual = '{{ '/images/produto/'.$produto->id.'/'.$produto->imagem }}';
         
 
@@ -133,6 +137,11 @@
           $('#form-contato-vendedor').submit(function(event) {
                 
                     event.preventDefault();
+                    if(!$('#aceita_receber_mensagens').is(':checked')){
+                      alert('É necessário aceitar receber mensagens para que o lojista consiga respondê-lo');
+                      $('#aceita_receber_mensagens').focus();
+                      return false;
+                    }
                     carregaLoading();
                     var dados = jQuery( this ).serialize();
 
@@ -142,9 +151,10 @@
                       data: dados,
                     })
                     .done(function() {
-                      $('body').append('<div class="alert alert-success alert-dismissible" style="position:absolute; top: 45%; left: 30%;" role="alert">\
+                      window.scrollTo(0, 0);
+                      $('body').append('<div class="alert alert-success alert-dismissible" style="position:absolute; top: 35%; left: 30%;" role="alert">\
   <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>\
-  <strong>Sucesso!</strong> Sua mensagem foi enviada, em breve entraremos em contato!\
+  <strong>Sucesso!</strong> Sua mensagem foi enviada, em breve o lojista entrará em contato!\
 </div>');
                       $('#form-contato-vendedor').each(function(index, el) {
                         if($(el).attr('name')!='produto_id'){
@@ -189,6 +199,28 @@
           });
           
         });
+
+      (function($) {
+        $.fn.extend( {
+          limiter: function(limit, elem) {
+          $(this).on("keyup focus", function() {
+              setCount(this, elem);
+          });
+          function setCount(src, elem) {
+              var chars = src.value.length;
+              if (chars > limit) {
+                  src.value = src.value.substr(0, limit);
+                  chars = limit;
+              }
+              elem.html( limit - chars );
+          }
+          setCount($(this)[0], elem);
+            }
+        });
+      })(jQuery);
+      var elem = $("#caracteres");
+      $("#mensagem").limiter(100, elem);
+
 
         
     </script>

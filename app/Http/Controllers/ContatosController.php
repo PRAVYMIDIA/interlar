@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers;
 
 use App\Contato;
+use App\Produto;
 use Mail;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent;
@@ -14,13 +15,17 @@ class ContatosController extends Controller {
 	 */
 	public function vendedor(Request $request)
 	{
+		$produto = Produto::find($request->input('produto_id'));
+		if(!$produto){
+			return response()->json(['erro' => 'Produto inexistente']);
+		}
 		$contato      		= new Contato();
 		$contato->nome	 	= $request->input('nome');
 		$contato->celular	= $request->input('celular');
 		$contato->email	 	= $request->input('email');
 		$contato->mensagem	= $request->input('mensagem');
 		$contato->produto_id= $request->input('produto_id');
-		$contato->loja_id	= $request->input('loja_id');
+		$contato->loja_id	= $produto->loja_id;
 		$contato->aceita_receber_mensagens	= $request->input('aceita_receber_mensagens');
 
 
@@ -40,6 +45,64 @@ class ContatosController extends Controller {
 			Mail::send('emails.contato_vendedor', $contato_array, function($m){
 				$m->to(env('MAIL_TO_VENDEDOR'),'INTERLAR')->subject('Visitante interessado em produto');
 			});
+
+			$celular =  null;
+			## SMS
+			if($contato->loja_id){
+				$celular = $contato->loja->celular;
+			}
+			if($celular){
+
+	            $celular = preg_replace("/[^0-9]+/", "", $celular);
+
+	            // Integração Zenvia
+	            $ch = curl_init();
+
+	            curl_setopt($ch, CURLOPT_URL, "https://api-rest.zenvia360.com.br/services/send-sms");
+	            curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+	            curl_setopt($ch, CURLOPT_HEADER, FALSE);
+
+	            curl_setopt($ch, CURLOPT_POST, TRUE);
+
+	            curl_setopt($ch, CURLOPT_POSTFIELDS, "{
+	              \"sendSmsRequest\": {
+	                \"from\": \"Cliente Site Interlar ".$contato->celular."\",
+	                \"to\": \"55".$celular."\",
+	                \"msg\": \"Prod:".str_limit($contato->produto->nome,10)." - ".$contato->mensagem." - de:".str_limit($contato->nome,10)."\",
+	                \"callbackOption\": \"ALL\",
+	                \"id\": \"".$contato->id."\"
+	              }
+	            }");
+
+	            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+	              "Content-Type: application/json",
+	              "Authorization: Basic ". base64_encode('raemp.corp:IqEPsgtp6G'),
+	              "Accept: application/json"
+	            ));
+
+	            $response = curl_exec($ch);
+	            curl_close($ch);
+	            /*$response = '{
+	              "sendSmsResponse" : {
+	                "statusCode" : "00",
+	                "statusDescription" : "Ok",
+	                "detailCode" : "000",
+	                "detailDescription" : "Message Sent"
+	              }
+	            }';*/
+	            $response = json_decode($response);
+	            
+	            if($response->sendSmsResponse){
+	                if($response->sendSmsResponse->statusCode == '00'){
+	                    $envio = 1;
+	                }else{
+	                    $envio = 0;
+	                }
+	            }else{
+	                $envio = 0;
+	            }
+			}
+
 			return response()->json(['erro' => null]);
 		}
 	}
