@@ -11,7 +11,7 @@ composer.phar
 /public/build
 /public/css
 /public/fonts
-/public/img
+# /public/img
 /public/js
 /resources/assets/build
 
