@@ -91,15 +91,24 @@ body {
   margin-bottom: 180px !important;
 }
 .footer {
-    position: absolute;
-    bottom: 0; 
-	width: 100%;
-	/* Set the fixed height of the footer here */
-    height: 180px;
-	padding-top: 20px;
-	background-color: #dddddd;
-    border-top: 1px #cccccc solid;
-    margin-top: 10px;
+  position: absolute;
+  bottom: 0; 
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 180px;
+  padding-top: 20px;
+  background-color: #dddddd;
+  border-top: 1px #cccccc solid;
+  margin-top: 10px;
+}
+@media screen and (max-width:639px) {
+  .footer {
+    height: 370px;
+    padding: 5px;
+  }
+  body {
+      margin-bottom: 370px !important;
+  }
 }
 
 .footer-text {
@@ -156,8 +165,13 @@ body {
 .thumbnail-loja{
  	border: none; 
  	border-radius: 0px;
-    position: relative;
-    margin-bottom: 0px;
-    height: 250px;
-    margin-bottom: 25px;
+  position: relative;
+  margin-bottom: 0px;
+  height: 250px;
+  margin-bottom: 25px;
  }
+ .thumb-loja{
+  max-width:205px;
+  /*max-height:60px;*/
+ }
+body{ overflow-x:hidden;}

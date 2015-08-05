@@ -26,7 +26,7 @@
           <p>{!! $produto->descricao !!}</p>
 
           <div class="row">
-            <img class="thumbnail thumbnail-custom" id="imagem_principal" 
+            <img class="thumbnail thumbnail-custom img-responsive" id="imagem_principal" 
               src="{{ '/images/produto/'.$produto->id.'/'.$produto->imagemResize(870,null,90) }}" alt="{{$produto->nome}}">
           </div>
           <div class="row" style="margin-top:15px;">

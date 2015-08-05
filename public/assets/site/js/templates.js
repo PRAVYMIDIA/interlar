@@ -45,7 +45,12 @@ var template_lojas = '{{#data}}\
         <div class="col-sm-6 col-md-4" style="text-align: center;">\
             <div class="thumbnail thumbnail-loja">\
               <div style="text-align: center; padding: 10px;">\
-                <img src="images/loja/{{id}}/{{imagem}}" width="205" height="60">\
+                {{#imagem}}\
+                <img class="thumb-loja" src="images/loja/{{id}}/{{imagem}}">\
+                {{/imagem}}\
+                {{^imagem}}\
+                <img class="thumb-loja" src="img/no-logo.jpg">\
+                {{/imagem}}\
               </div>\
               <div style="margin-top: 8px;">\
                 <span style="color: #666666;font-style: bold;">{{nome}}</span>\

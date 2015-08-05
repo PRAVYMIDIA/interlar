@@ -24,6 +24,7 @@
         <tr>
             <th>Nome</th>
             <th>Localização</th>
+            <th>Imagem</th>
             <th>Ativo ?</th>
             <th>Criado em</th>
             <th width="10%">{{ trans("admin/admin.action") }}</th>

@@ -5,7 +5,44 @@
 <style type="text/css">
     #shoppingmapa {
       height: 552px;
-      width: 770px;
+      width: 98%;
+      margin-left: 1%;
+    }
+
+    @media screen and (max-width:320px) {
+      #shoppingmapa {
+        height: 252px;
+      }
+      #pac-input {
+        width: 150px !important;
+      }
+      #pac-input:focus {
+        width: 151px !important;
+      }
+    }
+    @media screen and (min-width:321px) and (max-width:639px) {
+      
+      #shoppingmapa {
+        height: 352px;
+      }
+      #pac-input {
+        width: 250px;
+      }
+      #pac-input:focus {
+        width: 251px;
+      }
+    }
+    @media screen and (min-width:640px) and (max-width:959px) {
+      
+      #shoppingmapa {
+        height: 452px;
+      }
+      #pac-input {
+        width: 250px;
+      }
+      #pac-input:focus {
+        width: 251px;
+      }
     }
     .gm-style-iw * {
       display: block;
@@ -33,7 +70,7 @@
       #pac-input {
         background-color: #fff;
         padding: 0 11px 0 13px;
-        width: 400px;
+        width: 350px;
         font-family: Roboto;
         font-size: 15px;
         font-weight: 300;
@@ -44,7 +81,7 @@
         border-color: #4d90fe;
         margin-left: -1px;
         padding-left: 14px;  /* Regular padding-left + 1. */
-        width: 401px;
+        width: 351px;
       }
 
       .pac-container {

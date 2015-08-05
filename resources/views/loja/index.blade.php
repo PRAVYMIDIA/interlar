@@ -1,7 +1,7 @@
 @extends('site')
 @section('title') Home :: @parent @stop
 @section('content')
-      <div class="row">
+      <div class="row" style="margin-top:15px;">
         <div class="row">
         <div class="col-sm-12 col-md-8">
           <div class="form-group has-feedback">
@@ -63,9 +63,11 @@
         </div> <!-- /. row -->
 
         <div class="row">
-          <span class="col-md-4 col-md-offset-4">
-            <button type="button" class="btn btn-default btn-block" id="btn_carrega_mais_lojas" onclick="carregaLojas();">Carregar mais Lojas</button>
-          </span>
+          <div class="col-md-12" style="margin-to:10px; margin-bottom:10px;">
+            <span class="col-md-4 col-md-offset-4">
+              <button type="button" class="btn btn-default btn-block" id="btn_carrega_mais_lojas" onclick="carregaLojas();">Carregar mais Lojas</button>
+            </span>
+          </div>
         </div>        
       </div> <!-- /. row -->
 

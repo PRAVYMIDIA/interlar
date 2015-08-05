@@ -158,13 +158,14 @@ class LojaController extends AdminController {
     public function data(\Illuminate\Http\Request $request)
     {
         
-        $loja = Loja::select(array('lojas.nome', 'lojas.localizacao', 'lojas.ativo', 'lojas.created_at','lojas.id'));
+        $loja = Loja::select(array('lojas.nome', 'lojas.localizacao', 'lojas.imagem', 'lojas.ativo', 'lojas.created_at','lojas.id'));
 
         $dt =  Datatables::of($loja)
             ->editColumn('created_at', function ($lojatipo) {
                 return $lojatipo->created_at ? with(new \Carbon\Carbon($lojatipo->created_at))->format('d/m/Y H:i') : '';
 
             })
+            ->editColumn('imagem', '{!! $imagem?\'<img src="/images/loja/\'.$id.\'/\'.$imagem.\'" class="img-thumbnail" style="height:40px;" />\':\'<i class="fa fa-times text-danger"></i>\'!!}')
             ->editColumn('ativo', '{!! $ativo?\'<i class="fa fa-check"></i>\':\'<i class="fa fa-times"></i>\'!!}')
             ->add_column('actions', '<a href="{{{ URL::to(\'admin/loja/\' . $id . \'/edit\' ) }}}" class="btn btn-success btn-xs iframe" title="{{ trans("admin/modal.edit") }}" ><span class="glyphicon glyphicon-pencil"></span></a>
                     <a href="{{{ URL::to(\'admin/loja/\' . $id . \'/delete\' ) }}}" class="btn btn-xs btn-danger iframe" title="{{ trans("admin/modal.delete") }}"><span class="glyphicon glyphicon-trash"></span></a>

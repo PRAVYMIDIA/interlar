@@ -88,8 +88,9 @@
 				<div
 					class="form-group {{{ $errors->has('imagem') ? 'error' : '' }}}">
 					<div class="col-lg-12">
-						<label class="control-label" for="imagem">{{ (isset($loja) ? $loja->imagem : '')!=''?'Trocar ':'Inserir ' }}Imagem</label> <input name="imagem"
-							type="file" class="uploader" id="imagem" value="Upload" />
+						<label class="control-label" for="imagem">{{ (isset($loja) ? $loja->imagem : '')!=''?'Trocar ':'Inserir ' }}Imagem</label> 
+						<input name="imagem" type="file" class="uploader" id="imagem" value="Upload" />
+						<div class="help-text">Largura x Altura : <strong>205px x 140px</strong></div>
 					</div>
 
 				</div>
