@@ -5,11 +5,11 @@
 <div class="rectangle-3" style="background-color: #FFFFFF;">
   <div class="container">
     <div class="row">
-      <div class="row">
-        <div class="col-md-3">
-          <a href="/"><img src="/assets/site/images/logo_shopping_interlar_aricanduva.png" /></a>
+      <div class="col-xs-12 row">
+        <div class="col-md-3 col-xs-12">
+          <a href="/"><img class="img-responsive" src="/assets/site/images/logo_shopping_interlar_aricanduva.png" /></a>
         </div>
-        <div class="col-md-6" style="margin-top: 30px;">
+        <div class="col-md-6 col-xs-12" id="bloco-menu">
           <nav class="navbar navbar-default navbar-custom">
             <div class="container-fluid">
               <!-- Brand and toggle get grouped for better mobile display -->
@@ -51,7 +51,7 @@
             </div><!-- /.container-fluid -->
           </nav>
         </div>
-        <div class="col-md-3" style="margin-top: 30px;">
+        <div class="col-md-3 col-xs-12" style="margin-top: 30px;">
           <div class="form-group has-feedback" style="margin-top: 5px;">
             {!! Form::open(array('url'=>'/busca','method'=>'get','id'=>'form-busca')) !!}
             <input type="search" class="form-control" id="termo" value="{{ isset($termo)?$termo:null }}" name="termo" placeholder="Encontre a melhor oferta">

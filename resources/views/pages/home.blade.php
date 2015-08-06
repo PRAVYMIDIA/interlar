@@ -43,7 +43,7 @@
                       <li class="init-arrow-down"> <a href="javascript:void(0)"> <span class="gw-menu-text">Ambientes</span> <b class="gw-arrow"></b> </a>
                         <ul class="gw-submenu">
                           @foreach($ambientes as $id=>$ambiente)
-                          <li> <a href="/ambientes/{{str_slug($ambiente, '-').'/'. $id }}">{{$ambiente}}</a> </li>
+                          <li class="menu_ambientes item_ambiente_{{$id}}"> <a href="#" ambiente="{{ $id }}" class="bt_ambiente">{{$ambiente}}</a> </li>
                           @endforeach
 
                         </ul>
@@ -51,15 +51,15 @@
                       <li class="init-arrow-down"> <a href="javascript:void(0)"> <span class="gw-menu-text">Produtos</span> <b class="gw-arrow icon-arrow-up8"></b> </a>
                         <ul class="gw-submenu">
                           @foreach($tipos as $id=>$tipo)
-                          <li> <a href="/tipos/{{str_slug($tipo, '-').'/'. $id }}">{{$tipo}}</a> </li>
+                          <li class="menu_tipos item_tipo_{{$id}}"> <a href="#" tipo="{{ $id }}" class="bt_tipo">{{$tipo}}</a> </li>
                           @endforeach
                           
                         </ul>
                       </li>
                       <li class="init-arrow-down"> <a href="javascript:void(0)"> <span class="gw-menu-text">Lojas</span> <b></b> </a>
                         <ul class="gw-submenu">
-                          @foreach($tipos as $id=>$tipo)
-                          <li> <a href="/tipos/{{str_slug($tipo, '-').'/'. $id }}">{{$tipo}}</a> </li>
+                          @foreach($lojas as $id=>$loja)
+                          <li  class="menu_loja .item_loja_{{$id}}"> <a href="#" loja="{{ $id }}" class="bt_loja">{{$loja}}</a> </li>
                           @endforeach
                         </ul>
                       </li>
@@ -74,7 +74,7 @@
               <ul class="nav nav-pills nav-stacked">
                 <li role="presentation" class="active"><a href="#" class="titulo_filtro">Ambientes</a></li>
                 @foreach($ambientes as $id=>$ambiente)
-                <li role="presentation" class="menu_ambientes" id="item_ambiente_{{$id}}"> <a href="#" ambiente="{{ $id }}" class="bt_ambiente">{{$ambiente}}</a> </li>
+                <li role="presentation" class="menu_ambientes item_ambiente_{{$id}}"> <a href="#" ambiente="{{ $id }}" class="bt_ambiente">{{$ambiente}}</a> </li>
                 @endforeach
                 
               </ul>
@@ -85,7 +85,7 @@
               <ul class="nav nav-pills nav-stacked" style="margin-top:15px;">
                 <li role="presentation" class="active"><a href="#" class="titulo_filtro">Produtos</a></li>
                 @foreach($tipos as $id=>$tipo)
-                <li role="presentation" class="menu_tipos" id="item_tipo_{{$id}}"> <a href="#" tipo="{{ $id }}" class="bt_tipo">{{$tipo}}</a> </li>
+                <li role="presentation" class="menu_tipos item_tipo_{{$id}}"> <a href="#" tipo="{{ $id }}" class="bt_tipo">{{$tipo}}</a> </li>
                 @endforeach
                 
               </ul>
@@ -97,7 +97,7 @@
               <ul class="nav nav-pills nav-stacked" style="margin-top:15px;">
                 <li role="presentation" class="active"><a href="#" class="titulo_filtro">Lojas</a></li>
                 @foreach($lojas as $id=>$loja)
-                <li role="presentation"  class="menu_loja" id="item_loja_{{$id}}"> <a href="#" loja="{{ $id }}" class="bt_loja">{{$loja}}</a> </li>
+                <li role="presentation"  class="menu_loja .item_loja_{{$id}}"> <a href="#" loja="{{ $id }}" class="bt_loja">{{$loja}}</a> </li>
                 @endforeach
               </ul>
             </div>
@@ -190,17 +190,17 @@
                 // Filtros
                 $('.menu_ambientes').hide();
                 $.each(retorno.ambientes, function(index, val) {
-                   $('#item_ambiente_'+index).show();
+                   $('.item_ambiente_'+index).show();
                 });
 
                 $('.menu_tipos').hide();
                 $.each(retorno.tipos, function(index, val) {
-                   $('#item_tipo_'+index).show();
+                   $('.item_tipo_'+index).show();
                 });
 
                 $('.menu_loja').hide();
                 $.each(retorno.lojas, function(index, val) {
-                   $('#item_loja_'+index).show();
+                   $('#.item_loja_'+index).show();
                 });
 
               });

@@ -1,7 +1,7 @@
     <footer class="footer">
       <div class="container">
         <div class="row">
-        <div class="row footer-text">
+        <div class="col-md-12 footer-text">
           <div class="col-xs-12 col-sm-3">
             <img src="/assets/site/images/logo_interlar_footer.png" class="img-responsive" />
           </div>
