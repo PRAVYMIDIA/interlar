@@ -107,7 +107,7 @@
         </div> <!-- /. col-md-3 -->
       </div> <!-- /. row -->
 
-      
+  <img src="{{ '/images/produto/'.$produto->id.'/'.$produto->imagem }}" style="display:none" id="zoomImg">      
 @endsection
 
 @section('scripts')
@@ -175,8 +175,14 @@
                     
                 
         });
+
+          $("#zoomImg")
+              .attr("src", $('#zoomImg').attr("src"))
+              .load(function() {
+                  $("#imagem_principal").imageLens({ imageSrc: imagem_atual, lensSize: 200 });
+              });
           
-          $("#imagem_principal").imageLens({ imageSrc: imagem_atual, lensSize: 200 });
+          
 
           $('.miniatura-extra').click(function(event) {
             event.preventDefault();

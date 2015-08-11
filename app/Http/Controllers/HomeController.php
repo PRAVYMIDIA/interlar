@@ -73,7 +73,7 @@ class HomeController extends Controller {
 		// 		}
 		// 	})->lists('nome','id')->all();
 		// }else{
-			$lojas			= $lojas->has('produtos')->lists('nome','id')->all();
+			$lojas			= $lojas->lists('nome','id')->all(); // has('produtos')->
 		// }
 
 		$produto_grade = 1;

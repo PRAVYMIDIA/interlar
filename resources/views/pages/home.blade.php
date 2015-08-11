@@ -59,7 +59,7 @@
                       <li class="init-arrow-down"> <a href="javascript:void(0)"> <span class="gw-menu-text">Lojas</span> <b></b> </a>
                         <ul class="gw-submenu">
                           @foreach($lojas as $id=>$loja)
-                          <li  class="menu_loja .item_loja_{{$id}}"> <a href="#" loja="{{ $id }}" class="bt_loja">{{$loja}}</a> </li>
+                          <li  class="menu_loja item_loja_{{$id}}"> <a href="#" loja="{{ $id }}" class="bt_loja">{{$loja}}</a> </li>
                           @endforeach
                         </ul>
                       </li>
@@ -97,7 +97,7 @@
               <ul class="nav nav-pills nav-stacked" style="margin-top:15px;">
                 <li role="presentation" class="active"><a href="#" class="titulo_filtro">Lojas</a></li>
                 @foreach($lojas as $id=>$loja)
-                <li role="presentation"  class="menu_loja .item_loja_{{$id}}"> <a href="#" loja="{{ $id }}" class="bt_loja">{{$loja}}</a> </li>
+                <li role="presentation"  class="menu_loja item_loja_{{$id}}"> <a href="#" loja="{{ $id }}" class="bt_loja">{{$loja}}</a> </li>
                 @endforeach
               </ul>
             </div>
@@ -200,7 +200,7 @@
 
                 $('.menu_loja').hide();
                 $.each(retorno.lojas, function(index, val) {
-                   $('#.item_loja_'+index).show();
+                   $('.item_loja_'+index).show();
                 });
 
               });

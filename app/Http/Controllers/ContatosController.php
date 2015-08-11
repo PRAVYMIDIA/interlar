@@ -54,6 +54,23 @@ class ContatosController extends Controller {
 			if($celular){
 
 	            $celular = preg_replace("/[^0-9]+/", "", $celular);
+	            $celular_cliente = preg_replace("/[^0-9]+/", "", $contato->celular);
+
+	            $mensagem_sms = "Site Interlar - Prod:".$contato->produto->nome." - ".$contato->mensagem." - de:".$contato->nome;
+	            if(strlen($mensagem_sms)>147){
+	            	$mensagem_sms = "Site Interlar - Prod:".str_limit($contato->produto->nome,15)." - ".$contato->mensagem." - de:".$contato->nome;
+	            	if(strlen($mensagem_sms)>147){
+	            		$mensagem_sms = "Site Interlar - Prod:".str_limit($contato->produto->nome,15)." - ".$contato->mensagem." - de:".substr($contato->nome, 0, strpos($contato->nome, ' ') );
+
+	            		if(strlen($mensagem_sms)>147){
+		            		$mensagem_sms = "Interlar|Prd:".str_limit($contato->produto->nome,15)." - ".$contato->mensagem." - de:".str_limit($contato->nome,15) ;
+							if(strlen($mensagem_sms)>147){
+								$mensagem_sms = substr($mensagem_sms, 0, 147);
+							}
+		            	}
+	            	}
+	            	
+	            }
 
 	            // Integração Zenvia
 	            $ch = curl_init();
@@ -66,9 +83,9 @@ class ContatosController extends Controller {
 
 	            curl_setopt($ch, CURLOPT_POSTFIELDS, "{
 	              \"sendSmsRequest\": {
-	                \"from\": \"Cliente Site Interlar ".$contato->celular."\",
+	                \"from\": \"".$celular_cliente."\",
 	                \"to\": \"55".$celular."\",
-	                \"msg\": \"Prod:".str_limit($contato->produto->nome,10)." - ".$contato->mensagem." - de:".str_limit($contato->nome,10)."\",
+	                \"msg\": \"".$mensagem_sms."\",
 	                \"callbackOption\": \"ALL\",
 	                \"id\": \"".$contato->id."\"
 	              }
@@ -101,6 +118,10 @@ class ContatosController extends Controller {
 	            }else{
 	                $envio = 0;
 	            }
+			}
+
+			if($envio==0){
+				return response()->json(['erro' => 'Não foi possível enviar o SMS. Erro: '.$response->sendSmsResponse->detailDescription]);
 			}
 
 			return response()->json(['erro' => null]);

@@ -65,6 +65,36 @@
 </div>
 @include('partials.footer')
 
+<style type="text/css">
+    #background_poupup{
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+    #bloco_newsletter_poupup{
+        position: absolute;
+        width: 830px;
+        height: 480px;
+        background-color: #ee1d25;
+        border-radius: 10px;
+        padding: 10px;
+        text-align: center;
+    }
+</style>
+<div id="background_poupup" style="display:none">
+    <div id="bloco_newsletter_poupup">
+        <button onclick="fechaPoupup();" class="close" type="button" data-dismiss="alert" aria-label="Close"><span>&times;</span>&nbsp; fechar</button>
+        <img src="/img/popup.jpg">
+        <div class="col-md-12">
+            <span class="col-md-10"><input type="email" class="form-control" id="emailnewsletterpoupup" placeholder="Digite seu E-Mail"></span>
+            <span class="col-md-2"><button type="button" id="bt_cadastra_newsletter_poupup" class="btn btn-default btn-block">Cadastrar</button></span>
+        </div>        
+    </div>
+</div>
+
 <!-- Scripts -->
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -99,8 +129,11 @@
             $(this).remove();
         });
     }
-
-    
+    function fechaPoupup(){
+        $('#background_poupup').hide('fast', function() {
+            $(this).remove();
+        });
+    }
 
     var pagina_exibicao_produtos = {{ isset($produto_grade)?1:0}};
 
@@ -112,6 +145,7 @@
     var v_loading = 0;
 
     $(document).ready(function() {
+
         $('#emailnewsletter').bind('keypress', function(e) {
             var code = e.keyCode || e.which;
             if(code == 13) { //Enter keycode
@@ -144,6 +178,10 @@
             salvaNewsletter2();
         });
 
+        $('#bt_cadastra_newsletter_poupup').click(function() {
+            salvaNewsletter3();
+        });
+
         $('.bt_ambiente').click(function(e) {
             e.preventDefault();
             filtraProdutosPorAmbiente( $(this).attr('ambiente') );
@@ -165,6 +203,19 @@
         var nws = getCookie('newsletter');
         if(nws ==0){
             $('#bloco_newsletter_topo').addClass('alert').addClass('alert-warning').show('fast');
+
+            $('#bloco_newsletter_poupup').css({ 
+                top: (($(window).height()/2)- 250)+'px',
+                left: (($(window).width()/2) - 425)+'px',
+            });
+            $('#background_poupup').show('fast');
+            $('#background_poupup').click(function(event) {
+                fechaPoupup();
+            });
+            $('#bloco_newsletter_poupup').click(function(event) {
+                return false;
+            });
+
         }
 
     });
@@ -341,6 +392,64 @@
         return re.test(email);
     }
 
+    function salvaNewsletter3(){
+
+        var v_email = $('#emailnewsletterpoupup').val();
+        var re = /[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}/igm;
+        if (!validateEmail(v_email))
+        {
+            alert('Por favor coloque um e-mail válido.');
+            return false;
+        }
+        carregaLoading();
+        $.ajax({
+            url: '/emails/salvar',
+            type: 'POST',
+            dataType: 'json',
+            data: { email:v_email, pagina: '{{ Request::path() }}', ambiente: v_ambiente, tipo: v_tipo},
+        })
+        .done(function(retorno) {
+            fechaLoading();
+            if(retorno.erro){
+                $('body').append('<div class="alert alert-danger alert-dismissible" id="alert_block" style="position:absolute; top:200px; left:40%;" role="alert">\
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>\
+                  <strong>Erro!</strong> '+retorno.erro+'!\
+                </div>');
+
+            }else{
+                fechaPoupup();
+                $('#bloco_newsletter_topo').hide('fast', function() {
+                    $(this).remove();
+                });
+                $('body').append('<div class="alert alert-success alert-dismissible" id="alert_block" style="position:absolute; top: 50px; left: 30%;" role="alert">\
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>\
+                  <strong>Sucesso!</strong> Agora você receberá todas as promoções no seu e-mail!\
+                </div>');
+
+                document.cookie="newsletter=1; expires=Thu, 31 Dec {{date('Y')}} 23:59:59 UTC; path=/";
+                
+            }
+
+            $('#alert_block').css({ 
+                top: (($(window).height()/2)- 25)+'px',
+                left: (($(window).width()/2) - 225)+'px',
+            });
+            
+        })
+        .fail(function() {
+            fechaLoading();
+            $('body').append('<div class="alert alert-danger alert-dismissible" id="alert_block" style="position:absolute; top:200px; left:40%;" role="alert">\
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>\
+                  <strong>Erro!</strong> Houve algum erro de conexão, por favor tente mais tarde!\
+                </div>');
+
+            $('#alert_block').css({ 
+                top: (($(window).height()/2)- 25)+'px',
+                left: (($(window).width()/2) - 225)+'px',
+            });
+        });
+        
+    }
     function salvaNewsletter2(){
 
         var v_email = $('#emailnewslettertopo').val();
@@ -360,7 +469,7 @@
         .done(function(retorno) {
             fechaLoading();
             if(retorno.erro){
-                $('body').append('<div class="alert alert-danger alert-dismissible" style="position:absolute; top:200px; left:40%;" role="alert">\
+                $('body').append('<div class="alert alert-danger alert-dismissible" id="alert_block" style="position:absolute; top:200px; left:40%;" role="alert">\
                   <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>\
                   <strong>Erro!</strong> '+retorno.erro+'!\
                 </div>');
@@ -369,7 +478,7 @@
                 $('#bloco_newsletter_topo').hide('fast', function() {
                     $(this).remove();
                 });
-                $('body').append('<div class="alert alert-success alert-dismissible" style="position:absolute; top: 45%; left: 30%;" role="alert">\
+                $('body').append('<div class="alert alert-success alert-dismissible" id="alert_block" style="position:absolute; top: 45%; left: 30%;" role="alert">\
                   <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>\
                   <strong>Sucesso!</strong> Agora você receberá todas as promoções no seu e-mail!\
                 </div>');
@@ -377,14 +486,23 @@
                 document.cookie="newsletter=1; expires=Thu, 31 Dec {{date('Y')}} 23:59:59 UTC; path=/";
                 
             }
+
+            $('#alert_block').css({ 
+                top: (($(window).height()/2)- 25)+'px',
+                left: (($(window).width()/2) - 225)+'px',
+            });
             
         })
         .fail(function() {
             fechaLoading();
-            $('body').append('<div class="alert alert-danger alert-dismissible" style="position:absolute; top:200px; left:40%;" role="alert">\
+            $('body').append('<div class="alert alert-danger alert-dismissible" id="alert_block" style="position:absolute; top:200px; left:40%;" role="alert">\
                   <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>\
                   <strong>Erro!</strong> Houve algum erro de conexão, por favor tente mais tarde!\
                 </div>');
+            $('#alert_block').css({ 
+                top: (($(window).height()/2)- 25)+'px',
+                left: (($(window).width()/2) - 225)+'px',
+            });
         });
         
     } 

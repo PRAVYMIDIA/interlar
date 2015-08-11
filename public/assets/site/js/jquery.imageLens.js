@@ -10,7 +10,7 @@
             borderColor: "#888"
         };
         var options = $.extend(defaults, options);
-        var lensStyle = "background-position: 0px 0px;width: " + String(options.lensSize) + "px;height: " + String(options.lensSize)
+        var lensStyle = "background-position: -200px -200px;width: " + String(options.lensSize) + "px;height: " + String(options.lensSize)
             + "px;float: left;display: none;border-radius: " + String(options.lensSize / 2 + options.borderSize)
             + "px;border: " + String(options.borderSize) + "px solid " + options.borderColor 
             + ";background-repeat: no-repeat;position: absolute;";
