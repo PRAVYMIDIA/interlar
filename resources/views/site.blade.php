@@ -411,20 +411,16 @@
         .done(function(retorno) {
             fechaLoading();
             if(retorno.erro){
-                $('body').append('<div class="alert alert-danger alert-dismissible" id="alert_block" style="position:absolute; top:200px; left:40%;" role="alert">\
-                  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>\
-                  <strong>Erro!</strong> '+retorno.erro+'!\
-                </div>');
+
+                carregaModal('Erro', retorno.erro, 'ERRO');
 
             }else{
                 fechaPoupup();
                 $('#bloco_newsletter_topo').hide('fast', function() {
                     $(this).remove();
                 });
-                $('body').append('<div class="alert alert-success alert-dismissible" id="alert_block" style="position:absolute; top: 50px; left: 30%;" role="alert">\
-                  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>\
-                  <strong>Sucesso!</strong> Agora você receberá todas as promoções no seu e-mail!\
-                </div>');
+
+                carregaModal('Sucesso!', 'Agora você receberá todas as promoções no seu e-mail!', 'SUCESSO');
 
                 document.cookie="newsletter=1; expires=Thu, 31 Dec {{date('Y')}} 23:59:59 UTC; path=/";
                 
@@ -469,19 +465,15 @@
         .done(function(retorno) {
             fechaLoading();
             if(retorno.erro){
-                $('body').append('<div class="alert alert-danger alert-dismissible" id="alert_block" style="position:absolute; top:200px; left:40%;" role="alert">\
-                  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>\
-                  <strong>Erro!</strong> '+retorno.erro+'!\
-                </div>');
+
+                carregaModal('Erro', retorno.erro, 'ERRO');
 
             }else{
                 $('#bloco_newsletter_topo').hide('fast', function() {
                     $(this).remove();
                 });
-                $('body').append('<div class="alert alert-success alert-dismissible" id="alert_block" style="position:absolute; top: 45%; left: 30%;" role="alert">\
-                  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>\
-                  <strong>Sucesso!</strong> Agora você receberá todas as promoções no seu e-mail!\
-                </div>');
+
+                carregaModal('Sucesso', 'Agora você receberá todas as promoções no seu e-mail!', 'SUCESSO');
 
                 document.cookie="newsletter=1; expires=Thu, 31 Dec {{date('Y')}} 23:59:59 UTC; path=/";
                 
@@ -553,9 +545,44 @@
         });
         
     }  
+    function carregaModal(title, text, type) {
+        
+         if (type == 'ERRO') {
+            icon = 'glyphicon glyphicon-remove-circle';
+            textColor = 'text-danger';
+            alertColor = 'alert-danger';
+            removeClassAlert = 'alert-success';
+         } else if (type == 'SUCESSO') {
+            icon = 'glyphicon glyphicon-ok-circle';
+            textColor = 'text-success';
+            alertColor = 'alert-success';
+            removeClassAlert = 'alert-danger';
+         } else {
+            icon = 'glyphicon glyphicon-info-sign';
+            textColor = 'text-danger';
+            alertColor = 'alert-danger';
+            removeClassAlert = 'alert-success';
+         };
+
+        $('#myModal').modal('show');
+            var modal = $('#myModal');
+            modal.find('.modal-title').html('<span class="' + icon + ' ' + textColor + '"></span>\
+              <strong>' + title + '</strong> <br><br> ' + text);
+            modal.find('.alert').addClass(alertColor).removeClass(removeClassAlert);
+    }
 </script>
 
 @yield('scripts')
-
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="alert" style="margin-bottom: 0px">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel"></h4>
+      </div>
+    </div>
+  </div>
+</div>
 </body>
 </html>
