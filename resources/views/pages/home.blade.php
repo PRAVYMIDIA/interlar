@@ -122,7 +122,7 @@
             
            
           </div>
-          <div class="row">
+          <div class="row" style="margin: 50px 0px;">
             <span class="col-md-4 col-md-offset-4">
               <button type="button" class="btn btn-default btn-block" id="btn_carrega_mais_produtos" style="display:none;" onclick="carregaProdutos();">Carregar mais produtos</button>
             </span>
