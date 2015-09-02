@@ -186,20 +186,15 @@
                 data: dados,
               })
               .done(function() {
-                $('body').append('<div class="alert alert-success alert-dismissible" style="position:absolute; top: 45%; left: 30%;" role="alert">\
-                  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>\
-                  <strong>Sucesso!</strong> Sua mensagem foi enviada, em breve entraremos em contato!\
-                </div>');
+                carregaModal('Sucesso', 'Sua mensagem foi enviada, em breve entraremos em contato!', 'SUCESSO');
+
                 $('#form-contato').each(function(index, el) {
                       el.reset();                     
                 });
                
               })
               .fail(function() {
-                $('body').append('<div class="alert alert-danger alert-dismissible" style="position:absolute; top:200px; left:40%;" role="alert">\
-                  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>\
-                  <strong>Erro!</strong> Houve algum problema de conexão, por favor tente mais tarde!\
-                </div>');
+                carregaModal('Erro', 'Houve algum problema de conexão, por favor tente mais tarde!', 'ERRO');
               })
               .always(function() {
                 fechaLoading();
