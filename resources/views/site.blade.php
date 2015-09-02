@@ -50,7 +50,7 @@
           @endif
       </div> <!-- /. row -->
 
-    <div id="bloco_newsletter_topo" style="display:none" role="alert">
+    <!-- <div id="bloco_newsletter_topo" style="display:none" role="alert">
         <button class="close" type="button" data-dismiss="alert" aria-label="Close"><span>&times;</span></button>
         <label for="email">Cadastre seu email e receba novas ofertas de produtos em promoção.</label>
         <div class="row">
@@ -59,7 +59,7 @@
         </div>
         
         
-    </div>
+    </div> -->
 
 @yield('content')
 </div>
