@@ -102,7 +102,7 @@ class ProdutosController extends Controller {
 			$produtos->orderBy('id','DESC');
 		}
 
-		$produtos 		= $produtos->paginate(9);
+		$produtos 		= $produtos->paginate(21);
 
 		$produtos_array = array();
 		foreach ($produtos as $produto) {
