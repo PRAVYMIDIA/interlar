@@ -13,10 +13,16 @@
           </div>
 
           <div class="col-xs-12 col-sm-4"><br />
-            <b>Receba incriveis ofertas no seu email!</b><br />
+            <b>Receba incríveis ofertas no seu email!</b><br />
             <div class="form-group has-feedback" style="margin-top: 5px;">
-              <input type="email" class="form-control" id="emailnewsletter" placeholder="Digite seu E-Mail">
-              <span class="glyphicon glyphicon-open form-control-feedback" id="enviaNewsletterEmail"></span>
+                <div class="row">
+                    <span class="col-sm-10 col-md-10">
+                        <input type="email" class="form-control" id="emailnewsletter" placeholder="Digite seu E-Mail">
+                    </span>
+                    <span class="col-sm-1 col-md-1">
+                        <span class="glyphicon glyphicon-open form-control-feedback" id="enviaNewsletterEmail"></span>
+                    </span>
+                </div>
             </div>
           </div>
           <div class="col-xs-12 col-sm-2 hidden-xs"><br />

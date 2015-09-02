@@ -27,7 +27,7 @@
               <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                   <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Ambientes <span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><strong>Ambientes </strong><span class="caret"></span></a>
                     <ul class="dropdown-menu">
                       @foreach($ambientes as $id=>$ambiente)
                       <li> <a href="#" ambiente="{{$id }}" class="bt_ambiente">{{$ambiente}}</a> </li>
@@ -36,15 +36,15 @@
                     </ul>
                   </li>
                   <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Produtos <span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><strong>Produtos </strong><span class="caret"></span></a>
                     <ul class="dropdown-menu">
                       @foreach($tipos as $id=>$tipo)
                       <li> <a href="#" tipo="{{$id }}" class="bt_tipo">{{$tipo}}</a> </li>
                       @endforeach
                     </ul>
                   </li>                  
-                  <li><a href="{!! URL::to('loja') !!}">Lojas</a></li>                  
-                  <li><a href="/localizacao">Localização</a></li>
+                  <li><a href="{!! URL::to('loja') !!}"><strong>Lojas</strong></a></li>
+                  <li><a href="/localizacao"><strong>Localização</strong></a></li>
                 </ul>
 
               </div><!-- /.navbar-collapse -->

@@ -40,7 +40,7 @@
                 <div id="gw-sidebar" class="gw-sidebar">
                   <div class="nano-content">
                     <ul class="gw-nav gw-nav-list">
-                      <li class="init-arrow-down"> <a href="javascript:void(0)"> <span class="gw-menu-text">Ambientes</span> <b class="gw-arrow"></b> </a>
+                      <li class="init-arrow-down"> <a href="javascript:void(0)"> <span class="gw-menu-text"><strong>Ambientes</strong></span> <b class="gw-arrow"></b> </a>
                         <ul class="gw-submenu">
                           @foreach($ambientes as $id=>$ambiente)
                           <li class="menu_ambientes item_ambiente_{{$id}}"> <a href="#" ambiente="{{ $id }}" class="bt_ambiente">{{$ambiente}}</a> </li>
@@ -48,7 +48,7 @@
 
                         </ul>
                       </li>
-                      <li class="init-arrow-down"> <a href="javascript:void(0)"> <span class="gw-menu-text">Produtos</span> <b class="gw-arrow icon-arrow-up8"></b> </a>
+                      <li class="init-arrow-down"> <a href="javascript:void(0)"> <span class="gw-menu-text"><strong>Produtos</strong></span> <b class="gw-arrow icon-arrow-up8"></b> </a>
                         <ul class="gw-submenu">
                           @foreach($tipos as $id=>$tipo)
                           <li class="menu_tipos item_tipo_{{$id}}"> <a href="#" tipo="{{ $id }}" class="bt_tipo">{{$tipo}}</a> </li>
@@ -56,7 +56,7 @@
                           
                         </ul>
                       </li>
-                      <li class="init-arrow-down"> <a href="javascript:void(0)"> <span class="gw-menu-text">Lojas</span> <b></b> </a>
+                      <li class="init-arrow-down"> <a href="javascript:void(0)"> <span class="gw-menu-text"><strong>Lojas</strong></span> <b></b> </a>
                         <ul class="gw-submenu">
                           @foreach($lojas as $id=>$loja)
                           <li  class="menu_loja item_loja_{{$id}}"> <a href="#" loja="{{ $id }}" class="bt_loja">{{$loja}}</a> </li>
@@ -72,7 +72,7 @@
           <div class="row">
             <div class="col-sm-12 hidden-xs" style="padding-top: 8px;">
               <ul class="nav nav-pills nav-stacked">
-                <li role="presentation" class="active"><a href="#" class="titulo_filtro">Ambientes</a></li>
+                <li role="presentation" class="active"><a href="#" class="titulo_filtro"><strong>Ambientes</strong></a></li>
                 @foreach($ambientes as $id=>$ambiente)
                 <li role="presentation" class="menu_ambientes item_ambiente_{{$id}}"> <a href="#" ambiente="{{ $id }}" class="bt_ambiente">{{$ambiente}}</a> </li>
                 @endforeach
@@ -83,7 +83,7 @@
           <div class="row">
             <div class="col-sm-12 hidden-xs">
               <ul class="nav nav-pills nav-stacked" style="margin-top:15px;">
-                <li role="presentation" class="active"><a href="#" class="titulo_filtro">Produtos</a></li>
+                <li role="presentation" class="active"><a href="#" class="titulo_filtro"><strong>Produtos</strong></a></li>
                 @foreach($tipos as $id=>$tipo)
                 <li role="presentation" class="menu_tipos item_tipo_{{$id}}"> <a href="#" tipo="{{ $id }}" class="bt_tipo">{{$tipo}}</a> </li>
                 @endforeach
@@ -95,7 +95,7 @@
           <div class="row">
             <div class="col-sm-12 hidden-xs">
               <ul class="nav nav-pills nav-stacked" style="margin-top:15px;">
-                <li role="presentation" class="active"><a href="#" class="titulo_filtro">Lojas</a></li>
+                <li role="presentation" class="active"><a href="#" class="titulo_filtro"><strong>Lojas</strong></a></li>
                 @foreach($lojas as $id=>$loja)
                 <li role="presentation"  class="menu_loja item_loja_{{$id}}"> <a href="#" loja="{{ $id }}" class="bt_loja">{{$loja}}</a> </li>
                 @endforeach

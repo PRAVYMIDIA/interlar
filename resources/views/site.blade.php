@@ -153,6 +153,10 @@
             }
         });
 
+        $('#enviaNewsletterEmail').click(function() {
+             salvaNewsletter();
+        });
+
         $('#form-busca').submit(function(event) {
                 if(pagina_exibicao_produtos){
                     event.preventDefault();
