@@ -13,7 +13,7 @@
           </div>
 
           <div class="col-xs-12 col-sm-4"><br />
-            <b>Receba incriveis ofertas no seu email!</b><br />
+            <b>Receba incríveis ofertas no seu email!</b><br />
             <div class="form-group has-feedback" style="margin-top: 5px;">
                 <div class="row">
                     <span class="col-sm-10 col-md-10">
