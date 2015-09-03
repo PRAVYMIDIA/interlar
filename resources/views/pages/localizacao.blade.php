@@ -323,7 +323,7 @@
           markericon = locations[i][7];
         }
         marker = new google.maps.Marker({
-          icon: markericon,
+          // icon: markericon,
           position: new google.maps.LatLng(locations[i][5], locations[i][6]),
           map: map,
           title: locations[i][0],
