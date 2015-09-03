@@ -171,12 +171,7 @@
         });
 
         $('#termo_lupa').click(function() {
-            if(pagina_exibicao_produtos){
-                next_page = '/produtos/data';
-                v_termo = $('#termo').val();
-                $('#bloco_produtos').html('');
-                carregaProdutos();
-            }
+            $(this).closest('form').submit();
         });
 
         $('#enviaNewsletterEmail').click(function() {
