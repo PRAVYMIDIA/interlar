@@ -5,8 +5,10 @@
         <div class="row">
         <div class="col-sm-12 col-md-8">
           <div class="form-group has-feedback">
-            <input type="text" class="form-control" id="buscalojanome" placeholder="Buscar pelo nome da loja">
-            <span id="btnbuscalojanome" class="glyphicon glyphicon-search form-control-feedback"></span>
+            <span class="col-xs-11 col-md-11">
+                <input type="text" class="form-control" id="buscalojanome" placeholder="Buscar pelo nome da loja">
+            </span>
+            <span id="btnbuscalojanome" class="glyphicon glyphicon-search" style="cursor: pointer; margin-top: 10px"></span>
           </div>
         </div>
         <div class="col-sm-12 col-md-4">
