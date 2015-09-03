@@ -189,11 +189,23 @@
         $('.bt_ambiente').click(function(e) {
             e.preventDefault();
             filtraProdutosPorAmbiente( $(this).attr('ambiente') );
-        }); 
+        });
+
+         $('.bt_ambiente_topo').click(function(e) {
+             e.preventDefault();
+             filtraProdutosPorAmbienteTopo( $(this).attr('ambiente') );
+         });
+
         $('.bt_tipo').click(function(e) {
             e.preventDefault();
             filtraProdutosPorTipo( $(this).attr('tipo') );
         });
+
+        $('.bt_tipo_topo').click(function(e) {
+            e.preventDefault();
+            filtraProdutosPorTipoTopo( $(this).attr('tipo') );
+        });
+
         $('.bt_loja').click(function(e) {
             e.preventDefault();
             filtraProdutosPorLojaTipo( $(this).attr('loja') );
@@ -265,6 +277,20 @@
         }
     }
 
+    function filtraProdutosPorAmbienteTopo (filtro_id) {
+            v_ambiente = filtro_id;
+
+            next_page = '/produtos/data';
+
+            if(pagina_exibicao_produtos){
+                $('#bloco_produtos').html('');
+                atualizaQueryString();
+                carregaProdutos();
+            }else{
+                document.location = '/?ambiente='+v_ambiente;
+            }
+        }
+
     function filtraProdutosPorAmbiente (filtro_id) {
         if(v_ambiente != filtro_id){
             v_ambiente = filtro_id;
@@ -280,6 +306,20 @@
             carregaProdutos();
         }else{
             document.location = '/?ambiente='+v_ambiente;
+        }
+    }
+
+    function filtraProdutosPorTipoTopo (filtro_id) {
+        v_tipo = filtro_id;
+
+        next_page = '/produtos/data';
+
+        if(pagina_exibicao_produtos){
+            $('#bloco_produtos').html('');
+            atualizaQueryString();
+            carregaProdutos();
+        }else{
+            document.location = '/?tipo='+v_tipo;
         }
     }
 

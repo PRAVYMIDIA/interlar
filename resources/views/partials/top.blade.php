@@ -30,7 +30,7 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><strong>Ambientes </strong><span class="caret"></span></a>
                     <ul class="dropdown-menu">
                       @foreach($ambientes as $id=>$ambiente)
-                      <li> <a href="#" ambiente="{{$id }}" class="bt_ambiente">{{$ambiente}}</a> </li>
+                      <li> <a href="#" ambiente="{{$id }}" class="bt_ambiente_topo">{{$ambiente}}</a> </li>
                       @endforeach
                       
                     </ul>
@@ -39,7 +39,7 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><strong>Produtos </strong><span class="caret"></span></a>
                     <ul class="dropdown-menu">
                       @foreach($tipos as $id=>$tipo)
-                      <li> <a href="#" tipo="{{$id }}" class="bt_tipo">{{$tipo}}</a> </li>
+                      <li> <a href="#" tipo="{{$id }}" class="bt_tipo_topo">{{$tipo}}</a> </li>
                       @endforeach
                     </ul>
                   </li>                  
