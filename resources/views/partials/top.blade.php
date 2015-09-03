@@ -9,7 +9,7 @@
         <div class="col-md-3 col-xs-12">
           <a href="/"><img class="img-responsive" src="/assets/site/images/logo_shopping_interlar_aricanduva.png" /></a>
         </div>
-        <div class="col-md-6 col-xs-12" id="bloco-menu">
+        <div class="col-md-5 col-xs-12" id="bloco-menu">
           <nav class="navbar navbar-default navbar-custom">
             <div class="container-fluid">
               <!-- Brand and toggle get grouped for better mobile display -->
@@ -51,11 +51,15 @@
             </div><!-- /.container-fluid -->
           </nav>
         </div>
-        <div class="col-md-3 col-xs-12" style="margin-top: 30px;">
+        <div class="col-md-4 col-xs-12" style="margin-top: 30px;">
           <div class="form-group has-feedback" style="margin-top: 5px;">
             {!! Form::open(array('url'=>'/busca','method'=>'get','id'=>'form-busca')) !!}
-            <input type="search" class="form-control" id="termo" value="{{ isset($termo)?$termo:null }}" name="termo" placeholder="Encontre a melhor oferta">
-            <span class="glyphicon glyphicon-search form-control-feedback"></span>
+            <span class="col-xs-10 col-sm-10 col-md-10">
+                <input type="search" class="form-control" id="termo" value="{{ isset($termo)?$termo:null }}" name="termo" placeholder="Encontre a melhor oferta">
+            </span>
+            <span class="col-sm-1 col-md-1">
+                <span id="termo_lupa" class="glyphicon glyphicon-search" style="cursor: pointer; margin-top: 10px"></span>
+            </span>
             {!! Form::close() !!}
           </div>
         </div>

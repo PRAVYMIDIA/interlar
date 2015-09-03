@@ -20,7 +20,7 @@
                         <input type="email" class="form-control" id="emailnewsletter" placeholder="Digite seu E-Mail">
                     </span>
                     <span class="col-sm-1 col-md-1">
-                        <span class="glyphicon glyphicon-open form-control-feedback" id="enviaNewsletterEmail"></span>
+                        <span class="glyphicon glyphicon-open" id="enviaNewsletterEmail" style="cursor: pointer; margin-top: 10px"></span>
                     </span>
                 </div>
             </div>

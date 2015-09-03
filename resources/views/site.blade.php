@@ -153,10 +153,6 @@
             }
         });
 
-        $('#enviaNewsletterEmail').click(function() {
-             salvaNewsletter();
-        });
-
         $('#form-busca').submit(function(event) {
                 if(pagina_exibicao_produtos){
                     event.preventDefault();
@@ -172,7 +168,16 @@
             if(code == 13) { //Enter keycode
              $(this).closest('form').submit();
             }
-        }); 
+        });
+
+        $('#termo_lupa').click(function() {
+            if(pagina_exibicao_produtos){
+                next_page = '/produtos/data';
+                v_termo = $('#termo').val();
+                $('#bloco_produtos').html('');
+                carregaProdutos();
+            }
+        });
 
         $('#enviaNewsletterEmail').click(function() {
             salvaNewsletter();
