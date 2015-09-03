@@ -135,9 +135,7 @@
               <input type="email" class="form-control" name="email" placeholder="E-Mail" required="required">
             </div>
             <div class="form-group">
-              <textarea class="form-control" name="mensagem" placeholder="Mensagem" rows="4">
-
-              </textarea>
+              <textarea class="form-control" name="mensagem" placeholder="Mensagem" rows="4"></textarea>
             </div>
             <div class="form-group">
               <label for="aceita_receber_mensagens" class="form-label small">
