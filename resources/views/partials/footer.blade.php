@@ -16,12 +16,10 @@
             <b>Receba incríveis ofertas no seu email!</b><br />
             <div class="form-group has-feedback" style="margin-top: 5px;">
                 <div class="row">
-                    <span class="col-sm-10 col-md-10">
+                    <span class="col-xs-11 col-sm-10 col-md-10">
                         <input type="email" class="form-control" id="emailnewsletter" placeholder="Digite seu E-Mail">
                     </span>
-                    <span class="col-sm-1 col-md-1">
-                        <span class="glyphicon glyphicon-open" id="enviaNewsletterEmail" style="cursor: pointer; margin-top: 10px"></span>
-                    </span>
+                    <span class="glyphicon glyphicon-open" id="enviaNewsletterEmail" style="cursor: pointer; margin-top: 10px"></span>
                 </div>
             </div>
           </div>
