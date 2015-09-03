@@ -34,7 +34,7 @@
       <div class="row">
         <div class="col-lg-3">
           <div class="row">
-            <div class="col-xs-12 visible-xs">
+            <div class="col-xs-12 visible-xs visible-sm">
 
               <div class="gw-sidebar">
                 <div id="gw-sidebar" class="gw-sidebar">
@@ -70,7 +70,7 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-sm-12 hidden-xs" style="padding-top: 8px;">
+            <div class="col-sm-12 hidden-xs hidden-sm" style="padding-top: 8px;">
               <ul class="nav nav-pills nav-stacked">
                 <li role="presentation" class="active"><a href="#" class="titulo_filtro"><strong>Ambientes</strong></a></li>
                 @foreach($ambientes as $id=>$ambiente)
@@ -81,7 +81,7 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-sm-12 hidden-xs">
+            <div class="col-sm-12 hidden-xs hidden-sm">
               <ul class="nav nav-pills nav-stacked" style="margin-top:15px;">
                 <li role="presentation" class="active"><a href="#" class="titulo_filtro"><strong>Produtos</strong></a></li>
                 @foreach($tipos as $id=>$tipo)
@@ -93,7 +93,7 @@
           </div>
           
           <div class="row">
-            <div class="col-sm-12 hidden-xs">
+            <div class="col-sm-12 hidden-xs hidden-sm">
               <ul class="nav nav-pills nav-stacked" style="margin-top:15px;">
                 <li role="presentation" class="active"><a href="#" class="titulo_filtro"><strong>Lojas</strong></a></li>
                 @foreach($lojas as $id=>$loja)
