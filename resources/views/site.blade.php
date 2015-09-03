@@ -278,6 +278,7 @@
     }
 
     function filtraProdutosPorAmbienteTopo (filtro_id) {
+            v_tipo = null;
             v_ambiente = filtro_id;
 
             next_page = '/produtos/data';
