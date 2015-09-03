@@ -108,6 +108,10 @@
           <div class="row">
             <div id="shoppingmapa"></div>
             <input id="pac-input" class="controls" type="text" placeholder="Buscar">
+            <div class="col-md-12">
+              <a class="btn btn-primary col-xs-12 col-sm-4" style="margin-top:5px;" href="https://maps.google.com/maps?ll=-23.563328,-46.502402&z=16&t=m&hl=pt-BR&gl=BR&mapclient=embed&cid=8364013383827218075" target="_blank"><i class="glyphicon glyphicon-map-marker"></i> Navegar no Maps</a>
+              <a title="Navegar no Waze" class="visible-xs col-xs-12 col-sm-2" style="margin-top:5px;" href="waze://?q=Shopping%20Interlar%20ricanduva&ll=-23.56331778649918,-46.50242328643799"><img src="/assets/site/images/navegar_footer.png" class="img-responsive"  /></a>
+            </div>
             <!-- <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d2636.274231412429!2d-46.502902088869675!3d-23.562793692109967!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-BR!2sbr!4v1436555697265" width="770" height="552" frameborder="0" style="border:0" allowfullscreen></iframe> -->
           </div>
         </div> <!-- /. col-md-9 -->

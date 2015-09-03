@@ -31,7 +31,7 @@
             <a href="https://www.facebook.com/aricanduva" target="_blank"><img src="/assets/site/images/face_footer.png" style="margin-top: 5px;" /></a>
           </div>
           <div class="col-xs-12 col-sm-2 visible-xs">
-            <img src="/assets/site/images/navegar_footer.png" class="img-responsive" style="margin-top: 5px;" />
+            <a href="waze://?q=Shopping%20Interlar%20ricanduva&ll=-23.56331778649918,-46.50242328643799"><img src="/assets/site/images/navegar_footer.png" class="img-responsive" style="margin-top: 5px;" /></a>
           </div>          
         </div> <!-- /. row -->
         </div> <!-- /. row -->
