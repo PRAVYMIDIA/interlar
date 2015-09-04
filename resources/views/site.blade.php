@@ -39,9 +39,6 @@
 @include('flash::message')
 <div class="container">
 
-    <!-- BANNER MOBILE -->
-    <img class="hidden-sm hidden-md hidden-lg img-responsive img-thumbnail" src="/img/popup_mobile.png" />
-
     <div class="row" id="bloco_banner">
           @if($banner)
             <div onclick="document.location='{{ $banner->url }}';" style="cursor:pointer; padding:0px; margin-top:14px; margin-bottom:14px;{{ $banner->bgcolor?'background-color:'.$banner->bgcolor:'' }}">
@@ -82,7 +79,7 @@
 </style>
 
 <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" id="background_poupup">
-    <div id="bloco_newsletter_poupup" class="hidden-xs">
+    <div id="bloco_newsletter_poupup">
         <button onclick="fechaPoupup();" class="close" type="button" data-dismiss="alert" aria-label="Close"><span>&times;</span>&nbsp; fechar</button>
         <img src="/img/popup.jpg">
         <div class="col-md-12">
@@ -128,6 +125,15 @@
     }
     function fechaPoupup(){
         $('#background_poupup').modal('hide');
+
+        setCookie('newsletter', '1', 2);
+    }
+
+    function setCookie(cname, cvalue, exhours) {
+        var d = new Date();
+        d.setTime(d.getTime() + (exhours*60*60*1000));
+        var expires = "expires="+d.toUTCString();
+        document.cookie = cname + "=" + cvalue + "; " + expires;
     }
 
     var pagina_exibicao_produtos = {{ isset($produto_grade)?1:0}};
@@ -223,10 +229,7 @@
                 fechaPoupup();
             });
 
-            var windowWidth = window.innerWidth;
-            if(windowWidth > 790) {
-                $('#background_poupup').modal('show');
-            }
+            $('#background_poupup').modal('show');
 
             $('#bloco_newsletter_poupup').click(function(event) {
                 return false;
