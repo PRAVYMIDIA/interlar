@@ -102,7 +102,14 @@ class ProdutosController extends Controller {
 			$produtos->orderBy('id','DESC');
 		}
 
-		$produtos 		= $produtos->paginate(21);
+		$qtd_produtos = 21;
+		if($request->input('resolucao')){
+			if($request->input('resolucao') <= 768){
+				$qtd_produtos = 20;
+			}
+		}
+
+		$produtos 		= $produtos->paginate($qtd_produtos);
 
 		$produtos_array = array();
 		foreach ($produtos as $produto) {

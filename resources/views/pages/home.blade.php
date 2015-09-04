@@ -142,7 +142,8 @@
             interval: 4000
         });
         var page = 1;
-        var next_page = '/produtos/data';        
+        var next_page = '/produtos/data';
+        var v_resolucao = screen.width;
 
         function carregaProdutos(){
           if(v_loading == 0){
@@ -153,7 +154,7 @@
 
               $.ajax({
                 url: next_page,
-                data: {termo: v_termo,ambiente_id: v_ambiente, tipo_id: v_tipo, loja_id: v_loja, ordenacao: v_ordenacao }
+                data: {termo: v_termo,ambiente_id: v_ambiente, tipo_id: v_tipo, loja_id: v_loja, ordenacao: v_ordenacao, resolucao: v_resolucao }
               })
               .done(function(retorno) {
                 next_page = retorno.next_page_url;
