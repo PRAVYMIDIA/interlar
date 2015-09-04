@@ -79,7 +79,7 @@
 </style>
 
 <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" id="background_poupup">
-    <div id="bloco_newsletter_poupup" class="hidden-xs">
+    <div id="bloco_newsletter_poupup">
         <button onclick="fechaPoupup();" class="close" type="button" data-dismiss="alert" aria-label="Close"><span>&times;</span>&nbsp; fechar</button>
         <img src="/img/popup.jpg">
         <div class="col-md-12">
