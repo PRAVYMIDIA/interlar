@@ -9,7 +9,8 @@
           <div class="col-xs-12 col-sm-3"><br class="hidden-xs" />
             <b>Av. Aricanduva, 5555</b><br class="hidden-xs" />
             <b>Aricanduva</b><br class="hidden-xs" />
-            São Paulo - SP
+            São Paulo - SP<br class="hidden-xs" />
+            <a class="btn btn-primary btn-xs" style="margin-top:5px;" href="https://maps.google.com/maps?ll=-23.563328,-46.502402&z=16&t=m&hl=pt-BR&gl=BR&mapclient=embed&cid=8364013383827218075" target="_blank"><i class="glyphicon glyphicon-map-marker"></i> Como Chegar</a>
           </div>
 
           <div class="col-xs-12 col-sm-4"><br />
