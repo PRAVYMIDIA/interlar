@@ -38,6 +38,10 @@
 
 @include('flash::message')
 <div class="container">
+
+    <!-- BANNER MOBILE -->
+    <img class="hidden-sm hidden-md hidden-lg img-responsive img-thumbnail" src="/img/popup_mobile.png" />
+
     <div class="row" id="bloco_banner">
           @if($banner)
             <div onclick="document.location='{{ $banner->url }}';" style="cursor:pointer; padding:0px; margin-top:14px; margin-bottom:14px;{{ $banner->bgcolor?'background-color:'.$banner->bgcolor:'' }}">
@@ -66,14 +70,6 @@
 @include('partials.footer')
 
 <style type="text/css">
-    #background_poupup{
-        position: absolute;
-        top: 0px;
-        left: 0px;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-    }
     #bloco_newsletter_poupup{
         position: absolute;
         width: 830px;
@@ -84,8 +80,9 @@
         text-align: center;
     }
 </style>
-<div id="background_poupup" style="display:none">
-    <div id="bloco_newsletter_poupup">
+
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" id="background_poupup">
+    <div id="bloco_newsletter_poupup" class="hidden-xs">
         <button onclick="fechaPoupup();" class="close" type="button" data-dismiss="alert" aria-label="Close"><span>&times;</span>&nbsp; fechar</button>
         <img src="/img/popup.jpg">
         <div class="col-md-12">
@@ -130,9 +127,7 @@
         });
     }
     function fechaPoupup(){
-        $('#background_poupup').hide('fast', function() {
-            $(this).remove();
-        });
+        $('#background_poupup').modal('hide');
     }
 
     var pagina_exibicao_produtos = {{ isset($produto_grade)?1:0}};
@@ -224,10 +219,15 @@
                 top: (($(window).height()/2)- 250)+'px',
                 left: (($(window).width()/2) - 425)+'px',
             });
-            $('#background_poupup').show('fast');
             $('#background_poupup').click(function(event) {
                 fechaPoupup();
             });
+
+            var windowWidth = window.innerWidth;
+            if(windowWidth > 790) {
+                $('#background_poupup').modal('show');
+            }
+
             $('#bloco_newsletter_poupup').click(function(event) {
                 return false;
             });
