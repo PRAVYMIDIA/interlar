@@ -16,7 +16,9 @@
       -o-filter:grayscale(100%);
       filter:grayscale(100%);
   }
-  
+  .glyphicon-circle-arrow-left:hover{
+    opacity: .5;
+  }
 </style>
 @stop
 @section('content')

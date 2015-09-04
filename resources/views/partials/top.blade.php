@@ -5,11 +5,11 @@
 <div class="rectangle-3" style="background-color: #FFFFFF;">
   <div class="container">
     <div class="row">
-      <div class="col-xs-12 row">
+      <div class="row">
         <div class="col-md-3 col-xs-9 col-sm-4">
           <a href="/"><img class="img-responsive" src="/assets/site/images/logo_shopping_interlar_aricanduva.png" /></a>
         </div>
-        <div class="col-md-6 col-xs-2 col-sm-8" id="bloco-menu">
+        <div class="col-md-6 col-xs-3 col-sm-8" id="bloco-menu">
           <nav class="navbar navbar-default navbar-custom">
             <div class="container-fluid">
               <!-- Brand and toggle get grouped for better mobile display -->

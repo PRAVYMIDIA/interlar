@@ -427,7 +427,7 @@
         if(v_ambiente){
             $('.item_ambiente_'+v_ambiente).addClass('active-item');
             texto_breadcrumb += '<span id="breadcrumb_txt_1">'+$('.item_ambiente_'+v_ambiente).children().html()+'</span>';
-            $('.item_ambiente_'+v_ambiente).children().append('<i class="glyphicon glyphicon-remove remove_ordenacao pull-right" style="color:#fff;"></i>');
+            $('.item_ambiente_'+v_ambiente).children().append('<i class="pull-right" style="color:#fff;font-family: monospace; text-decoration: none; font-style: normal;">X</i>');
         }
 
         $('.menu_tipos').removeClass('active-item').removeClass('active');
@@ -437,7 +437,7 @@
                 texto_breadcrumb += ' &nbsp; &gt; &nbsp; ';
             }
             texto_breadcrumb += '<span id="breadcrumb_txt_2">'+$('.item_tipo_'+v_tipo).children().html()+'</span>';
-            $('.item_tipo_'+v_tipo).children().append('<i class="glyphicon glyphicon-remove remove_ordenacao pull-right" style="color:#fff;"></i>');
+            $('.item_tipo_'+v_tipo).children().append('<i class="pull-right" style="color:#fff;font-family: monospace; text-decoration: none; font-style: normal;">X</i>');
         }
 
         $('.menu_loja').removeClass('active-item').removeClass('active');
@@ -447,7 +447,7 @@
                 texto_breadcrumb += ' &nbsp; &gt; &nbsp; ';
             }
             texto_breadcrumb += '<span id="breadcrumb_txt_3">'+$('.item_loja_'+v_loja).children().html()+'</span>';
-            $('.item_loja_'+v_loja).children().append('<i class="glyphicon glyphicon-remove remove_ordenacao pull-right" style="color:#fff;"></i>');
+            $('.item_loja_'+v_loja).children().append('<i class="pull-right" style="color:#fff;font-family: monospace; text-decoration: none; font-style: normal;">X</i>');
         }
 
         $('.bt_ordenacao').removeClass('red');
