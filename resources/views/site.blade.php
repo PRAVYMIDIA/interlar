@@ -64,7 +64,16 @@
 
 @yield('content')
 </div>
+
 @include('partials.footer')
+
+<div class="row row-centered">
+    <span id="top-link-block" class="hidden col-centered">
+        <a href="#top"  onclick="$('html,body').animate({scrollTop:0},'slow');return false;">
+            <img class="img-responsive" src="/img/page_up.png">
+        </a>
+    </span><!-- /top-link-block -->
+</div>
 
 <style type="text/css">
     #bloco_newsletter_poupup{
@@ -85,13 +94,31 @@
         /* inline-block space fix */
         margin-right:-4px;
     }
+
+    .navbar-fixed-top + .content-container {
+    	margin-top: 70px;
+    }
+    .content-container {
+    	margin: 0 130px;
+    }
+
+    #top-link-block.affix-top {
+        position: absolute; /* allows it to "slide" up into view */
+        bottom: -82px; /* negative of the offset - height of link element */
+        left: 10px; /* padding from the left side of the window */
+    }
+    #top-link-block.affix {
+        position: fixed; /* keeps it on the bottom once in view */
+        bottom: 18px; /* height of link element */
+        right: 15px; /* padding from the left side of the window */
+    }
 </style>
 
 <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" id="background_poupup">
     <div class="row row-centered">
         <div id="bloco_newsletter_poupup" class="col-xs-6 col-centered" style="margin-top: 100px">
             <button onclick="fechaPoupup();" class="close" type="button" data-dismiss="alert" aria-label="Close"><span>&times;</span>&nbsp; fechar</button>
-            <img class="img-responsive img-thumbnail" src="/img/popup.jpg">
+            <img class="img-responsive" src="/img/popup.jpg">
             <div class="col-md-12" style="margin-top: 10px">
                 <span class="col-md-9"><input type="email" class="form-control" id="emailnewsletterpoupup" placeholder="Digite seu E-Mail"></span>
                 <span class="col-md-3"><button type="button" id="bt_cadastra_newsletter_poupup" class="btn btn-default btn-block">Cadastrar</button></span>
@@ -242,6 +269,13 @@
                 return false;
             });
 
+        }
+
+        if ( ($(window).height() + 100) < $(document).height() ) {
+            $('#top-link-block').removeClass('hidden').affix({
+                // how far to scroll down before link "slides" into view
+                offset: {top:100}
+            });
         }
 
     });
