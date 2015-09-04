@@ -68,24 +68,35 @@
 
 <style type="text/css">
     #bloco_newsletter_poupup{
-        position: absolute;
-        width: 830px;
-        height: 480px;
         background-color: #ee1d25;
         border-radius: 10px;
         padding: 10px;
         text-align: center;
     }
+    /* centered columns styles */
+    .row-centered {
+        text-align:center;
+    }
+    .col-centered {
+        display:inline-block;
+        float:none;
+        /* reset the text-align */
+        text-align:left;
+        /* inline-block space fix */
+        margin-right:-4px;
+    }
 </style>
 
 <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" id="background_poupup">
-    <div id="bloco_newsletter_poupup">
-        <button onclick="fechaPoupup();" class="close" type="button" data-dismiss="alert" aria-label="Close"><span>&times;</span>&nbsp; fechar</button>
-        <img src="/img/popup.jpg">
-        <div class="col-md-12">
-            <span class="col-md-10"><input type="email" class="form-control" id="emailnewsletterpoupup" placeholder="Digite seu E-Mail"></span>
-            <span class="col-md-2"><button type="button" id="bt_cadastra_newsletter_poupup" class="btn btn-default btn-block">Cadastrar</button></span>
-        </div>        
+    <div class="row row-centered">
+        <div id="bloco_newsletter_poupup" class="col-xs-6 col-centered" style="margin-top: 100px">
+            <button onclick="fechaPoupup();" class="close" type="button" data-dismiss="alert" aria-label="Close"><span>&times;</span>&nbsp; fechar</button>
+            <img class="img-responsive img-thumbnail" src="/img/popup.jpg">
+            <div class="col-md-12" style="margin-top: 10px">
+                <span class="col-md-9"><input type="email" class="form-control" id="emailnewsletterpoupup" placeholder="Digite seu E-Mail"></span>
+                <span class="col-md-3"><button type="button" id="bt_cadastra_newsletter_poupup" class="btn btn-default btn-block">Cadastrar</button></span>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -221,10 +232,6 @@
         if(nws ==0){
             $('#bloco_newsletter_topo').addClass('alert').addClass('alert-warning').show('fast');
 
-            $('#bloco_newsletter_poupup').css({ 
-                top: (($(window).height()/2)- 250)+'px',
-                left: (($(window).width()/2) - 425)+'px',
-            });
             $('#background_poupup').click(function(event) {
                 fechaPoupup();
             });
