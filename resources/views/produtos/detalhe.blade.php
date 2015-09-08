@@ -189,8 +189,8 @@
           $('.miniatura-extra').click(function(event) {
             event.preventDefault();
             carregaLoading();
-            console.log($(this).attr('exibir'));
-            console.log($(this).attr('href'));
+            // console.log($(this).attr('exibir'));
+            // console.log($(this).attr('href'));
 
             imagem_atual = $(this).attr('href');
 

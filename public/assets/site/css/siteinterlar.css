@@ -21,7 +21,10 @@ body {
 
 .barra-top {
 	background-color: #006ca8;
-	text-align: center; }
+	text-align: center; 
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
 
 .navbar-custom {
 	background-color:#FFFFFF;

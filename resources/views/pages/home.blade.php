@@ -71,7 +71,7 @@
           </div>
           <div class="row">
             <div class="col-sm-12 hidden-xs hidden-sm" style="padding-top: 8px;">
-              <ul class="nav nav-pills nav-stacked">
+              <ul class="nav nav-pills nav-stacked" id="bloco_menu_ambientes">
                 <li role="presentation" class="active"><a href="#" class="titulo_filtro"><strong>Ambientes</strong></a></li>
                 @foreach($ambientes as $id=>$ambiente)
                 <li role="presentation" class="menu_ambientes item_ambiente_{{$id}}"> <a href="#" ambiente="{{ $id }}" class="bt_ambiente">{{$ambiente}}</a> </li>
@@ -82,7 +82,7 @@
           </div>
           <div class="row">
             <div class="col-sm-12 hidden-xs hidden-sm">
-              <ul class="nav nav-pills nav-stacked" style="margin-top:15px;">
+              <ul class="nav nav-pills nav-stacked" id="bloco_menu_produtos" style="margin-top:15px;">
                 <li role="presentation" class="active"><a href="#" class="titulo_filtro"><strong>Produtos</strong></a></li>
                 @foreach($tipos as $id=>$tipo)
                 <li role="presentation" class="menu_tipos item_tipo_{{$id}}"> <a href="#" tipo="{{ $id }}" class="bt_tipo">{{$tipo}}</a> </li>
@@ -94,7 +94,7 @@
           
           <div class="row">
             <div class="col-sm-12 hidden-xs hidden-sm">
-              <ul class="nav nav-pills nav-stacked" style="margin-top:15px;">
+              <ul class="nav nav-pills nav-stacked" id="bloco_menu_lojas" style="margin-top:15px;">
                 <li role="presentation" class="active"><a href="#" class="titulo_filtro"><strong>Lojas</strong></a></li>
                 @foreach($lojas as $id=>$loja)
                 <li role="presentation"  class="menu_loja item_loja_{{$id}}"> <a href="#" loja="{{ $id }}" class="bt_loja">{{$loja}}</a> </li>
@@ -144,6 +144,38 @@
         var page = 1;
         var next_page = '/produtos/data';
         var v_resolucao = screen.width;
+
+
+      function ajustaVerMais(qual){
+        // console.log('Chamou função ajustaVerMais()');
+        // console.log(qual);
+        $('.nav-stacked').each(function(index, el) {
+          $(el).css({
+            'height': 'auto',
+            'overflow-y': 'visible'
+          });
+          // Verifica se este foi selecionado pra expandir ou é menor q o limite mínimo
+          // console.log('Elemento:'+$(el).attr('id')+' - '+$(el).height());
+            if($(el).height()< 362 || $(el).attr('id') == qual){
+              // console.log('Expandido');
+              $(el).css({
+                'height': 'auto',
+                'overflow-y': 'visible'
+              });
+              if($('#bt_exp_'+$(el).attr('id')).length){
+                $('#bt_exp_'+$(el).attr('id')).remove();
+              }
+            }else{
+              $(el).css({
+                'height': '362px',
+                'overflow-y': 'hidden'
+              });
+              if(! $('#bt_exp_'+$(el).attr('id')).length){
+                $(el).parent().append('<button type="button" style="margin-top:5px" id="bt_exp_'+$(el).attr('id')+'" class="btn btn-block btn-default" onclick="ajustaVerMais(\''+$(el).attr('id')+'\');" >Ver mais</button>');
+              }
+            }
+        });
+      }
 
         function carregaProdutos(){
           if(v_loading == 0){
@@ -204,6 +236,8 @@
                    $('.item_loja_'+index).show();
                 });
 
+                ajustaVerMais(null);
+
               });
 
             }
@@ -211,13 +245,10 @@
         }
 
         $(document).ready(function() {
-          
-          carregaProdutos();
-          
-          
+          carregaProdutos(); 
         });
 
-        
+      
     </script>
 @endsection
 @stop
