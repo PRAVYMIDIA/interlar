@@ -140,18 +140,18 @@
 			      	@for($i=1;$i<=31;$i++)
 			        <tr>
 			          <th scope="row">{{$i}}</th>
-			          <td><span class="label label-default">{{ $banner->visitas()->whereRaw('DAY(created_at) = '.$i.' AND MONTH(created_at) = 1 AND YEAR(created_at) = '.date('Y') )->count() }}</span></td>
-			          <td><span class="label label-default">{{ $banner->visitas()->whereRaw('DAY(created_at) = '.$i.' AND MONTH(created_at) = 2 AND YEAR(created_at) = '.date('Y') )->count() }}</span></td>
-			          <td><span class="label label-default">{{ $banner->visitas()->whereRaw('DAY(created_at) = '.$i.' AND MONTH(created_at) = 3 AND YEAR(created_at) = '.date('Y') )->count() }}</span></td>
-			          <td><span class="label label-default">{{ $banner->visitas()->whereRaw('DAY(created_at) = '.$i.' AND MONTH(created_at) = 4 AND YEAR(created_at) = '.date('Y') )->count() }}</span></td>
-			          <td><span class="label label-default">{{ $banner->visitas()->whereRaw('DAY(created_at) = '.$i.' AND MONTH(created_at) = 5 AND YEAR(created_at) = '.date('Y') )->count() }}</span></td>
-			          <td><span class="label label-default">{{ $banner->visitas()->whereRaw('DAY(created_at) = '.$i.' AND MONTH(created_at) = 6 AND YEAR(created_at) = '.date('Y') )->count() }}</span></td>
-			          <td><span class="label label-default">{{ $banner->visitas()->whereRaw('DAY(created_at) = '.$i.' AND MONTH(created_at) = 7 AND YEAR(created_at) = '.date('Y') )->count() }}</span></td>
-			          <td><span class="label label-default">{{ $banner->visitas()->whereRaw('DAY(created_at) = '.$i.' AND MONTH(created_at) = 8 AND YEAR(created_at) = '.date('Y') )->count() }}</span></td>
-			          <td><span class="label label-default">{{ $banner->visitas()->whereRaw('DAY(created_at) = '.$i.' AND MONTH(created_at) = 9 AND YEAR(created_at) = '.date('Y') )->count() }}</span></td>
-			          <td><span class="label label-default">{{ $banner->visitas()->whereRaw('DAY(created_at) =  '.$i.' AND MONTH(created_at) = 10 AND YEAR(created_at) = '.date('Y') )->count() }}</span></td>
-			          <td><span class="label label-default">{{ $banner->visitas()->whereRaw('DAY(created_at) =  '.$i.' AND MONTH(created_at) = 11 AND YEAR(created_at) = '.date('Y') )->count() }}</span></td>
-			          <td><span class="label label-default">{{ $banner->visitas()->whereRaw('DAY(created_at) =  '.$i.' AND MONTH(created_at) = 12 AND YEAR(created_at) = '.date('Y') )->count() }}</span></td>
+			          <td><span class="label label-default">{{ $banner_edit->visitas()->whereRaw('DAY(created_at) = '.$i.' AND MONTH(created_at) = 1 AND YEAR(created_at) = '.date('Y') )->count() }}</span></td>
+			          <td><span class="label label-default">{{ $banner_edit->visitas()->whereRaw('DAY(created_at) = '.$i.' AND MONTH(created_at) = 2 AND YEAR(created_at) = '.date('Y') )->count() }}</span></td>
+			          <td><span class="label label-default">{{ $banner_edit->visitas()->whereRaw('DAY(created_at) = '.$i.' AND MONTH(created_at) = 3 AND YEAR(created_at) = '.date('Y') )->count() }}</span></td>
+			          <td><span class="label label-default">{{ $banner_edit->visitas()->whereRaw('DAY(created_at) = '.$i.' AND MONTH(created_at) = 4 AND YEAR(created_at) = '.date('Y') )->count() }}</span></td>
+			          <td><span class="label label-default">{{ $banner_edit->visitas()->whereRaw('DAY(created_at) = '.$i.' AND MONTH(created_at) = 5 AND YEAR(created_at) = '.date('Y') )->count() }}</span></td>
+			          <td><span class="label label-default">{{ $banner_edit->visitas()->whereRaw('DAY(created_at) = '.$i.' AND MONTH(created_at) = 6 AND YEAR(created_at) = '.date('Y') )->count() }}</span></td>
+			          <td><span class="label label-default">{{ $banner_edit->visitas()->whereRaw('DAY(created_at) = '.$i.' AND MONTH(created_at) = 7 AND YEAR(created_at) = '.date('Y') )->count() }}</span></td>
+			          <td><span class="label label-default">{{ $banner_edit->visitas()->whereRaw('DAY(created_at) = '.$i.' AND MONTH(created_at) = 8 AND YEAR(created_at) = '.date('Y') )->count() }}</span></td>
+			          <td><span class="label label-default">{{ $banner_edit->visitas()->whereRaw('DAY(created_at) = '.$i.' AND MONTH(created_at) = 9 AND YEAR(created_at) = '.date('Y') )->count() }}</span></td>
+			          <td><span class="label label-default">{{ $banner_edit->visitas()->whereRaw('DAY(created_at) =  '.$i.' AND MONTH(created_at) = 10 AND YEAR(created_at) = '.date('Y') )->count() }}</span></td>
+			          <td><span class="label label-default">{{ $banner_edit->visitas()->whereRaw('DAY(created_at) =  '.$i.' AND MONTH(created_at) = 11 AND YEAR(created_at) = '.date('Y') )->count() }}</span></td>
+			          <td><span class="label label-default">{{ $banner_edit->visitas()->whereRaw('DAY(created_at) =  '.$i.' AND MONTH(created_at) = 12 AND YEAR(created_at) = '.date('Y') )->count() }}</span></td>
 			        </tr>
 			        @endfor
 			      </tbody>

@@ -36,6 +36,6 @@
         </div> <!-- /. row -->
       </div> <!-- /. container footer-text -->
       <div class="footer-assinatura">
-          <p class="text-center"><b>Desenvolvido por </b> <img src="/assets/site/images/logo_raemp_footer.png"/></p>
+          <p class="text-center"><b>Desenvolvido por </b> <a href="http://www.raemp.com.br" target="_blank"><img src="/assets/site/images/logo_raemp_footer.png"/></a></p>
       </div> <!-- /. footer-assinatura -->
     </footer>

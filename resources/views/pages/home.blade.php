@@ -72,9 +72,9 @@
           <div class="row">
             <div class="col-sm-12 hidden-xs hidden-sm" style="padding-top: 8px;">
               <ul class="nav nav-pills nav-stacked" id="bloco_menu_ambientes">
-                <li role="presentation" class="active"><a href="#" class="titulo_filtro"><strong>Ambientes</strong></a></li>
+                <li role="presentation" id="tit_bloco_menu_ambientes" class="active"><a href="#" class="titulo_filtro"><strong>Ambientes</strong></a></li>
                 @foreach($ambientes as $id=>$ambiente)
-                <li role="presentation" class="menu_ambientes item_ambiente_{{$id}}"> <a href="#" ambiente="{{ $id }}" class="bt_ambiente">{{$ambiente}}</a> </li>
+                <li role="presentation" class="menu_ambientes item_ambiente_{{$id}} notmobile"> <a href="#" ambiente="{{ $id }}" class="bt_ambiente">{{$ambiente}}</a> </li>
                 @endforeach
                 
               </ul>
@@ -83,9 +83,9 @@
           <div class="row">
             <div class="col-sm-12 hidden-xs hidden-sm">
               <ul class="nav nav-pills nav-stacked" id="bloco_menu_produtos" style="margin-top:15px;">
-                <li role="presentation" class="active"><a href="#" class="titulo_filtro"><strong>Produtos</strong></a></li>
+                <li role="presentation" id="tit_bloco_menu_tipos" class="active"><a href="#" class="titulo_filtro"><strong>Produtos</strong></a></li>
                 @foreach($tipos as $id=>$tipo)
-                <li role="presentation" class="menu_tipos item_tipo_{{$id}}"> <a href="#" tipo="{{ $id }}" class="bt_tipo">{{$tipo}}</a> </li>
+                <li role="presentation" class="menu_tipos item_tipo_{{$id}} notmobile"> <a href="#" tipo="{{ $id }}" class="bt_tipo">{{$tipo}}</a> </li>
                 @endforeach
                 
               </ul>
@@ -95,9 +95,9 @@
           <div class="row">
             <div class="col-sm-12 hidden-xs hidden-sm">
               <ul class="nav nav-pills nav-stacked" id="bloco_menu_lojas" style="margin-top:15px;">
-                <li role="presentation" class="active"><a href="#" class="titulo_filtro"><strong>Lojas</strong></a></li>
+                <li role="presentation" class="active" id="tit_bloco_menu_lojas"><a href="#" class="titulo_filtro"><strong>Lojas</strong></a></li>
                 @foreach($lojas as $id=>$loja)
-                <li role="presentation"  class="menu_loja item_loja_{{$id}}"> <a href="#" loja="{{ $id }}" class="bt_loja">{{$loja}}</a> </li>
+                <li role="presentation"  class="menu_loja item_loja_{{$id}} notmobile"> <a href="#" loja="{{ $id }}" class="bt_loja">{{$loja}}</a> </li>
                 @endforeach
               </ul>
             </div>
@@ -171,7 +171,7 @@
                 'overflow-y': 'hidden'
               });
               if(! $('#bt_exp_'+$(el).attr('id')).length){
-                $(el).parent().append('<button type="button" style="margin-top:5px" id="bt_exp_'+$(el).attr('id')+'" class="btn btn-block btn-default" onclick="ajustaVerMais(\''+$(el).attr('id')+'\');" >Ver mais</button>');
+                $(el).parent().append('<button type="button" style="margin-top:5px" id="bt_exp_'+$(el).attr('id')+'" class="btn btn-block btn-default" onclick="ajustaVerMais(\''+$(el).attr('id')+'\');" >Ver Todos</button>');
               }
             }
         });
@@ -219,21 +219,21 @@
                 }else{
                   $('#btn_carrega_mais_produtos').show('fast');
                 }
-                console.log(retorno);
+                // console.log(retorno);
                 // Filtros
                 $('.menu_ambientes').hide();
                 $.each(retorno.ambientes, function(index, val) {
-                   $('.item_ambiente_'+index).show();
+                   $('.item_ambiente_'+index).not('#ambiente_selected').show();
                 });
 
                 $('.menu_tipos').hide();
                 $.each(retorno.tipos, function(index, val) {
-                   $('.item_tipo_'+index).show();
+                   $('.item_tipo_'+index).not('#tipo_selected').show();
                 });
 
                 $('.menu_loja').hide();
                 $.each(retorno.lojas, function(index, val) {
-                   $('.item_loja_'+index).show();
+                   $('.item_loja_'+index).not('#loja_selected').show();
                 });
 
                 ajustaVerMais(null);
