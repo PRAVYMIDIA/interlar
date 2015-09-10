@@ -26,6 +26,30 @@ body {
   padding-bottom: 5px;
 }
 
+.menuMobile a,#menuMobile a:link,#menuMobile .btn-link{
+  color: #525252;
+}
+#menuMobile .btn-link:hover{
+  color: #ccc;
+}
+.menuMobile{
+    position: absolute;
+    z-index: 1000;
+    left: 0px;
+    background-color: rgba(0, 0, 0, 0.39);
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    padding-right: 0px;
+}
+.menuMobile .navbar-collapse{
+    background-color: #fff;
+    margin-left: 30px;
+    height: 100%;
+    box-shadow: -5px 0px 5px rgba(0, 0, 0, 0.52);
+}
+
+
 .navbar-custom {
 	background-color:#FFFFFF;
     color:#229922;
@@ -196,3 +220,8 @@ body {
   /*max-height:60px;*/
  }
 body{ overflow-x:hidden;}
+.btn-link {
+    font-weight: 400;
+    color: #aaa;
+    border-radius: 0;
+}

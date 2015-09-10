@@ -14,7 +14,7 @@
             <div class="container-fluid">
               <!-- Brand and toggle get grouped for better mobile display -->
               <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2" aria-expanded="false">
+                <button type="button" class="navbar-toggle collapsed" onclick="menuFlutuante();" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2" aria-expanded="false">
                   <span class="sr-only">Toggle navigation</span>
                   <span class="icon-bar"></span>
                   <span class="icon-bar"></span>
@@ -51,8 +51,11 @@
             </div><!-- /.container-fluid -->
           </nav>
         </div>
-        <div class="col-xs-12 visible-xs hidden-md hidden-lg">
+        <div id="mMobile" class="col-xs-12 visible-xs hidden-md hidden-lg">
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+                <button type="button" class="btn btn-link" style="padding-left: 0px;" onclick="menuFlutuante();" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2" aria-expanded="true">
+                  <span class="glyphicon glyphicon-remove" style="font-size: 24px;"></span>
+                </button>
                 <ul class="nav navbar-nav">
                   <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><strong>Ambientes </strong><span class="caret"></span></a>
@@ -75,7 +78,7 @@
                   <li><a href="/localizacao"><strong>Localização</strong></a></li>
                 </ul>
 
-              </div>
+          </div>
         </div>
         <div class="col-md-3 col-xs-12" style="margin-top: 30px;">
           <div class="form-group has-feedback" style="margin-top: 5px;">

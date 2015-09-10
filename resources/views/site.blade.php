@@ -151,6 +151,20 @@
 <script>
     $('#flash-overlay-modal').modal();
     $('div.alert').not('.alert-danger').delay(3000).slideUp(300);
+    var menu_flutuante_aberto = false;
+    function menuFlutuante(){
+        console.log('OPA');
+        if(menu_flutuante_aberto){
+            setTimeout(function(){
+                $('#mMobile').removeClass('menuMobile');
+            },1000);
+            menu_flutuante_aberto = false;
+        }else{
+            $('#mMobile').addClass('menuMobile');
+            menu_flutuante_aberto = true;
+        }
+        
+    }
 
     function getCookie(cname) {
         var name = cname + "=";
